@@ -17,7 +17,13 @@ section {
     src: url("../fonts/Raleway-Medium.ttf");
 }
 
-h1, h2, h3, h4, h5, h6 {
+/* Roboto Bold */
+@font-face {
+    font-family: "Roboto-Bold";
+    src: url("../fonts/Roboto-Bold.ttf");
+}
+
+h1, h2 {
     margin: 0px;
     padding: 0px;
     font-family: "Shrikhand-Regular";
@@ -25,6 +31,15 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
     font-size: 170%;
     letter-spacing: 2px;
+}
+
+h3, h4, h5, h6 {
+    margin: 0px;
+    padding: 0px;
+    font-family: "Roboto-Bold";
+    line-height: 100%;
+    font-weight: 600;
+    font-size: 120%;
 }
 
 p {
@@ -45,7 +60,11 @@ p {
 
 body {
     height: 100%;
-    background: linear-gradient(to bottom right, rgb(255, 137, 27), rgb(122, 0, 204)) no-repeat;
+}
+
+body,
+.logo-orinoco {
+    background: linear-gradient(to bottom right, rgb(255, 137, 27), rgb(153, 0, 255)) no-repeat;
 }
 
 header,
@@ -84,12 +103,11 @@ header {
     width: 40%;
 }
 
-.logo {
+.logo-orinoco {
     position: absolute;
     left: 50px;
     margin: 0;
     font-size: 400%;
-    background: linear-gradient(to bottom right, rgb(255, 137, 27), rgb(122, 0, 204));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -99,12 +117,13 @@ h1 {
     letter-spacing: 3px;
 }
 
+/* ==========  Cart  ========== */
 .cart {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
-    position: relative;
     height: 100%;
     width: 20%;
 }
@@ -124,6 +143,20 @@ h1 {
     color: black;
     border: solid black 3px;
     border-radius: 30%;
+}
+
+.cart-items {
+    position: absolute;
+    height: 65px;
+    width: 65px;
+    background-color: red;
+    top: -15px;
+    right: -15px;
+    border-radius: 50%;
+    box-shadow: black 5px 0px 5px;
+    font-size: 180%;
+    font-weight: 600;
+    color: white;
 }
 
 .orinoco:hover,

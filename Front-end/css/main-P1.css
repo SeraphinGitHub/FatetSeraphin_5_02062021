@@ -1,21 +1,66 @@
 /* ============================================ */
-/*              ---  Main Section Page 1 --- */
+/*         ---  Main Section Page 1 --- */
 /* ============================================ */
+.main,
+.anchor,
+.anchor figure {
+    margin: 0;
+    padding: 0;
+}
+
 .main {
-    height:auto;
+    list-style: none;
+    padding-bottom: 50px;
 }
 
-.test {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    width: 800px;
+.main li {
+    width: 90%;
+    margin: 50px;
+    margin-bottom: 0;
+    border-top: solid black 2px;
 }
 
-.test img {
-    margin: 20px;
-    height: 200px;
-    width: 300px;
-    border: solid black 2px;
+.anchor {
+    justify-content: space-between;
+    margin-top: 50px;
+    margin-left: -40px;
+    margin-right: -40px;
+    height: auto;
+    text-decoration: none;
+    color: black;
+    padding: 30px;
+    padding-right: 100px;
+    border-radius: 25px;
+}
+
+/* ======  Figure  ====== */
+.anchor figure {
+    height: 250px;
+    width: 25%;
+}
+
+/* ======  Img  ====== */
+.anchor img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 15px;
+}
+
+.item-price {
+    font-size: 160%;
+    width: 25%;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.item-description {
+    padding: 0px;
+    font-size: 130%;
+    width: 50%;
+}
+
+.anchor:hover {
+    background-color: lightskyblue;
+    box-shadow: gray 10px 10px 10px;
 }
