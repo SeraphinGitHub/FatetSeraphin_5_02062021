@@ -1,0 +1,21 @@
+/* ============================================ */
+/*              ---  Main Section Page 1 --- */
+/* ============================================ */
+.main {
+    height:auto;
+}
+
+.test {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    width: 800px;
+}
+
+.test img {
+    margin: 20px;
+    height: 200px;
+    width: 300px;
+    border: solid black 2px;
+}

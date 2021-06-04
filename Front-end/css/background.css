@@ -1,0 +1,146 @@
+
+body,
+section {
+    margin: 0;
+    padding: 0;
+}
+
+/* Shrikhand Regular */
+@font-face {
+    font-family: "Shrikhand-Regular";
+    src: url("../fonts/Shrikhand-Regular.otf");
+}
+
+/* Raleway Medium */
+@font-face {
+    font-family: "Raleway-Medium";
+    src: url("../fonts/Raleway-Medium.ttf");
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0px;
+    padding: 0px;
+    font-family: "Shrikhand-Regular";
+    line-height: 100%;
+    font-weight: 400;
+    font-size: 170%;
+    letter-spacing: 2px;
+}
+
+p {
+    margin: 0px;
+    padding: 0px;
+    font-family: "Raleway-Medium";
+    line-height: 100%;
+    font-weight: 400;
+    font-size: 100%;
+}
+
+.flexCenter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+} 
+
+body {
+    height: 100%;
+    background: linear-gradient(to bottom right, rgb(255, 137, 27), rgb(122, 0, 204)) no-repeat;
+}
+
+header,
+.main,
+footer {
+    width: 80%;
+}
+
+.orinoco,
+.cart,
+.main,
+footer {
+    background-color: white;
+}
+
+.border-radius {
+    border-radius: 30px;
+}
+
+/* ============================================ */
+/*              ---  Header  --- */
+/* ============================================ */
+header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.orinoco {
+    position: relative;
+    height: 100%;
+    width: 40%;
+}
+
+.logo {
+    position: absolute;
+    left: 50px;
+    margin: 0;
+    font-size: 400%;
+    background: linear-gradient(to bottom right, rgb(255, 137, 27), rgb(122, 0, 204));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h1 {
+    font-size: 270%;
+    letter-spacing: 3px;
+}
+
+.cart {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    width: 20%;
+}
+
+.cart p {
+    font-size: 170%;
+    font-weight: 600;
+    padding-left: 50px;
+}
+
+.logo-cart {
+    position: absolute;
+    right: 20px;
+    margin: 0;
+    padding: 10px;
+    font-size: 220%;
+    color: black;
+    border: solid black 3px;
+    border-radius: 30%;
+}
+
+.orinoco:hover,
+.cart:hover {
+    background-color: lightskyblue;
+    box-shadow: black 5px 5px 5px;
+}
+
+/* ============================================ */
+/*              ---  Footer  --- */
+/* ============================================ */
+footer {
+    margin-top: 30px;
+    margin-bottom: 30px
+}
+
+h2 {
+    padding: 30px;
+    padding-left: 10%;
+}
