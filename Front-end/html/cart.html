@@ -35,39 +35,42 @@
 
     <section class="flexCenter border-radius main">
         <div class="flexCenter caption">
-            <h3>Articles</h3>
+            <h3 class="caption-Arti">Articles</h3>
+            <h3 class="caption-Indi">Indications</h3>
+            <h3 class="caption-Prix">Prix</h3>
             <h3>Quantité</h3>
-            <h3>Prix</h3>
         </div>
 
         <ul class="flexCenter list-container">
-            <li>
-                <figure>
-                    <img src="../images/teddy_1.jpg" alt="ours en peluche faits à la main">
-                </figure>
+            <li class="flexCenter">
+                <a href="./product.html">
+                    <figure>
+                        <img src="../images/teddy_1.jpg" alt="ours en peluche faits à la main">
+                    </figure>
+                </a>
 
                 <div class="flexCenter item-caption">
                     <h3>Nom article</h3>
                     <p>Description</p>
                 </div>
 
-                <h3 class="item-price">Prix</h3>
+                <h3 class="item-price">00€00</h3>
 
-                <form action="" method="GET">
-                    <input class="quantity-input" type="number" name="quant" id="quant" min="1" max="100">
+                <form class="flexCenter quantity" action="" method="GET">
+                    <input class="quantity-input" type="number" name="quant" id="quant" min="1" max="100" value="1">
                 </form>
 
                 <button class="btn remove-btn" type="button">Retirer</button>
             </li>
         </ul>
 
-        <div class="flexCenter">
+        <div class="flexCenter order-container">
             <button class="btn clean-cart-btn" type="button">Vider le panier</button>
 
             <button class="btn purchase-btn" type="submit">Passer commande</button>
            
             <div class="flexCenter total-container">
-                <h3 class="total-tag">TOTAL</h3>
+                <h3>TOTAL</h3>
                 <h3 class="total-price">00€00</h3>
             </div>
         </div>

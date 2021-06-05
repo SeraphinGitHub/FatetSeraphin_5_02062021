@@ -1,21 +1,4 @@
 
-.btn {
-    border: none;
-    width: 100%;
-    background: linear-gradient(to bottom right, pink, rgb(185, 23, 255));
-    border-radius: 20px;
-    
-    font-family: "Roboto-Bold";
-    line-height: 100%;
-    font-weight: 400;
-    font-size: 150%;
-}
-
-.btn,
-.quantity-input {
-    height: 70px;
-}
-
 /* ============================================ */
 /*         ---  Main Section Page 2 --- */
 /* ============================================ */
@@ -167,11 +150,6 @@
 .quantity-input {
     width: 27%;
     text-align: center;
-
-    font-family: "Raleway-Medium";
-    line-height: 100%;
-    font-weight: 600;
-    font-size: 150%;
 }
 
 .add-btn {

@@ -1,3 +1,164 @@
+
 /* ============================================ */
-/*         ---  Main Section Page 3 --- */
+/*         ---  Cart Background  ---            */
 /* ============================================ */
+header {
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.orinoco {
+    width: 100%;
+    margin-left: 200px;        
+    margin-right: 200px;        
+}
+
+.cart {
+    margin: auto;
+    margin-top: 40px;
+}
+
+/* ============================================ */
+/*              ---  Caption ---                */
+/* ============================================ */
+.caption {
+    justify-content: flex-start;
+    height: 50px;
+    width: 80%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.caption h3,
+.total-container h3 {
+    font-size: 150%;
+}
+
+.caption-Arti {
+    width: 25%;
+}
+
+.caption-Indi {
+    width: 32%;
+}
+
+.caption-Prix {
+    width: 15%;
+}
+
+/* ============================================ */
+/*          ---  List Container ---             */
+/* ============================================ */
+.list-container {
+    width: 90%;
+    margin: 0;
+    padding: 0;
+    
+    /* background-color: yellowgreen; */
+}
+
+.list-container li {
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-top: solid black 2px;
+}
+
+/*  ---  Picture  ---  */
+.list-container a {
+    margin: 20px;
+    height: 200px;
+    width: 200px;
+}
+
+.list-container figure,
+.list-container img {
+    height: 100%;
+    width: 100%;
+}
+
+.list-container img {
+    object-fit: cover;
+    border-radius: 30px;
+}
+
+.item-caption,
+.item-price,
+.quantity, 
+.remove-btn {
+    margin: auto;
+}
+
+/*  ---  Caption  ---  */
+.item-caption {
+    align-content: flex-start;
+    height: auto;
+    width: 25%;
+
+    /* background-color: orange; */
+}
+
+.item-caption h3,
+.item-caption p {
+    width: 100%;
+    margin-top: 20px;
+    
+    /* background-color: skyblue; */
+}
+
+/*  ---  Quantity  ---  */
+.quantity {
+    width: 80px;
+}
+
+.quantity-input,
+.remove-btn,
+.clean-cart-btn {
+    height: 60px;
+}
+
+.quantity-input {
+    width: 100%;
+    text-align: center;
+}
+
+/*  ---  Remove Button  ---  */
+.remove-btn,
+.clean-cart-btn {
+    width: 150px;
+    background: linear-gradient(to bottom right, pink, red);
+}
+
+.remove-btn:hover,
+.clean-cart-btn:hover,
+.purchase-btn:hover {
+    box-shadow: gray 5px 5px 8px;
+}
+
+/* ============================================ */
+/*          ---  Order Container ---            */
+/* ============================================ */
+.order-container {
+    justify-content: space-between;
+    height: auto;
+    width: 85%;
+    margin: 60px;
+    padding-top: 60px;
+    border-top: solid black 2px;
+}
+
+.clean-cart-btn {
+    width: 200px;
+}
+
+.purchase-btn {
+    height: 100px;
+    width: 350px;
+    background: linear-gradient(to bottom right, greenyellow, rgb(0, 170, 0));
+}
+
+.total-container {
+    justify-content: space-between;
+    width: 170px;
+}

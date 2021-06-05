@@ -1,4 +1,31 @@
 
+/* ============================================ */
+/*               ---  Reset  ---                */
+/* ============================================ */
+body,
+section,
+.main,
+body a,
+body figure,
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* ============================================ */
+/*          ---  Flex Center  ---               */
+/* ============================================ */
+.flexCenter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ============================================ */
+/*            ---  Fonts  ---                   */
+/* ============================================ */
+
 /* Shrikhand Regular */
 @font-face {
     font-family: "Shrikhand-Regular";
@@ -15,16 +42,6 @@
 @font-face {
     font-family: "Roboto-Bold";
     src: url("../fonts/Roboto-Bold.ttf");
-}
-
-body,
-section,
-.main,
-body a,
-body figure,
-h1, h2, h3, h4, h5, h6, p {
-    margin: 0;
-    padding: 0;
 }
 
 h1, h2 {
@@ -49,13 +66,16 @@ p {
     font-size: 100%;
 }
 
-.flexCenter {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+.quantity-input {
+    font-family: "Roboto-Bold";
+    line-height: 100%;
+    font-weight: 400;
+    font-size: 150%;
 }
 
+/* ============================================ */
+/*          ---  Body Specs  ---                */
+/* ============================================ */
 body {
     height: 100%;
 }
@@ -63,6 +83,10 @@ body {
 body a {
     text-decoration: none;
     color: black;
+}
+
+body li {
+    list-style: none;
 }
 
 body,
@@ -76,6 +100,9 @@ footer {
     width: 80%;
 }
 
+/* ============================================ */
+/*          ---  Background Color  ---          */
+/* ============================================ */
 .orinoco,
 .cart,
 .main,
@@ -87,6 +114,9 @@ footer {
     border-radius: 30px;
 }
 
+/* ============================================ */
+/*          ---  Figure / Price   ---           */
+/* ============================================ */
 .item-price {
     font-size: 160%;
     text-align: center;
@@ -107,6 +137,26 @@ footer {
 } 
 
 /* ============================================ */
+/*          ---  Button Class  ---              */
+/* ============================================ */
+.btn {
+    border: none;
+    width: 100%;
+    background: linear-gradient(to bottom right, pink, rgb(185, 23, 255));
+    border-radius: 20px;
+    
+    font-family: "Roboto-Bold";
+    line-height: 100%;
+    font-weight: 400;
+    font-size: 150%;
+}
+
+.btn,
+.quantity-input {
+    height: 70px;
+}
+
+/* ============================================ */
 /*              ---  Header  --- */
 /* ============================================ */
 header {
@@ -114,14 +164,18 @@ header {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    height: 100px;
+    height: auto;
     margin-top: 50px;
     margin-bottom: 30px;
 }
 
+.orinoco,
+.cart {
+    height: 100px;
+}
+
 .orinoco {
     position: relative;
-    height: 100%;
     width: 500px;
 }
 
@@ -146,7 +200,6 @@ h1 {
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
-    height: 100%;
     width: 290px;
 }
 
