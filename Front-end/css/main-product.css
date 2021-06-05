@@ -1,0 +1,92 @@
+/* ============================================ */
+/*         ---  Main Section Page 2 --- */
+/* ============================================ */
+.top-container {
+    justify-content: space-between;
+    width: 100%;
+    margin: 70px;
+}
+
+.main figure,
+.main img {
+    border-radius: 20px;
+}
+
+.main figure {
+    height: 400px;
+    width: 40%;
+}
+
+.main img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.item-price {
+    width: 40%;
+}
+
+.item-description {
+    width: 80%;
+    margin: 70px;
+}
+
+/* ============================================ */
+/*         ---  Dropdown Custom Menu --- */
+/* ============================================ */
+.custom-dropdown {
+    position: relative;
+    height: auto;
+    margin-top: 10px;
+}
+
+.custom-btn {
+    height: 70px;
+    width: 100%;
+    border: none;
+    background: linear-gradient(to bottom right, pink, rgb(185, 23, 255));
+    border-radius: 20px;
+
+    font-family: "Roboto-Bold";
+    line-height: 100%;
+    font-weight: 400;
+    font-size: 150%;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    height: auto;
+    padding-top: 4px;
+
+    font-family: "Raleway-Medium";
+    line-height: 100%;
+    font-weight: 100;
+    font-size: 130%;
+    background: linear-gradient(to bottom right, dodgerblue, black);
+    border-radius: 0 0 20px 20px;
+}
+
+.dropdown-content a {
+    justify-content: flex-start;
+    margin: 4px;
+    margin-top: 0;
+    padding-left: 70px;
+    height: 60px;
+    width: 100%;
+    background-color: white;
+    border-radius: 16px;
+}
+
+.custom-dropdown:hover .custom-btn {
+    border-radius: 20px 20px 0 0;
+}
+
+.custom-dropdown:hover .dropdown-content {
+    display: flex;
+}
+
+.dropdown-content a:hover {
+    background-color: rgb(173, 224, 255);
+}

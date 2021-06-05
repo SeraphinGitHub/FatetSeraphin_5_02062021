@@ -1,10 +1,4 @@
 
-body,
-section {
-    margin: 0;
-    padding: 0;
-}
-
 /* Shrikhand Regular */
 @font-face {
     font-family: "Shrikhand-Regular";
@@ -23,9 +17,17 @@ section {
     src: url("../fonts/Roboto-Bold.ttf");
 }
 
+body,
+section,
+.main,
+body a,
+body figure,
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+}
+
 h1, h2 {
-    margin: 0px;
-    padding: 0px;
     font-family: "Shrikhand-Regular";
     line-height: 100%;
     font-weight: 400;
@@ -34,8 +36,6 @@ h1, h2 {
 }
 
 h3, h4, h5, h6 {
-    margin: 0px;
-    padding: 0px;
     font-family: "Roboto-Bold";
     line-height: 100%;
     font-weight: 600;
@@ -43,8 +43,6 @@ h3, h4, h5, h6 {
 }
 
 p {
-    margin: 0px;
-    padding: 0px;
     font-family: "Raleway-Medium";
     line-height: 100%;
     font-weight: 400;
@@ -60,6 +58,11 @@ p {
 
 body {
     height: 100%;
+}
+
+body a {
+    text-decoration: none;
+    color: black;
 }
 
 body,
@@ -82,6 +85,20 @@ footer {
 
 .border-radius {
     border-radius: 30px;
+}
+
+.item-price {
+    font-size: 160%;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.item-description {
+    font-size: 130%;
+}
+
+.main img {
+    box-shadow: gray 5px 5px 10px;
 }
 
 /* ============================================ */
