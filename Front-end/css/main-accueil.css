@@ -3,6 +3,8 @@
 /* ============================================ */
 .main {
     list-style: none;
+    padding-left: 20px;
+    padding-right: 20px;
     padding-bottom: 50px;
 }
 
@@ -13,21 +15,23 @@
     border-top: solid black 2px;
 }
 
+.anchor,
+.anchor figure {
+    height: 250px;
+}
+
 .anchor {
     justify-content: space-between;
     margin-top: 50px;
     margin-left: -40px;
     margin-right: -40px;
-    height: auto;
     padding: 30px;
-    padding-right: 100px;
     border-radius: 25px;
 }
 
 /* ======  Figure  ====== */
 .anchor figure {
-    height: 250px;
-    width: 25%;
+    width: 300px;
 }
 
 /* ======  Img  ====== */
@@ -38,12 +42,20 @@
     border-radius: 15px;
 }
 
-.item-price {
-    width: 25%;
+.item-caption {
+    align-content: flex-start;
+    height: auto;
+    width: 23%;
+    padding-right: 13%;
+
+    /* background-color: slateblue; */
 }
 
-.item-description {
-    width: 50%;
+.item-caption h3,
+.item-caption p {
+    width: 100%;
+    font-size: 130%;
+    margin-top: 30px;
 }
 
 .anchor:hover {
