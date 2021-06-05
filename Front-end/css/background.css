@@ -54,7 +54,7 @@ p {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-} 
+}
 
 body {
     height: 100%;
@@ -100,6 +100,11 @@ footer {
 .main img {
     box-shadow: gray 5px 5px 10px;
 }
+
+:hover {
+    animation-duration: 0.4s;
+    transition-duration: 0.4s;
+} 
 
 /* ============================================ */
 /*              ---  Header  --- */

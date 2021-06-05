@@ -1,8 +1,27 @@
+
+.btn {
+    border: none;
+    width: 100%;
+    background: linear-gradient(to bottom right, pink, rgb(185, 23, 255));
+    border-radius: 20px;
+    
+    font-family: "Roboto-Bold";
+    line-height: 100%;
+    font-weight: 400;
+    font-size: 150%;
+}
+
+.btn,
+.quantity-input {
+    height: 70px;
+}
+
 /* ============================================ */
 /*         ---  Main Section Page 2 --- */
 /* ============================================ */
 .top-container {
     justify-content: space-between;
+    height: 400px;
     width: 100%;
     margin: 70px;
 }
@@ -23,15 +42,6 @@
     width: 100%;
 }
 
-.item-price {
-    width: 40%;
-}
-
-.item-description {
-    width: 80%;
-    margin: 70px;
-}
-
 /* ============================================ */
 /*         ---  Dropdown Custom Menu --- */
 /* ============================================ */
@@ -41,28 +51,24 @@
     margin-top: 10px;
 }
 
-.custom-btn {
-    height: 70px;
+.dropdown-flow {
+    position: relative;
+    height: 0;
     width: 100%;
-    border: none;
-    background: linear-gradient(to bottom right, pink, rgb(185, 23, 255));
-    border-radius: 20px;
-
-    font-family: "Roboto-Bold";
-    line-height: 100%;
-    font-weight: 400;
-    font-size: 150%;
+    overflow: hidden;
 }
 
 .dropdown-content {
-    display: none;
     position: absolute;
     height: auto;
+    width: 100%;
     padding-top: 4px;
-
+    transform: translateY(-100%);
+    transition-duration: 0.5s;
+    
     font-family: "Raleway-Medium";
     line-height: 100%;
-    font-weight: 100;
+    font-weight: 400;
     font-size: 130%;
     background: linear-gradient(to bottom right, dodgerblue, black);
     border-radius: 0 0 20px 20px;
@@ -84,9 +90,67 @@
 }
 
 .custom-dropdown:hover .dropdown-content {
-    display: flex;
+    transform: translateY(0%);
+}
+
+.custom-dropdown:hover .dropdown-flow {
+    height: 260px;
 }
 
 .dropdown-content a:hover {
-    background-color: rgb(173, 224, 255);
+    background-color: rgb(255, 208, 122);
+}
+
+/* ============================================ */
+/*   ---  Price / Quantity / Add Button --- */
+/* ============================================ */
+.right-container {
+    justify-content: space-between;
+    height: 100%;
+    width: 50%;
+
+    /* background-color: orange; */
+}
+
+.item-price {
+    margin-top: 50px;
+    width: 100%;
+    /* background-color: skyblue; */
+}
+
+.quantity,
+.add-btn {
+    margin: 20px;
+}
+
+.quantity {
+    justify-content: space-between;
+    width: 40%;
+    /* background-color: yellowgreen; */
+}
+
+.quantity-label {
+    width: 65%;
+}
+
+.quantity-input {
+    width: 27%;
+    text-align: center;
+
+    font-family: "Raleway-Medium";
+    line-height: 100%;
+    font-weight: 600;
+    font-size: 150%;
+}
+
+.add-btn {
+    width: 45%;
+}
+
+/* ============================================ */
+/*           ---  Description --- */
+/* ============================================ */
+.item-description {
+    width: 80%;
+    margin: 70px;
 }

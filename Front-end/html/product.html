@@ -39,18 +39,30 @@
                 <img src="../images/teddy_1.jpg" alt="ours en peluche faits à la main">
                 
                 <div class="custom-dropdown">
-                    <button class="custom-btn">Personaliser</button>
+                    <button class="btn custom-btn" type="button">Personaliser</button>
 
-                    <div class="flexCenter dropdown-content">
-                        <a href="" class="flexCenter color-0">Color_0</a>
-                        <a href="" class="flexCenter color-1">Color_1</a>
-                        <a href="" class="flexCenter color-2">Color_2</a>
-                        <a href="" class="flexCenter color-3">Color_3</a>
+                    <div class="dropdown-flow">
+                        <div class="flexCenter dropdown-content">
+                            <a href="" class="flexCenter color-0">Color_0</a>
+                            <a href="" class="flexCenter color-1">Color_1</a>
+                            <a href="" class="flexCenter color-2">Color_2</a>
+                            <a href="" class="flexCenter color-3">Color_3</a>
+                        </div>
                     </div>
                 </div>
             </figure>
-    
-            <h3 class="item-price">00€00</h3>
+            
+            <div class="flexCenter right-container">
+                <h3 class="item-price">00€00</h3>
+               
+                <form class="flexCenter quantity" action="" method="GET">
+                    <label class="flexCenter btn quantity-label" for="quant">Quantité</label>
+                    
+                    <input class="quantity-input" type="number" name="quant" id="quant" min="1" max="100" value="1">
+                </form>
+
+                <button class="btn add-btn" type="button">Ajouter au panier</button>
+            </div>
         </div>
 
         <p class="item-description">Description</p>
