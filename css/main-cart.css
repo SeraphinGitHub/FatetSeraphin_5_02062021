@@ -25,8 +25,8 @@ header {
     justify-content: flex-start;
     height: 50px;
     width: 80%;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 .caption h3,
@@ -49,6 +49,12 @@ header {
 /* ============================================ */
 /*          ---  List Container ---             */
 /* ============================================ */
+.flow-cart-list,
+.list-container li {
+    width: 100%;
+    overflow: hidden;
+}
+
 .list-container {
     width: 90%;
     margin: 0;
@@ -57,7 +63,7 @@ header {
     /* background-color: yellowgreen; */
 }
 
-.list-container li {
+.flow-cart-item {
     justify-content: space-between;
     width: 100%;
     padding-top: 15px;
@@ -143,8 +149,9 @@ header {
     justify-content: space-between;
     height: auto;
     width: 85%;
-    margin: 60px;
-    padding-top: 60px;
+    margin-top: 60px;
+    margin-bottom: 110px;
+    padding-top: 110px;
     border-top: solid black 2px;
 }
 

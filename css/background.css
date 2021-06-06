@@ -89,6 +89,10 @@ body li {
     list-style: none;
 }
 
+body button {
+    cursor: pointer;
+}
+
 body,
 .logo-orinoco {
     background: linear-gradient(to bottom right, rgb(255, 137, 27), rgb(153, 0, 255)) no-repeat;
@@ -132,8 +136,7 @@ footer {
 }
 
 :hover {
-    animation-duration: 0.4s;
-    transition-duration: 0.4s;
+    transition-duration: 0.15s;
 } 
 
 /* ============================================ */
@@ -154,6 +157,12 @@ footer {
 .btn,
 .quantity-input {
     height: 70px;
+}
+
+.btn:active {
+    border-top: solid grey 5px;
+    border-left: solid grey 5px;
+    transition-duration: 0s;
 }
 
 /* ============================================ */
