@@ -141,6 +141,10 @@
     width: 65%;
 }
 
+.quantity-label:active {
+    border: none;
+}
+
 .quantity-input {
     width: 27%;
     text-align: center;

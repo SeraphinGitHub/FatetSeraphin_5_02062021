@@ -1,31 +1,36 @@
 
 "use strict"
 
-//  =====  Control "Retirer" button (Cart Page) =====
+// ======================================================================
+// Control "Retirer" button (Cart Page)
+// ======================================================================
 const removeBtn = document.getElementsByClassName("remove-btn");
 const removeTransition = "transform: translateY(-100%); transition-duration: 0.3s";
 
 for (let i = 0; i < removeBtn.length; i++) {
+    const button = removeBtn[i];
     
-    removeBtn[i].addEventListener("click", function(event) {
+    button.addEventListener("click", (event) => {
         event.target.parentElement.style = removeTransition;
         
-        setTimeout(function() {
+        setTimeout(() => {
             event.target.parentElement.remove()
         }, 500);
     }); 
 }
 
-
-//  =====  Control "Vider le panier" button (Cart Page) =====
+// ======================================================================
+// Control "Vider le panier" button (Cart Page)
+// ======================================================================
 const cleanBtn = document.querySelector(".clean-cart-btn");
+const listContainer = document.querySelector(".list-container");
 
-cleanBtn.addEventListener("click", function() {
-    if (document.querySelector(".list-container")) {
-        document.querySelector(".list-container").style = removeTransition;
+cleanBtn.addEventListener("click", () => {
+    if (listContainer) {
+        listContainer.style = removeTransition;
 
-        setTimeout(function() {
-            document.querySelector(".list-container").remove()
+        setTimeout(() => {
+            listContainer.remove()
         }, 500);
     };
 });
