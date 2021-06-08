@@ -2,7 +2,7 @@
 "use strict"
 
 // ======================================================================
-// Create "Product page" html code (Product Pages)
+// Create "Item product page" html code (Product Pages)
 // ======================================================================
 const sectionContainer = document.querySelector(".main");
 
@@ -50,11 +50,11 @@ const renderProductPage = (data) => {
 }
 
 // ======================================================================
-// Promises "Get data from API" + Create "List product" (Home Page)
+// Get data from API + Render "Item properties" (Home Page)
 // ======================================================================
 
 // *************************
-let itemArrayId = 0;
+let itemArrayId = 1;
 // *************************
 
 const getProductData = (arrayId) => {
@@ -67,7 +67,7 @@ getProductData(itemArrayId);
 
 
 // ======================================================================
-// Create "Colors dropdown" html code (Product Pages)
+// Create & Render "Colors dropdown" html code (Product Pages)
 // ======================================================================
 setTimeout (() => {
     const dropdownContent = document.querySelector(".dropdown-content");
@@ -101,7 +101,7 @@ setTimeout (() => {
 
 
 // ======================================================================
-// Control "Personaliser" button (Product Page)
+// Control button "Personaliser"  (Product Page)
 // ======================================================================
 setTimeout (() => {
     const customBtn = document.querySelector(".custom-btn");

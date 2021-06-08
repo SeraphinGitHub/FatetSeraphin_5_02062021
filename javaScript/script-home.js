@@ -2,14 +2,14 @@
 "use strict"
 
 // ======================================================================
-// Create "Product list element" html code (Home Pages)
+// Create "Items list elements" html code (Home Pages)
 // ======================================================================
 const ulContainer = document.querySelector(".main");
 
 const renderProductList = (data) => {
     const priceNumbered = Number(data.price)/100;
     const priceFormated = new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(priceNumbered);
-    // href="./html/product.html"
+
     const productListHtml = `
         <li>
             <a class="flexCenter anchor" id="${data._id}" onClick="returnItemId(this.id)" href="./html/product.html">
@@ -32,7 +32,7 @@ const renderProductList = (data) => {
 
 
 // ======================================================================
-// Promises "Get data from API" + Create "List product" (Home Page)
+// Get data from API + Render "Items list elements" (Home Page)
 // ======================================================================
 const getProductData = () => {
     fetch("http://localhost:3000/api/teddies")
@@ -56,7 +56,7 @@ getProductData();
 
 
 // ======================================================================
-// Link to "Product page" on Click (Home Page)
+// Link to "Item product page" on Click (Home Page)
 // ======================================================================
 let itemArrayId;
 
@@ -72,7 +72,7 @@ const returnItemId = (clickedItem) => {
             // *******************************
 
             for (let i = 0; i < 5; i++) {
-                
+
                 if(itemId === data[i]._id) {
                     itemArrayId = i;
                     console.log(itemArrayId);

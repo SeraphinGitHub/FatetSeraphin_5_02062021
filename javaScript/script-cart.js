@@ -2,7 +2,7 @@
 "use strict"
 
 // ======================================================================
-// Control "Retirer" button (Cart Page)
+// Control button "Retirer" (Cart Page)
 // ======================================================================
 const removeBtn = document.getElementsByClassName("remove-btn");
 const removeTransition = "transform: translateY(-100%); transition-duration: 0.3s";
@@ -19,8 +19,9 @@ for (let i = 0; i < removeBtn.length; i++) {
     }); 
 }
 
+
 // ======================================================================
-// Control "Vider le panier" button (Cart Page)
+// Control button "Vider le panier" (Cart Page)
 // ======================================================================
 const cleanBtn = document.querySelector(".clean-cart-btn");
 const listContainer = document.querySelector(".list-container");
