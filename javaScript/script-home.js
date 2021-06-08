@@ -9,10 +9,10 @@ const ulContainer = document.querySelector(".main");
 const renderProductList = (data) => {
     const priceNumbered = Number(data.price)/100;
     const priceFormated = new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(priceNumbered);
-
+    // href="./html/product.html"
     const productListHtml = `
         <li>
-            <a class="flexCenter anchor" id="${data.id}" href="./html/product.html">
+            <a class="flexCenter anchor" id="${data._id}" onClick="returnItemId(this.id)" href="./html/product.html">
                 <figure>
                     <img src="${data.imageUrl}" alt="ours en peluche faits à la main">
                 </figure>
@@ -30,6 +30,7 @@ const renderProductList = (data) => {
     ulContainer.insertAdjacentHTML("beforeend", productListHtml);
 }
 
+
 // ======================================================================
 // Promises "Get data from API" + Create "List product" (Home Page)
 // ======================================================================
@@ -37,8 +38,13 @@ const getProductData = () => {
     fetch("http://localhost:3000/api/teddies")
     .then((response) => response.json())
     .then((data) => {
+
+        // *******************************
         let dataArray = Object.keys(data);
-        console.log("dataArray is : " + typeof(dataArray));
+        console.log("Type of dataArray : " + typeof(dataArray));
+        // *******************************
+
+        // dataArray.lenght
 
         for (let i = 0; i < 5; i++) {
             renderProductList(data[i]);
@@ -47,3 +53,33 @@ const getProductData = () => {
 }
 
 getProductData();
+
+
+// ======================================================================
+// Link to "Product page" on Click (Home Page)
+// ======================================================================
+let itemArrayId;
+
+const returnItemId = (clickedItem) => {
+    let itemId = clickedItem;
+
+    const compareWithApiId = () => {
+        fetch("http://localhost:3000/api/teddies")
+        .then((response) => response.json())
+        .then((data) => {
+            
+            // *******************************
+            // *******************************
+
+            for (let i = 0; i < 5; i++) {
+                
+                if(itemId === data[i]._id) {
+                    itemArrayId = i;
+                    console.log(itemArrayId);
+                }
+            }
+        });
+    }
+
+    compareWithApiId();
+}
