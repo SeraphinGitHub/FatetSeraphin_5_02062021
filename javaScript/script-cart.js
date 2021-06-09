@@ -35,3 +35,31 @@ cleanBtn.addEventListener("click", () => {
         }, 500);
     };
 });
+
+
+// ======================================================================
+// Control button "Passer commande" (Cart Page)
+// ======================================================================
+const purchaseBtn = document.querySelector(".purchase-btn");
+
+purchaseBtn.addEventListener("click", () => {
+    window.location = "./confirmation.html";
+});
+
+
+// ======================================================================
+//  Create New Promise To POST (Model)
+// ======================================================================
+// function postData(url = '', data = {}) {
+    
+    //     const response = await fetch(url, {
+        //       method: 'POST',
+        //       body: JSON.stringify(data)
+        //     });
+        //     return response.json();
+// }
+  
+// postData('https://example.com/answer', { answer: 42 })
+//     .then(data => {
+//       console.log(data);
+// });

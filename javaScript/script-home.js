@@ -2,17 +2,32 @@
 "use strict"
 
 // ======================================================================
+// Simplify "fetch call function" ==> "GET" Method (All Pages)
+// ======================================================================
+const apiUrl = "http://localhost:3000/api/teddies";
+
+const getDataFromApi = async (url) => {
+    
+    const response = await fetch(url).then((response) => response.json())
+    return response;
+}
+
+
+// ======================================================================
 // Create "Items list elements" html code (Home Pages)
 // ======================================================================
 const ulContainer = document.querySelector(".main");
 
-const renderProductList = (data) => {
+// const killHref = `href="./html/product.html"`
+const killHref = ``
+
+const creatProductList = (data) => {
     const priceNumbered = Number(data.price)/100;
     const priceFormated = new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(priceNumbered);
 
     const productListHtml = `
         <li>
-            <a class="flexCenter anchor" id="${data._id}" onClick="returnItemId(this.id)" href="./html/product.html">
+            <a class="flexCenter anchor" id="${data._id}" onClick="returnItemId(this.id)" ${killHref}>
                 <figure>
                     <img src="${data.imageUrl}" alt="ours en peluche faits à la main">
                 </figure>
@@ -32,54 +47,45 @@ const renderProductList = (data) => {
 
 
 // ======================================================================
-// Get data from API + Render "Items list elements" (Home Page)
+// Get data from API + Render "List" (Home Page)
 // ======================================================================
-const getProductData = () => {
-    fetch("http://localhost:3000/api/teddies")
-    .then((response) => response.json())
-    .then((data) => {
 
-        // *******************************
-        let dataArray = Object.keys(data);
-        console.log("Type of dataArray : " + typeof(dataArray));
-        // *******************************
+const renderProductList = async () => {
 
-        // dataArray.lenght
-
-        for (let i = 0; i < 5; i++) {
-            renderProductList(data[i]);
+    getDataFromApi(apiUrl).then((data) => {
+        const arrayLength = data.length;
+    
+        for (let i = 0; i < arrayLength; i++) {
+            creatProductList(data[i]);
         }
     });
 }
-
-getProductData();
 
 
 // ======================================================================
 // Link to "Item product page" on Click (Home Page)
 // ======================================================================
-let itemArrayId;
-
 const returnItemId = (clickedItem) => {
-    let itemId = clickedItem;
+    
+    // let params = new URLSearchParams(clickedItem);
+    // console.log(params.toString());
 
-    const compareWithApiId = () => {
-        fetch("http://localhost:3000/api/teddies")
-        .then((response) => response.json())
-        .then((data) => {
-            
-            // *******************************
-            // *******************************
+    // window.location = new URL(`./html/product.html`)
+    window.location = new URL(`./html/product.html?azerty=${clickedItem}`);
 
-            for (let i = 0; i < 5; i++) {
 
-                if(itemId === data[i]._id) {
-                    itemArrayId = i;
-                    console.log(itemArrayId);
-                }
-            }
-        });
-    }
-
-    compareWithApiId();
+    // let itemId = clickedItem;
+    // console.log(itemId);
+    // return itemId;
 }
+
+
+// ======================================================================
+// Final chain promises order  (Product Page)
+// ======================================================================
+const init = () => {
+    renderProductList()
+    .then(() => {});
+}
+
+init();

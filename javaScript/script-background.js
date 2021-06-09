@@ -2,11 +2,11 @@
 "use strict"
 
 // ======================================================================
-// Recycle "Header" html code (All Pages)
+// Render & Recycle "Header" html code (All Pages)
 // ======================================================================
 const headerContainer = document.querySelector("header");
 
-const renderHeader = (home, cart) => {
+const createHeader = (home, cart) => {
 
     const headerHtml = `
         <a class="flexCenter border-radius orinoco" href="${home}">
@@ -41,15 +41,15 @@ const cartOther = "./cart.html";
 
 const checkLinks = (homeIndex, cartIndex, homeOther, cartOther) => {
     (window.location.pathname === homeIndex)
-    ? renderHeader(homeIndex, cartIndex)
-    : renderHeader(homeOther, cartOther);
+    ? createHeader(homeIndex, cartIndex)
+    : createHeader(homeOther, cartOther);
 }
 
 checkLinks(homeIndex, cartIndex, homeOther, cartOther);
 
 
 // ======================================================================
-// Recycle "Footer" html code (All Pages)
+// Render & Recycle "Footer" html code (All Pages)
 // ======================================================================
 const footerContainer = document.querySelector("footer");
 
