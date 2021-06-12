@@ -133,7 +133,6 @@ header {
 .remove-btn,
 .clean-cart-btn {
     width: 150px;
-    background: linear-gradient(to bottom right, pink, red);
 }
 
 .remove-btn:hover,
@@ -162,7 +161,6 @@ header {
 .purchase-btn {
     height: 100px;
     width: 350px;
-    background: linear-gradient(to bottom right, greenyellow, rgb(0, 170, 0));
 }
 
 .total-container {

@@ -62,7 +62,6 @@
     line-height: 100%;
     font-weight: 400;
     font-size: 130%;
-    background: linear-gradient(to bottom right, dodgerblue, black);
     border-radius: 0 0 20px 20px;
 }
 
@@ -95,25 +94,22 @@
     align-content: space-between;
     height: 480px;
     margin-right: 30px;
-    
-    /* background-color: orange; */
 }
+
 
 /*  ---  Price --- */
 .item-price {
     text-align: left;
     width: 100%;
     margin-top: 20px;
-    /* background-color: skyblue; */
 }
+
 
 /*  ---  Description --- */
 .item-caption {
     align-content: flex-start;
     height: auto;
     width: 100%;
-
-    /* background-color: tomato; */
 }
 
 .item-caption h3,
@@ -123,18 +119,19 @@
     margin-top: 30px;
 }
 
-/*  ---  Quantity / Add Button --- */
+
+/*  ---  Quantity  --- */
 .qnt-add-tag {
     justify-content: space-between;
+    align-items: flex-end;
     width: 100%;
-
-    /* background-color: skyblue; */
+    margin-top: 20px;
+    margin-bottom: -5px;
 }
 
 .quantity {
     justify-content: space-between;
-    width: 40%;
-    /* background-color: yellowgreen; */
+    width: 100%;
 }
 
 .quantity-label {
@@ -150,11 +147,39 @@
     text-align: center;
 }
 
-.add-btn {
-    width: 45%;
+
+/*  ---  + / -  buttons  --- */
+.plus-minus-btn {
+    width: 48%;
+}
+
+.quantity-plus-btn,
+.quantity-minus-btn {
+    width: 35%;
+    margin: auto;
+    margin-bottom: 20px;
+    color: white;
+    text-shadow: black 3px 3px 3px;
+}
+
+.quantity-plus-btn {
+    font-size: 300%;
+}
+
+.quantity-minus-btn {
+    font-size: 400%;
+}
+
+
+/*  ---  Cart Add Button --- */
+.cart-add-btn {
+    width: 48%;
+    margin-bottom: 3px;
 }
 
 .quantity-label:hover,
-.add-btn:hover {
+.cart-add-btn:hover,
+.quantity-plus-btn:hover,
+.quantity-minus-btn:hover {
     box-shadow: gray 5px 5px 8px;
 }

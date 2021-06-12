@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../css/all.min.css">
+    <link rel="stylesheet" href="../css/colors.css">
     <link rel="stylesheet" href="../css/background.css">
     <link rel="stylesheet" href="../css/main-product.css">
     
@@ -32,7 +33,7 @@
             </div>
 
             <figure>
-                <img src="../images/teddy_1.jpg" alt="ours en peluche faits à la main">
+                <img src="" alt="ours en peluche faits à la main">
             </figure>
         </div>
             
@@ -45,14 +46,20 @@
             </div>
             
             <div class="flexCenter qnt-add-tag">
-                <form class="flexCenter quantity" action="" method="GET">
-                    <label class="flexCenter btn quantity-label" for="quant">Quantité</label>
-                        
-                    <input class="quantity-input" type="number" name="quant" id="quant" min="1" max="100" value="1">
-                </form>
+                <div class="flexCenter plus-minus-btn">
+                    <button class="btn quantity-plus-btn" type="button"> + </button>
+                    <button class="btn quantity-minus-btn" type="button"> - </button>
+                    
+                    <form class="flexCenter quantity" action="" method="GET">
+                        <label class="flexCenter btn quantity-label" for="quant">Quantité</label>
+                            
+                        <input class="quantity-input" type="number" name="quant" id="quant" min="1" max="10" value="1">
+                    </form>
+                </div>
 
-                <button class="btn add-btn" type="submit">Ajouter au panier</button>
+                <button class="btn cart-add-btn" type="submit">Ajouter au panier</button>
             </div>
+            
         </div>
     </section>
 

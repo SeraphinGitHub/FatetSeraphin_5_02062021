@@ -16,18 +16,15 @@ const getDataFromApi = async (url) => {
 // ======================================================================
 // Create "Items list elements" html code (Home Pages)
 // ======================================================================
-const ulContainer = document.querySelector(".main");
+const creatProductList = async (data) => {
 
-// const killHref = `href="./html/product.html"`
-const killHref = ``
-
-const creatProductList = (data) => {
+    const ulContainer = document.querySelector(".main");
     const priceNumbered = Number(data.price)/100;
     const priceFormated = new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(priceNumbered);
 
     const productListHtml = `
         <li>
-            <a class="flexCenter anchor" id="${data._id}" onClick="returnItemId(this.id)" ${killHref}>
+            <a class="flexCenter anchor" id="${data._id}" href="./html/product.html?_id=${data._id}">
                 <figure>
                     <img src="${data.imageUrl}" alt="ours en peluche faits à la main">
                 </figure>
@@ -49,7 +46,6 @@ const creatProductList = (data) => {
 // ======================================================================
 // Get data from API + Render "List" (Home Page)
 // ======================================================================
-
 const renderProductList = async () => {
 
     getDataFromApi(apiUrl).then((data) => {
@@ -63,29 +59,10 @@ const renderProductList = async () => {
 
 
 // ======================================================================
-// Link to "Item product page" on Click (Home Page)
-// ======================================================================
-const returnItemId = (clickedItem) => {
-    
-    // let params = new URLSearchParams(clickedItem);
-    // console.log(params.toString());
-
-    // window.location = new URL(`./html/product.html`)
-    window.location = new URL(`./html/product.html?azerty=${clickedItem}`);
-
-
-    // let itemId = clickedItem;
-    // console.log(itemId);
-    // return itemId;
-}
-
-
-// ======================================================================
 // Final chain promises order  (Product Page)
 // ======================================================================
-const init = () => {
-    renderProductList()
-    .then(() => {});
+const initHomePage = () => {
+    renderProductList();
 }
 
-init();
+initHomePage();

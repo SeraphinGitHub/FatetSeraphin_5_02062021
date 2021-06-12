@@ -44,8 +44,6 @@
     height: auto;
     width: 23%;
     padding-right: 13%;
-
-    /* background-color: slateblue; */
 }
 
 .item-caption h3,
@@ -56,6 +54,5 @@
 }
 
 .anchor:hover {
-    background-color: lightskyblue;
     box-shadow: gray 10px 10px 10px;
 }

@@ -1,0 +1,48 @@
+
+/* ---  Background Color  --- */
+.orinoco,
+.cart,
+.main,
+footer {
+    background-color: white;
+}
+
+body,
+.logo-orinoco {
+    background: linear-gradient(to bottom right, rgb(255, 137, 27), rgb(153, 0, 255)) no-repeat;
+}
+
+/* ---  Button Class Color  --- */
+.btn {
+    background: linear-gradient(to bottom right, pink, rgb(185, 23, 255));
+}
+
+/* ---  Pastille item Panier Color  --- */
+.cart-items {
+    background-color: rgb(255, 130, 0);
+}
+
+/* ---  Dropdown Background Color  --- */
+.dropdown-content {
+    background: linear-gradient(to bottom right, dodgerblue, black);
+}
+
+/* ---  Red buttons  --- */
+.remove-btn,
+.clean-cart-btn,
+.quantity-minus-btn {
+    background: linear-gradient(to bottom right, pink, red);
+}
+
+/* ---  Green buttons  --- */
+.purchase-btn,
+.quantity-plus-btn {
+    background: linear-gradient(to bottom right, greenyellow, rgb(0, 170, 0));
+}
+
+/* ---  Anchor on :Hover  --- */
+.orinoco:hover,
+.cart:hover,
+.anchor:hover {
+    background-color: lightskyblue;
+}

@@ -93,25 +93,10 @@ body button {
     cursor: pointer;
 }
 
-body,
-.logo-orinoco {
-    background: linear-gradient(to bottom right, rgb(255, 137, 27), rgb(153, 0, 255)) no-repeat;
-}
-
 header,
 .main,
 footer {
     width: 80%;
-}
-
-/* ============================================ */
-/*          ---  Background Color  ---          */
-/* ============================================ */
-.orinoco,
-.cart,
-.main,
-footer {
-    background-color: white;
 }
 
 .border-radius {
@@ -145,7 +130,6 @@ footer {
 .btn {
     border: none;
     width: 100%;
-    background: linear-gradient(to bottom right, pink, rgb(185, 23, 255));
     border-radius: 20px;
     
     font-family: "Roboto-Bold";
@@ -193,8 +177,8 @@ header {
     left: 50px;
     margin: 0;
     font-size: 400%;
-    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
 }
 
 h1 {
@@ -233,7 +217,6 @@ h1 {
     position: absolute;
     height: 65px;
     width: 65px;
-    background-color: rgb(255, 130, 0);
     top: -15px;
     right: -15px;
     border-radius: 50%;
@@ -246,7 +229,6 @@ h1 {
 
 .orinoco:hover,
 .cart:hover {
-    background-color: lightskyblue;
     box-shadow: black 5px 5px 5px;
 }
 

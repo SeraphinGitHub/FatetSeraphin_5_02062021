@@ -4,47 +4,56 @@
 // ======================================================================
 // Control button "Retirer" (Cart Page)
 // ======================================================================
-const removeBtn = document.getElementsByClassName("remove-btn");
-const removeTransition = "transform: translateY(-100%); transition-duration: 0.3s";
+const onClick_Remove = async () => {
 
-for (let i = 0; i < removeBtn.length; i++) {
-    const button = removeBtn[i];
-    
-    button.addEventListener("click", (event) => {
-        event.target.parentElement.style = removeTransition;
+    const removeBtn = document.getElementsByClassName("remove-btn");
+    const removeTransition = "transform: translateY(-100%); transition-duration: 0.3s";
+
+    for (let i = 0; i < removeBtn.length; i++) {
+        const button = removeBtn[i];
         
-        setTimeout(() => {
-            event.target.parentElement.remove()
-        }, 500);
-    }); 
+        button.addEventListener("click", (event) => {
+            event.target.parentElement.style = removeTransition;
+            
+            setTimeout(() => {
+                event.target.parentElement.remove()
+            }, 400);
+        }); 
+    }
 }
 
 
 // ======================================================================
 // Control button "Vider le panier" (Cart Page)
 // ======================================================================
-const cleanBtn = document.querySelector(".clean-cart-btn");
-const listContainer = document.querySelector(".list-container");
+const onClick_EmptyCart = async () => {
 
-cleanBtn.addEventListener("click", () => {
-    if (listContainer) {
-        listContainer.style = removeTransition;
+    const cleanBtn = document.querySelector(".clean-cart-btn");
+    const listContainer = document.querySelector(".list-container");
+    const emptyTransition = "transform: translateY(-100%); transition-duration: 0.5s";
 
-        setTimeout(() => {
-            listContainer.remove()
-        }, 500);
-    };
-});
-
+    cleanBtn.addEventListener("click", () => {
+        if (listContainer) {
+            listContainer.style = emptyTransition;
+            
+            setTimeout(() => {
+                listContainer.remove()
+            }, 500);
+        };
+    });
+}
 
 // ======================================================================
 // Control button "Passer commande" (Cart Page)
 // ======================================================================
-const purchaseBtn = document.querySelector(".purchase-btn");
+const onClick_Purchase = async () => {
+    
+    const purchaseBtn = document.querySelector(".purchase-btn");
 
-purchaseBtn.addEventListener("click", () => {
-    window.location = "./confirmation.html";
-});
+    purchaseBtn.addEventListener("click", () => {
+        window.location = "./confirmation.html";
+    });
+}
 
 
 // ======================================================================
@@ -63,3 +72,16 @@ purchaseBtn.addEventListener("click", () => {
 //     .then(data => {
 //       console.log(data);
 // });
+
+
+// ======================================================================
+// Final chain promises order  (Product Page)
+// ======================================================================
+const initCartPage = () => {
+    onClick_Remove();
+    onClick_EmptyCart();
+    onClick_Purchase();
+}
+
+initCartPage();
+
