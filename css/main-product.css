@@ -148,29 +148,6 @@
 }
 
 
-/*  ---  + / -  buttons  --- */
-.plus-minus-btn {
-    width: 48%;
-}
-
-.quantity-plus-btn,
-.quantity-minus-btn {
-    width: 35%;
-    margin: auto;
-    margin-bottom: 20px;
-    color: white;
-    text-shadow: black 3px 3px 3px;
-}
-
-.quantity-plus-btn {
-    font-size: 300%;
-}
-
-.quantity-minus-btn {
-    font-size: 400%;
-}
-
-
 /*  ---  Cart Add Button --- */
 .cart-add-btn {
     width: 48%;

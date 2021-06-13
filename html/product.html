@@ -14,6 +14,7 @@
     
     <script src="../javaScript/script-background.js" async></script>
     <script src="../javaScript/script-product.js" async></script>
+    <script src="../javaScript/script-quantityBtn.js" defer></script>
 </head>
 
 <body class="flexCenter">
@@ -21,6 +22,7 @@
     </header>
 
     <section class="flexCenter border-radius main">
+
         <div class="flexCenter left-container">
             <div class="custom-dropdown">
                 <button class="btn custom-btn" type="button">Personaliser</button>
@@ -47,20 +49,20 @@
             
             <div class="flexCenter qnt-add-tag">
                 <div class="flexCenter plus-minus-btn">
-                    <button class="btn quantity-plus-btn" type="button"> + </button>
                     <button class="btn quantity-minus-btn" type="button"> - </button>
+                    <button class="btn quantity-plus-btn" type="button"> + </button>
                     
                     <form class="flexCenter quantity" action="" method="GET">
-                        <label class="flexCenter btn quantity-label" for="quant">Quantité</label>
+                        <label class="flexCenter btn quantity-label" for="quantity">Quantité</label>
                             
-                        <input class="quantity-input" type="number" name="quant" id="quant" min="1" max="10" value="1">
+                        <input class="quantity-input" type="number" name="quantity" id="quantity" min="1" max="10" value="1">
                     </form>
                 </div>
 
                 <button class="btn cart-add-btn" type="submit">Ajouter au panier</button>
             </div>
-            
         </div>
+
     </section>
 
     <footer class="border-radius">

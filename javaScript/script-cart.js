@@ -2,6 +2,18 @@
 "use strict"
 
 // ======================================================================
+// Simplify "fetch call function" ==> "GET" Method (All Pages)
+// ======================================================================
+const apiUrl = "http://localhost:3000/api/teddies";
+
+const getDataFromApi = async (url) => {
+    
+    const response = await fetch(url).then((response) => response.json())
+    return response;
+}
+
+
+// ======================================================================
 // Control button "Retirer" (Cart Page)
 // ======================================================================
 const onClick_Remove = async () => {
@@ -35,6 +47,7 @@ const onClick_EmptyCart = async () => {
     cleanBtn.addEventListener("click", () => {
         if (listContainer) {
             listContainer.style = emptyTransition;
+            localStorage.clear();
             
             setTimeout(() => {
                 listContainer.remove()
@@ -52,6 +65,76 @@ const onClick_Purchase = async () => {
 
     purchaseBtn.addEventListener("click", () => {
         window.location = "./confirmation.html";
+    });
+}
+
+
+// ======================================================================
+//  Create "Items Cart-list elements" html code (Cart Pages)
+// ======================================================================
+const creatCartItem = async (data) => {
+
+    let itemData_cart = new ItemData(
+        data.colors,
+        data._id,
+        data.name,
+        data.price, 
+        data.imageUrl,
+        data.description,
+        new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(Number (data.price)/100)
+    );
+
+    const ulContainer = document.querySelector(".list-container");
+    
+    const itemListHtml = `
+        <li class="flexCenter">
+            <div class="flexCenter flow-cart-item">
+                <a href="./product.html?_id=${data._id}">
+                    <figure>
+                        <img src="${itemData_cart.imageUrl}" alt="ours en peluche faits à la main">
+                    </figure>
+                </a>
+
+                <div class="flexCenter item-caption">
+                    <h3>${itemData_cart.name}</h3>
+                    <p>${itemData_cart.description}</p>
+                </div>
+
+                <h3 class="item-price">${itemData_cart.priceFormated}</h3>
+
+                <form class="flexCenter quantity" action="" method="GET">
+                    <button class="btn quantity-minus-btn" type="button"> - </button>
+                    <button class="btn quantity-plus-btn" type="button"> + </button>
+
+                    <input class="quantity-input" type="number" name="quantity" min="1" max="10" value="${localStorage.getItem(data._id)}">
+                </form>
+
+                <button class="btn remove-btn" type="button">Retirer</button>
+            </div>
+        </li>`
+    ;
+
+    ulContainer.insertAdjacentHTML("beforeend", itemListHtml);
+}
+
+
+// ======================================================================
+//  Render "Items Cart-list elements" (Cart Pages)
+// ======================================================================
+const renderItemsCartList = async () => {
+    getDataFromApi(apiUrl).then((data) => {
+        
+        const arrayLength = data.length;
+
+        for (let i = 0; i < arrayLength; i++) {
+            let itemQuantity = localStorage.getItem(data[i]._id);
+            
+            if(itemQuantity) {
+                creatCartItem(data[i]);
+                onClick_QtyAddCartButton();
+                onClick_EmptyCart();
+            }
+        }
     });
 }
 
@@ -78,8 +161,9 @@ const onClick_Purchase = async () => {
 // Final chain promises order  (Product Page)
 // ======================================================================
 const initCartPage = () => {
+
+    renderItemsCartList();
     onClick_Remove();
-    onClick_EmptyCart();
     onClick_Purchase();
 }
 

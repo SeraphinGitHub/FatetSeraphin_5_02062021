@@ -244,3 +244,41 @@ h2 {
     padding: 30px;
     padding-left: 10%;
 }
+
+
+/* ============================================ */
+/*          ---  + / -  buttons  ---            */
+/* ============================================ */
+.plus-minus-btn {
+    width: 48%;
+}
+
+.quantity-plus-btn,
+.quantity-minus-btn {
+    width: 35%;
+    margin: auto;
+    margin-bottom: 20px;
+    color: white;
+    text-shadow: black 3px 3px 3px;
+}
+
+.quantity-plus-btn {
+    font-size: 300%;
+}
+
+.quantity-minus-btn {
+    font-size: 400%;
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

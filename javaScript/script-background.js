@@ -2,6 +2,22 @@
 "use strict"
 
 // ======================================================================
+// Render "Item properties" (Product Page)
+// ======================================================================
+class ItemData {
+    constructor (colors, id, name, price, imageUrl, description, priceFormated) {
+        this.colors = colors;
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.imageUrl = imageUrl;
+        this.description = description;
+        this.priceFormated = priceFormated;
+    }
+}
+
+
+// ======================================================================
 // Create & Render "Header" html code (All Pages)
 // ======================================================================
 const createHeader = async (home, cart) => {
@@ -23,7 +39,7 @@ const createHeader = async (home, cart) => {
                 <i class="fas fa-cart-plus"></i>
             </figure>
 
-            <h3 class="flexCenter cart-items"></h3>
+            <h3 class="flexCenter cart-items">0</h3>
         </a>`
     ;
     
@@ -63,24 +79,12 @@ const renderFooter = async () => {
 
 
 // ======================================================================
-// Cart items Reset on load (All Pages)
-// ======================================================================
-const cartReset = async () => {
-    const cartItems = document.querySelector(".cart-items");
-
-    window.addEventListener("load", () => {
-        cartItems.textContent = 0;
-    });
-}
-
-
-// ======================================================================
 // Final chain promises order  (Product Page)
 // ======================================================================
 const initBackground = () => {
-    renderHeader()
-    .then(() => {return cartReset()})
-    .then(() => {return renderFooter()});
+
+    renderHeader();
+    renderFooter();
 }
 
 initBackground();
