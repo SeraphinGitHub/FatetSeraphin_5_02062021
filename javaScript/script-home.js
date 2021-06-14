@@ -1,20 +1,9 @@
 
 "use strict"
+// console.log("home JS is loaded");
 
 // ======================================================================
-// Simplify "fetch call function" ==> "GET" Method (All Pages)
-// ======================================================================
-const apiUrl = "http://localhost:3000/api/teddies";
-
-const getDataFromApi = async (url) => {
-    
-    const response = await fetch(url).then((response) => response.json())
-    return response;
-}
-
-
-// ======================================================================
-// Create "Items list elements" html code (Home Pages)
+// Create "Items list elements" html code       (Home Pages)
 // ======================================================================
 const creatProductList = async (data) => {
 
@@ -25,14 +14,17 @@ const creatProductList = async (data) => {
         data.price, 
         data.imageUrl,
         data.description,
+        
+        // Turn API's price number value into a currency price
         new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(Number (data.price)/100)
     );
 
     const ulContainer = document.querySelector(".main");
     
+    // Create html content of one item with API's data
     const productListHtml = `
         <li>
-            <a class="flexCenter anchor" href="./html/product.html?_id=${data._id}">
+            <a class="flexCenter anchor" id="${data._id}" href="./html/product.html?_id=${data._id}">
                 <figure>
                     <img src="${itemData_home.imageUrl}" alt="ours en peluche faits à la main">
                 </figure>
@@ -52,13 +44,17 @@ const creatProductList = async (data) => {
 
 
 // ======================================================================
-// Get data from API + Render "List" (Home Page)
+// Render "Items list elements"     (Home Page)
 // ======================================================================
 const renderProductList = async () => {
 
-    getDataFromApi(apiUrl).then((data) => {
+    fetch("http://localhost:3000/api/teddies")
+    .then((response) => response.json())
+    .then((data) => {
+
         const arrayLength = data.length;
-    
+        
+        // Render html content for each item in the API's list
         for (let i = 0; i < arrayLength; i++) {
             creatProductList(data[i]);
         }
@@ -67,7 +63,7 @@ const renderProductList = async () => {
 
 
 // ======================================================================
-// Final chain promises order  (Product Page)
+// Functions chaining order     (Home Page)
 // ======================================================================
 const initHomePage = () => {
 

@@ -1,8 +1,9 @@
 
 "use strict"
+// console.log("background JS is loaded");
 
 // ======================================================================
-// Render "Item properties" (Product Page)
+// Class "Item properties"      (All Pages)
 // ======================================================================
 class ItemData {
     constructor (colors, id, name, price, imageUrl, description, priceFormated) {
@@ -18,11 +19,12 @@ class ItemData {
 
 
 // ======================================================================
-// Create & Render "Header" html code (All Pages)
+// Create & Render "Header" html code       (All Pages)
 // ======================================================================
 const createHeader = async (home, cart) => {
     const headerContainer = document.querySelector("header");
     
+    // Recycle header's html content
     const headerHtml = `
         <a class="flexCenter border-radius orinoco" href="${home}">
             <figure class="logo-orinoco">
@@ -67,11 +69,13 @@ const renderHeader = async () => {
 
 
 // ======================================================================
-// Create & Render "Footer" html code (All Pages)
+// Create & Render "Footer" html code       (All Pages)
 // ======================================================================
 const renderFooter = async () => {
 
     const footerContainer = document.querySelector("footer");
+    
+    // Recycle footer's html content
     const footerHtml = `<h2>ORINOCO - Site de vente en ligne</h2>`;
 
     footerContainer.insertAdjacentHTML("beforeend", footerHtml);
@@ -79,10 +83,61 @@ const renderFooter = async () => {
 
 
 // ======================================================================
-// Final chain promises order  (Product Page)
+// Sum "All item quantity" cart shop        (All Pages)
+// ======================================================================
+const updateCartItems = () => {
+
+    fetch("http://localhost:3000/api/teddies")
+    .then((response) => response.json())
+    .then((data) => {
+        
+        const dataLength = data.length;
+        
+        const qtyArrayLoop = (itemArray) =>{
+            
+            // Get quantity of each item per ID from localStorage
+            for (let i = 0; i < dataLength; i++) {
+                
+                const itemId = data[i]._id;
+                let itemQuantity = localStorage.getItem(itemId);
+                
+                // If localStorage ID & quantity exist => push each quantity value in "itemArray"
+                if(itemQuantity !== null) {
+                    itemArray.push(itemQuantity)
+                    console.log(itemArray);
+                }
+                
+                else return itemArray;
+            }
+        }
+        
+        let itemArray = [];
+        const qtyArray = qtyArrayLoop(itemArray);
+        
+        // Add up all values of "itemArray" to calculate "total" item amount in cart shop
+        const totalQty = () => {
+            let total = 0;
+            
+            for (let i in qtyArray) {
+                total += Number (qtyArray[i]);
+            }
+
+            return total;
+        }
+
+        // Display the "total" calculated value in the cart html element
+        const cartItems = document.querySelector(".cart-items");
+        cartItems.textContent = totalQty();
+    });
+}
+
+
+// ======================================================================
+// Functions chaining order     (All Page)
 // ======================================================================
 const initBackground = () => {
 
+    updateCartItems();
     renderHeader();
     renderFooter();
 }

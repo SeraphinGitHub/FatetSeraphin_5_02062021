@@ -1,76 +1,85 @@
 
 "use strict"
+// console.log("cart JS is loaded");
 
 // ======================================================================
-// Simplify "fetch call function" ==> "GET" Method (All Pages)
-// ======================================================================
-const apiUrl = "http://localhost:3000/api/teddies";
-
-const getDataFromApi = async (url) => {
-    
-    const response = await fetch(url).then((response) => response.json())
-    return response;
-}
-
-
-// ======================================================================
-// Control button "Retirer" (Cart Page)
+// Control button "Retirer"     (Cart Page)
 // ======================================================================
 const onClick_Remove = async () => {
 
     const removeBtn = document.getElementsByClassName("remove-btn");
-    const removeTransition = "transform: translateY(-100%); transition-duration: 0.3s";
 
-    for (let i = 0; i < removeBtn.length; i++) {
-        const button = removeBtn[i];
+    if (removeBtn) {
+
+        const removeTransition = "transform: translateY(-100%); transition-duration: 0.3s";
         
-        button.addEventListener("click", (event) => {
-            event.target.parentElement.style = removeTransition;
+        // Cycle event for each "remove button" of the page
+        for (let i = 0; i < removeBtn.length; i++) {
+            const button = removeBtn[i];
             
-            setTimeout(() => {
-                event.target.parentElement.remove()
-            }, 400);
-        }); 
+            button.addEventListener("click", (event) => {
+                event.target.parentElement.style = removeTransition;  // Move <div> up
+                localStorage.removeItem(event.target.parentElement.id);  // Remove item's data from localStorage
+                updateCartItems();  // Update number of items in the cart
+                
+                // ***************************
+                console.log(updateCartItems());
+
+                setTimeout(() => {
+                    event.target.parentElement.remove();  // Totally remove the html content after delay
+                }, 400);
+            }); 
+        }
     }
 }
 
 
 // ======================================================================
-// Control button "Vider le panier" (Cart Page)
+// Control button "Vider le panier"     (Cart Page)
 // ======================================================================
 const onClick_EmptyCart = async () => {
 
     const cleanBtn = document.querySelector(".clean-cart-btn");
-    const listContainer = document.querySelector(".list-container");
-    const emptyTransition = "transform: translateY(-100%); transition-duration: 0.5s";
 
-    cleanBtn.addEventListener("click", () => {
-        if (listContainer) {
-            listContainer.style = emptyTransition;
-            localStorage.clear();
-            
-            setTimeout(() => {
-                listContainer.remove()
-            }, 500);
-        };
-    });
+    if (cleanBtn) {
+
+        const listContainer = document.querySelector(".list-container");
+        const emptyTransition = "transform: translateY(-100%); transition-duration: 0.5s";
+
+        cleanBtn.addEventListener("click", () => {
+
+            if (listContainer) {
+
+                listContainer.style = emptyTransition;  // Move <div> up
+                localStorage.clear();  // Delete all data from localStorage
+                updateCartItems();  // Update number of items in the cart
+                
+                setTimeout(() => {
+                    listContainer.remove();  // Totally remove the html content after delay
+                }, 500);
+            };
+        });
+    }
 }
 
 // ======================================================================
-// Control button "Passer commande" (Cart Page)
+// Control button "Passer commande"     (Cart Page)
 // ======================================================================
 const onClick_Purchase = async () => {
     
     const purchaseBtn = document.querySelector(".purchase-btn");
 
-    purchaseBtn.addEventListener("click", () => {
-        window.location = "./confirmation.html";
-    });
+    if (purchaseBtn) {
+
+        purchaseBtn.addEventListener("click", () => {
+            window.location = "./confirmation.html";
+        });
+    }
 }
 
 
 // ======================================================================
-//  Create "Items Cart-list elements" html code (Cart Pages)
+//  Create "Items Cart-list elements" html code     (Cart Pages)
 // ======================================================================
 const creatCartItem = async (data) => {
 
@@ -81,14 +90,17 @@ const creatCartItem = async (data) => {
         data.price, 
         data.imageUrl,
         data.description,
+
+        // Turn API's price number value into a currency price
         new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(Number (data.price)/100)
     );
 
     const ulContainer = document.querySelector(".list-container");
     
+    // Create html content of one cart item with API's data
     const itemListHtml = `
         <li class="flexCenter">
-            <div class="flexCenter flow-cart-item">
+            <div class="flexCenter flow-cart-item" id="${data._id}">
                 <a href="./product.html?_id=${data._id}">
                     <figure>
                         <img src="${itemData_cart.imageUrl}" alt="ours en peluche faits à la main">
@@ -122,17 +134,24 @@ const creatCartItem = async (data) => {
 //  Render "Items Cart-list elements" (Cart Pages)
 // ======================================================================
 const renderItemsCartList = async () => {
-    getDataFromApi(apiUrl).then((data) => {
+
+    fetch("http://localhost:3000/api/teddies")
+    .then((response) => response.json())
+    .then((data) => {
         
         const arrayLength = data.length;
-
+        
+        // Cycle API's list & render only matching ID in localoStorage
         for (let i = 0; i < arrayLength; i++) {
-            let itemQuantity = localStorage.getItem(data[i]._id);
-            
-            if(itemQuantity) {
-                creatCartItem(data[i]);
-                onClick_QtyAddCartButton();
-                onClick_EmptyCart();
+
+            const dataItemId = data[i]._id;
+            let itemQuantity = localStorage.getItem(dataItemId);
+
+            // If exist data in localStorage => Render these data
+            if(itemQuantity !== null) {
+                creatCartItem(data[i]);  // Render cart item's html content with API's data
+                onClick_Remove();  // Call "remove" function to enable deleting item
+                onClick_QtyAddCartButton(dataItemId);  // Call the function to change quantity only
             }
         }
     });
@@ -158,12 +177,12 @@ const renderItemsCartList = async () => {
 
 
 // ======================================================================
-// Final chain promises order  (Product Page)
+// Functions chaining order  (Product Page)
 // ======================================================================
 const initCartPage = () => {
 
     renderItemsCartList();
-    onClick_Remove();
+    onClick_EmptyCart();
     onClick_Purchase();
 }
 
