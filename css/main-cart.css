@@ -113,27 +113,34 @@ header {
     /* background-color: skyblue; */
 }
 
-/*  ---  Quantity  ---  */
+/*  ---  Quantity "+ / -" ---  */
 .quantity {
     justify-content: space-between;
     width: 160px;
 }
 
-.quantity-input,
+.quantity-plus-btn,
+.quantity-minus-btn,
+.validate-btn,
 .remove-btn,
 .clean-cart-btn {
     height: 60px;
 }
 
 .quantity-input {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    height: 40px;
     width: 100%;
     text-align: center;
 }
 
+/*  --- "+ / -" --- */
 .quantity-plus-btn,
 .quantity-minus-btn {
-    width: 70px;
-    margin-bottom: 10px;
+    align-content: center;
+    width: 60px;
+    margin: 0%;
 }
 
 /*  ---  Remove Button  ---  */
@@ -172,5 +179,5 @@ header {
 
 .total-container {
     justify-content: space-between;
-    width: 170px;
+    width: 200px;
 }

@@ -40,6 +40,11 @@ body,
     background: linear-gradient(to bottom right, greenyellow, rgb(0, 170, 0));
 }
 
+/* ---  Blue buttons  --- */
+.validate-btn {
+    background: linear-gradient(to bottom right, rgb(194, 232, 255), dodgerblue);
+}
+
 /* ---  Anchor on :Hover  --- */
 .orinoco:hover,
 .cart:hover,

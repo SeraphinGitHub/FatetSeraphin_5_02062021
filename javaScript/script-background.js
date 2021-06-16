@@ -3,7 +3,7 @@
 // console.log("background JS is loaded");
 
 // ======================================================================
-// Class "Item properties"      (All Pages)
+// Class "Item properties"
 // ======================================================================
 class ItemData {
     constructor (colors, id, name, price, imageUrl, description, priceFormated) {
@@ -19,7 +19,7 @@ class ItemData {
 
 
 // ======================================================================
-// Create & Render "Header" html code       (All Pages)
+// Create & Render "Header" html code
 // ======================================================================
 const createHeader = async (home, cart) => {
     const headerContainer = document.querySelector("header");
@@ -69,7 +69,7 @@ const renderHeader = async () => {
 
 
 // ======================================================================
-// Create & Render "Footer" html code       (All Pages)
+// Create & Render "Footer" html code
 // ======================================================================
 const renderFooter = async () => {
 
@@ -83,9 +83,9 @@ const renderFooter = async () => {
 
 
 // ======================================================================
-// Sum "All item quantity" cart shop        (All Pages)
+// Calculate total number of Items in cart
 // ======================================================================
-const updateCartItems = () => {
+const updateTotalItems = () => {
 
     fetch("http://localhost:3000/api/teddies")
     .then((response) => response.json())
@@ -104,11 +104,10 @@ const updateCartItems = () => {
                 // If localStorage ID & quantity exist => push each quantity value in "itemArray"
                 if(itemQuantity !== null) {
                     itemArray.push(itemQuantity)
-                    console.log(itemArray);
                 }
-                
-                else return itemArray;
             }
+
+            return itemArray;
         }
         
         let itemArray = [];
@@ -133,12 +132,12 @@ const updateCartItems = () => {
 
 
 // ======================================================================
-// Functions chaining order     (All Page)
+// Functions chaining order
 // ======================================================================
 const initBackground = () => {
 
-    updateCartItems();
     renderHeader();
+    updateTotalItems();
     renderFooter();
 }
 

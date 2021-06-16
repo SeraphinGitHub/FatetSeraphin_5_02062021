@@ -8,6 +8,7 @@
 .main li {
     width: 90%;
     margin: 50px;
+    margin-top: 25px;
     margin-bottom: 0;
     border-top: solid black 2px;
 }
@@ -19,7 +20,7 @@
 
 .anchor {
     justify-content: space-between;
-    margin-top: 50px;
+    margin-top: 20px;
     margin-left: -40px;
     margin-right: -40px;
     padding: 30px;

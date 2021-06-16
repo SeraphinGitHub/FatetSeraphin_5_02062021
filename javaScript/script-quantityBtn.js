@@ -3,7 +3,7 @@
 // console.log("QtyBtn JS is loaded");
 
 // ======================================================================
-// Control button "+ / -" & "Add to Cart"       (Product Page)
+// Control button "+ / -" & "Add to Cart"
 // ======================================================================
 const onClick_QtyAddCartButton = async (itemId) => {
 
@@ -22,7 +22,7 @@ const onClick_QtyAddCartButton = async (itemId) => {
 
 
 // ======================================================================
-// Set button "+ / -" Function          (Product Page)
+// Set button "+ / -" Function
 // ======================================================================
 const plusMinusAddBtn = (item, inputClass, quantityValue, resetValue) => {
     
@@ -68,41 +68,68 @@ const plusMinusAddBtn = (item, inputClass, quantityValue, resetValue) => {
 
     // ========== On Click "Add to Cart" Button ==========
     const addButton = item.querySelector(".cart-add-btn");
+    const validateButton = item.querySelector(".validate-btn");
     
-    if(addButton) {
-        
-        // Get item's ID tranfered from Query String (only need for product page) 
-        const pageParams = new URLSearchParams(window.location.search);
-        const getId = pageParams.get("_id");
+    if(addButton || validateButton) {
 
-        addButton.addEventListener("click", () => {
-            setLocalStorage(getStorage());  // Set item's ID & quantity value in localStorage
-            inputClass.value = resetValue;  // After adding item to cart => restore input field to 1
-            quantityValue = inputClass.value;  // Restore "+ / -" buttons values to 1
-            updateCartItems();  // Update number of items in the cart
-        });
+        if(addButton) {
+
+            // Get item's ID tranfered from Query String (only need for product page) 
+            const pageParams = new URLSearchParams(window.location.search);
+            const getId = pageParams.get("_id");
+
+            addButton.addEventListener("click", () => {
+
+                setLocalStorage(getStorage(getId), getId);  // Set item's ID & quantity value in localStorage
+                inputClass.value = resetValue;  // After adding item to cart => restore input field to 1
+                quantityValue = inputClass.value;  // Restore "+ / -" buttons values to 1
+                updateTotalItems();  // (background.js) Update number of items in the cart
+            });
+        }
+
+        if(validateButton) {
+
+            validateButton.addEventListener("click", (event) => {
+
+                const itemId = event.target.parentElement.parentElement.id;
+                modifyLocalStorage(itemId);  // Set item's ID & quantity value in localStorage
+                updateTotalItems();  // (background.js) Update number of items in the cart
+                updateTotalPrice();
+            });
+        }
         
 
         // Get localStorage's quantity values per item's ID
-        const getStorage = () => {
-            let data = localStorage.getItem(getId);
+        const getStorage = (itemId) => {
+            let data = localStorage.getItem(itemId);
+            console.log(data);
             return data;
         }
 
 
         // Set item's ID & quantity value in localStorage 
-        const setLocalStorage = (getStorage) => {
+        const setLocalStorage = (getStorage, itemId) => {
             
             // if locaStorage is empty => set localStorage to input field's value
-            if (getStorage === null) localStorage.setItem(getId, inputClass.value);
+            if (getStorage === null) {
+                localStorage.setItem(itemId, inputClass.value);
+            }
             
             // if locaStorage is not empty => get the previous value & add it up with the new value
             else {
-                let itemQty = localStorage.getItem(getId);  // Get previous quantity value
+                let itemQty = localStorage.getItem(itemId);  // Get previous quantity value
                 let itemQtyNumbered = Number (itemQty);  // Turn it into a number (localStorage store as strings)
                 itemQtyNumbered += Number (inputClass.value);  // Add up previous value with input field's value
-                localStorage.setItem(getId, itemQtyNumbered);  // Store the new calculated value
+                localStorage.setItem(itemId, itemQtyNumbered);  // Store the new calculated value
             }
+        }
+
+
+        const modifyLocalStorage = (itemId) => {
+
+            let modifiedQty;
+            modifiedQty = Number (inputClass.value);
+            localStorage.setItem(itemId, modifiedQty);
         }
     }
 }

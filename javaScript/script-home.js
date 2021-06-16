@@ -3,7 +3,7 @@
 // console.log("home JS is loaded");
 
 // ======================================================================
-// Create "Items list elements" html code       (Home Pages)
+// Create "Items list elements" html code
 // ======================================================================
 const creatProductList = async (data) => {
 
@@ -44,7 +44,7 @@ const creatProductList = async (data) => {
 
 
 // ======================================================================
-// Render "Items list elements"     (Home Page)
+// Render "Items list elements"
 // ======================================================================
 const renderProductList = async () => {
 
@@ -63,7 +63,7 @@ const renderProductList = async () => {
 
 
 // ======================================================================
-// Functions chaining order     (Home Page)
+// Functions chaining order
 // ======================================================================
 const initHomePage = () => {
 

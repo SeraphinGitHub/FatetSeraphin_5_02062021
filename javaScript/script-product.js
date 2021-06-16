@@ -3,7 +3,7 @@
 // console.log("product JS is loaded");
 
 // ======================================================================
-// Render "Item properties"     (Product Page)
+// Render "Item properties"
 // ======================================================================
 const renderItemProperties = async () => {
     
@@ -59,7 +59,7 @@ const renderItemProperties = async () => {
 
 
 // ======================================================================
-// Control button "Personaliser"  (Product Page)
+// Control button "Personaliser"
 // ======================================================================
 const onClick_CustomButton = async () => {
 
@@ -88,7 +88,7 @@ const onClick_CustomButton = async () => {
 
 
 // ======================================================================
-// Functions chaining order  (Product Page)
+// Functions chaining order
 // ======================================================================
 const initProductPage = () => {
 
