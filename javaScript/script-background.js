@@ -51,20 +51,22 @@ const createHeader = async (home, cart) => {
 
 const renderHeader = async () => {
     // From index
+    const slashIndex = "/";
     const homeIndex = "/index.html";
     const cartIndex = "/html/cart.html";
     
     // From html folder
     const homeOther = "../index.html";
-    const cartOther = "./cart.html";
+    const cartOther = "/html/cart.html";
 
-    const checkLinks = (homeIndexArg, cartIndexArg, homeOtherArg, cartOtherArg) => {
-        (window.location.pathname === homeIndexArg)
+    const checkLinks = (slashIndex, homeIndexArg, cartIndexArg, homeOtherArg, cartOtherArg) => {
+        (window.location.pathname === slashIndex || window.location.pathname === homeIndexArg)
         ? createHeader(homeIndexArg, cartIndexArg)
         : createHeader(homeOtherArg, cartOtherArg);
     }
 
-    checkLinks(homeIndex, cartIndex, homeOther, cartOther);
+    checkLinks(slashIndex, homeIndex, cartIndex, homeOther, cartOther);
+    console.log(window.location.pathname);
 }
 
 
