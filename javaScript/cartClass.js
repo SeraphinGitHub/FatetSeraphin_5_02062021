@@ -24,30 +24,29 @@ class CartClass {
             item.quantity.push(Number (quantityValue));
             localStorage.setItem("cartArray", JSON.stringify(cartArray));
         }
-        
-        if (!cartArray.includes(item)) {
+
+        // If Teddy item !exist in cart shop ==> Add item + chosen Qty
+        if (!cartArray.some(arg => arg._id === item._id)) {
+            
             cartArray.push(item);
             setTeddyLocalStorage();
-            console.log("cart NOT include this Teddy");
+
+            // ********************
+            console.log("First");
         }
         
+        // If Teddy item already exist in cart shop ==> Just add chosen Qty
         else {
             setTeddyLocalStorage();
-            console.log("cart include this Teddy");
-        }
+
+            // ********************
+            console.log("Just add Qty");
+        }      
     }
 
 
     removeItem(item) {
-        event.target.parentElement.style = removeTransition;  // Move <div> up
-        localStorage.setItem(event.target.parentElement.id, 0);  // Set item's data to zero before remove
-        updateTotalItems();  // (background.js) Update number of items in the cart
-        updateTotalPrice();  // Update total price in the cart
         
-        setTimeout(() => {
-            localStorage.removeItem(event.target.parentElement.id);  // Remove item's data from localStorage
-            event.target.parentElement.remove();  // Totally remove the html content after delay
-        }, 400);
     }
 
 

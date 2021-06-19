@@ -7,7 +7,7 @@
 const creatCartItem = (teddy) => {
 
     const ulContainer = document.querySelector(".list-container");
-    
+
     // Create html content of one cart item with API's data
     const itemListHtml = `
         <li class="flexCenter">
@@ -29,7 +29,7 @@ const creatCartItem = (teddy) => {
                     <button class="flexCenter btn quantity-minus-btn" type="button"> - </button>
                     <button class="flexCenter btn quantity-plus-btn" type="button"> + </button>
                     
-                    <input class="quantity-input" type="number" name="quantity" min="1" value="${localStorage.getItem(teddy._id)}">
+                    <input class="quantity-input" type="number" name="quantity" min="1" value="${"000"}">
                 </div>
 
                 <button class="btn remove-btn" type="button">Retirer</button>
@@ -50,8 +50,9 @@ const renderItemsCartList = () => {
     let cartArray = cart.getItems();
     
     for (let i in cartArray) {
-
-        const teddy = setTeddy(cartArray[i]);
+        
+        let teddy;
+        teddy = setTeddy(cartArray[i]);
         creatCartItem(teddy);
     }
 }
@@ -71,15 +72,14 @@ const onClick_Remove = () => {
         
         button.addEventListener("click", (event) => {
             event.target.parentElement.style = removeTransition;  // Move <div> up
-
-            // localStorage.setItem(event.target.parentElement.id, 0);  // Set item's data to zero before remove
-            // updateTotalItems();  // (background.js) Update number of items in the cart
-            // updateTotalPrice();  // Update total price in the cart
+            localStorage.setItem(event.target.parentElement.id, 0);  // Set item's data to zero before remove
+            updateTotalItems();  // (background.js) Update number of items in the cart
+            updateTotalPrice();  // Update total price in the cart
             
-            // setTimeout(() => {
-            //     localStorage.removeItem(event.target.parentElement.id);  // Remove item's data from localStorage
-            //     event.target.parentElement.remove();  // Totally remove the html content after delay
-            // }, 400);
+            setTimeout(() => {
+                localStorage.removeItem(event.target.parentElement.id);  // Remove item's data from localStorage
+                event.target.parentElement.remove();  // Totally remove the html content after delay
+            }, 400);
         }); 
     }
 }

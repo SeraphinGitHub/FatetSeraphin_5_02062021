@@ -11,7 +11,7 @@ const creatProductList = (teddy) => {
     // Create html content of one item with API's data
     const productListHtml = `
         <li>
-            <a class="flexCenter anchor" id="${teddy.id}" href="./html/product.html?_id=${teddy.id}">
+            <a class="flexCenter anchor" id="${teddy._id}" href="./html/product.html?_id=${teddy._id}">
                 <figure>
                     <img src="${teddy.imageUrl}" alt="ours en peluche faits à la main">
                 </figure>
