@@ -116,7 +116,7 @@ header {
 /*  ---  Quantity "+ / -" ---  */
 .quantity {
     justify-content: space-between;
-    width: 160px;
+    width: 140px;
 }
 
 .quantity-plus-btn,
@@ -130,7 +130,7 @@ header {
 .quantity-input {
     margin-top: 12px;
     margin-bottom: 12px;
-    height: 40px;
+    height: 50px;
     width: 100%;
     text-align: center;
 }
@@ -162,7 +162,7 @@ header {
     justify-content: space-between;
     height: auto;
     width: 85%;
-    margin-top: 60px;
+    margin-top: 40px;
     margin-bottom: 110px;
     padding-top: 110px;
     border-top: solid black 2px;

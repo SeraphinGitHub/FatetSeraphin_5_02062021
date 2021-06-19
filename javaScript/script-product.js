@@ -38,10 +38,9 @@ const renderItemProperties = () => {
         // Render html content for each color in the API's list
         for (let i = 0; i < arrayLength; i++) {
             createDropdownColors(i);
-        }    
+        }
 
-        // Call the function to change quantity & add item to cart
-        onClick_QtyAddCartButton(teddy);
+        onClick_QtyAddCartButton(teddy); // Call the function to change quantity & add item to cart
     });
 }
 

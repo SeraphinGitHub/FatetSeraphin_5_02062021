@@ -71,32 +71,8 @@ const renderFooter = () => {
 // ======================================================================
 const updateTotalItems = () => {
 
-    let cartArray = JSON.parse(localStorage.getItem("cartArray"));
-
-    const calcTotalQty = () => {
-        
-        let totalQtyAll = 0;
-
-        for (let i in cartArray) {
-            
-            let teddy;
-            teddy = cartArray[i];
-            let qtyArray = teddy.quantity;
-            let totalQty = 0;
-        
-            for (let i in qtyArray) {
-                totalQty += qtyArray[i];
-            }
-
-            totalQtyAll += totalQty;
-        }
-
-        return totalQtyAll;
-    }
-
-    // Display the "total" calculated value in the cart html element
-    const cartItems = document.querySelector(".cart-items");
-    cartItems.textContent = calcTotalQty();
+    const cart = setCartClass();
+    cart.setTotalQty();
 }
 
 

@@ -6,20 +6,13 @@
 // ======================================================================
 const onClick_QtyAddCartButton = (teddy) => {
     
+    const cart = setCartClass(teddy);
+
     // Set the "+ / -" buttons per item's ID (only need for cart page)
     const inputClass = document.querySelector(".quantity-input");
     let quantityValue = Number (inputClass.value);
     const resetValue = 1;
 
-    plusMinusAddBtn(inputClass, quantityValue, resetValue, teddy);
-}
-
-
-// ======================================================================
-// Set button "+ / -" Function
-// ======================================================================
-const plusMinusAddBtn = (inputClass, quantityValue, resetValue, teddy) => {
-    
     
     // ========== On Click "+" Button in Product Page ==========
     const cartPath = "/html/cart.html";
@@ -78,28 +71,10 @@ const plusMinusAddBtn = (inputClass, quantityValue, resetValue, teddy) => {
     
     // ========== On Click "Add to Cart" in Product Page ==========
     const addButton = document.querySelector(".cart-add-btn");
-    let cartArray = [];
-
-    if (localStorage.length) {
-        cartArray = JSON.parse(localStorage.getItem("cartArray"));
-    }
     
     addButton.addEventListener("click", () => {
-        // cartArray.push(Date());
-        
-        const setTeddyLocalStorage = () => {
-            teddy.quantity.push(Number (quantityValue));
-            localStorage.setItem("cartArray", JSON.stringify(cartArray));
-        }
-        
-        if (!cartArray.includes(teddy)) {
-            cartArray.push(teddy);
-            setTeddyLocalStorage();
-        }
-        
-        else {
-            setTeddyLocalStorage();
-        }
+
+        cart.addItem(teddy, quantityValue);
 
         inputClass.value = resetValue;  // After adding item to cart => restore input field to 1
         quantityValue = inputClass.value;  // Restore "+ / -" buttons values to 1
@@ -112,7 +87,6 @@ const plusMinusAddBtn = (inputClass, quantityValue, resetValue, teddy) => {
     // ========== On Click "+ / -" Buttons in Cart Page ==========
     const plusMinusCartPage = () => {
 
-        // inputClass.value = quantityValue;
         teddy.quantity = inputClass.value;
         localStorage.setItem("cartArray", JSON.stringify(cartArray));  // Overwrite current localStorage Qty value
         updateTotalItems();  // (background.js) Update number of items in the cart
