@@ -1,51 +1,39 @@
 
 "use strict"
-// console.log("product JS is loaded");
 
 // ======================================================================
 // Render "Item properties"
 // ======================================================================
-const renderItemProperties = async () => {
+const renderItemProperties = () => {
     
     const pageParams = new URLSearchParams(window.location.search);
     const getId = pageParams.get("_id");
-    
-    // Get data tranfered from Query String to initialize item content 
+
+    // Get ID tranfered from Query String to initialize item content 
     fetch(`http://localhost:3000/api/teddies/${getId}`)
     .then((response) => response.json())
-    .then((data) => {
-            
-        let itemData_product = new ItemData(
-            data.colors,
-            data._id,
-            data.name,
-            data.price, 
-            data.imageUrl,
-            data.description,
-
-            // Turn API's price number value into a currency price
-            new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(Number (data.price)/100)
-        );
-
+    .then((jsonData) => {
+        
+        const teddy = setTeddy(jsonData);
 
         // Initialize item properties
-        document.querySelector(".main").id = data._id;
-        document.querySelector(".left-container figure img").src = itemData_product.imageUrl;
-        document.querySelector(".item-price").textContent = itemData_product.priceFormated;
-        document.querySelector(".item-name").textContent = itemData_product.name;
-        document.querySelector(".item-description").textContent = itemData_product.description;
+        document.querySelector(".main").id = teddy.id;
+        document.querySelector(".left-container figure img").src = teddy.imageUrl;
+        document.querySelector(".item-price").textContent = teddy.priceFormated();
+        document.querySelector(".item-name").textContent = teddy.name;
+        document.querySelector(".item-description").textContent = teddy.description;
         
 
-        // Create html content of one color with API's data
+        // Create html content of one color with API's jsonData
         const dropdownContent = document.querySelector(".dropdown-content");
         
         const createDropdownColors = (colorId) => {
             
-            const dropdownColorsHtml = `<a class="flexCenter">${itemData_product.colors[colorId]}</a>`;
+            const dropdownColorsHtml = `<a class="flexCenter">${jsonData.colors[colorId]}</a>`;
             dropdownContent.insertAdjacentHTML("beforeend", dropdownColorsHtml);
         }
         
-        const arrayLength = itemData_product.colors.length;
+        const arrayLength = jsonData.colors.length;
         
         // Render html content for each color in the API's list
         for (let i = 0; i < arrayLength; i++) {
@@ -53,7 +41,7 @@ const renderItemProperties = async () => {
         }    
 
         // Call the function to change quantity & add item to cart
-        onClick_QtyAddCartButton(getId);
+        onClick_QtyAddCartButton(teddy);
     });
 }
 
@@ -61,7 +49,7 @@ const renderItemProperties = async () => {
 // ======================================================================
 // Control button "Personaliser"
 // ======================================================================
-const onClick_CustomButton = async () => {
+const onClick_CustomButton = () => {
 
     const customBtn = document.querySelector(".custom-btn");
     const dropCont = document.querySelector(".dropdown-content");
@@ -90,10 +78,7 @@ const onClick_CustomButton = async () => {
 // ======================================================================
 // Functions chaining order
 // ======================================================================
-const initProductPage = () => {
-
+window.addEventListener("load", () => {
     renderItemProperties();
     onClick_CustomButton();
-}
-
-initProductPage();
+});

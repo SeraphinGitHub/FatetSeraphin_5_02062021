@@ -1,27 +1,10 @@
 
 "use strict"
-// console.log("background JS is loaded");
-
-// ======================================================================
-// Class "Item properties"
-// ======================================================================
-class ItemData {
-    constructor (colors, id, name, price, imageUrl, description, priceFormated) {
-        this.colors = colors;
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.imageUrl = imageUrl;
-        this.description = description;
-        this.priceFormated = priceFormated;
-    }
-}
-
 
 // ======================================================================
 // Create & Render "Header" html code
 // ======================================================================
-const createHeader = async (home, cart) => {
+const createHeader = (home, cart) => {
     const headerContainer = document.querySelector("header");
     
     // Recycle header's html content
@@ -41,7 +24,7 @@ const createHeader = async (home, cart) => {
                 <i class="fas fa-cart-plus"></i>
             </figure>
 
-            <h3 class="flexCenter cart-items">0</h3>
+            <h3 class="flexCenter cart-items"></h3>
         </a>`
     ;
     
@@ -49,7 +32,7 @@ const createHeader = async (home, cart) => {
 }
 
 
-const renderHeader = async () => {
+const renderHeader = () => {
     // From index
     const slashIndex = "/";
     const homeIndex = "/index.html";
@@ -66,14 +49,13 @@ const renderHeader = async () => {
     }
 
     checkLinks(slashIndex, homeIndex, cartIndex, homeOther, cartOther);
-    console.log(window.location.pathname);
 }
 
 
 // ======================================================================
 // Create & Render "Footer" html code
 // ======================================================================
-const renderFooter = async () => {
+const renderFooter = () => {
 
     const footerContainer = document.querySelector("footer");
     
@@ -89,58 +71,40 @@ const renderFooter = async () => {
 // ======================================================================
 const updateTotalItems = () => {
 
-    fetch("http://localhost:3000/api/teddies")
-    .then((response) => response.json())
-    .then((data) => {
-        
-        const dataLength = data.length;
-        
-        const qtyArrayLoop = (itemArray) =>{
-            
-            // Get quantity of each item per ID from localStorage
-            for (let i = 0; i < dataLength; i++) {
-                
-                const itemId = data[i]._id;
-                let itemQuantity = localStorage.getItem(itemId);
-                
-                // If localStorage ID & quantity exist => push each quantity value in "itemArray"
-                if(itemQuantity !== null) {
-                    itemArray.push(itemQuantity)
-                }
-            }
+    let cartArray = JSON.parse(localStorage.getItem("cartArray"));
 
-            return itemArray;
-        }
+    const calcTotalQty = () => {
         
-        let itemArray = [];
-        const qtyArray = qtyArrayLoop(itemArray);
-        
-        // Add up all values of "itemArray" to calculate "total" item amount in cart shop
-        const totalQty = () => {
-            let total = 0;
+        let totalQtyAll = 0;
+
+        for (let i in cartArray) {
             
+            let teddy;
+            teddy = cartArray[i];
+            let qtyArray = teddy.quantity;
+            let totalQty = 0;
+        
             for (let i in qtyArray) {
-                total += Number (qtyArray[i]);
+                totalQty += qtyArray[i];
             }
 
-            return total;
+            totalQtyAll += totalQty;
         }
 
-        // Display the "total" calculated value in the cart html element
-        const cartItems = document.querySelector(".cart-items");
-        cartItems.textContent = totalQty();
-    });
+        return totalQtyAll;
+    }
+
+    // Display the "total" calculated value in the cart html element
+    const cartItems = document.querySelector(".cart-items");
+    cartItems.textContent = calcTotalQty();
 }
 
 
 // ======================================================================
 // Functions chaining order
 // ======================================================================
-const initBackground = () => {
-
+window.addEventListener("load", () => {
     renderHeader();
     updateTotalItems();
     renderFooter();
-}
-
-initBackground();
+});
