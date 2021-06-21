@@ -4,7 +4,7 @@
 // ======================================================================
 //  Create "Items Cart-list elements" html code
 // ======================================================================
-const creatCartItem = (teddy) => {
+const creatCartItem = (teddy, teddyQty) => {
 
     const ulContainer = document.querySelector(".list-container");
 
@@ -29,7 +29,7 @@ const creatCartItem = (teddy) => {
                     <button class="flexCenter btn quantity-minus-btn" type="button"> - </button>
                     <button class="flexCenter btn quantity-plus-btn" type="button"> + </button>
                     
-                    <input class="quantity-input" type="number" name="quantity" min="1" value="${"000"}">
+                    <input class="quantity-input" type="number" name="quantity" min="1" value="${teddyQty}">
                 </div>
 
                 <button class="btn remove-btn" type="button">Retirer</button>
@@ -49,37 +49,40 @@ const renderItemsCartList = () => {
     const cart = setCartClass();
     let cartArray = cart.getItems();
     
+    // For each teddy in cart
     for (let i in cartArray) {
-        
-        let teddy;
-        teddy = setTeddy(cartArray[i]);
-        creatCartItem(teddy);
+
+        let teddy = setTeddy(cartArray[i]); // Get Teddy data from localStorage
+        let teddyQty = cart.miniQtyLoop(cartArray[i].quantity); //Get Teddy total quantity
+
+        creatCartItem(teddy, teddyQty); // Render list item in cart
+        onClick_QtyAddCartButton(teddy); // Set "+/-" button per item in cart
     }
 }
 
 
-// Control button "Retirer"
+// On Click button - "Retirer"
 const onClick_Remove = () => {
     const cart = setCartClass();
     cart.removeItem();
 }
 
 
-// Control button "Vider le panier"
+// On Click button - "Vider le panier"
 const onClick_EmptyCart = () => {
     const cart = setCartClass();
     cart.emptyCart();
 }
 
 
-// Control button "Passer commande"
+// On Click button - "Passer commande"
 const onClick_Purchase = () => {
     const cart = setCartClass();
     cart.purchase();
 }
 
 
-// Control button "Confirmer commande"
+// On Click button - "Confirmer commande"
 const onClick_Confirm = () => {
     const cart = setCartClass();
     cart.confirm();

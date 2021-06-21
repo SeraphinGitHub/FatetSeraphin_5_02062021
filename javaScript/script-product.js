@@ -15,7 +15,7 @@ const renderItemProperties = () => {
     .then((jsonData) => {
         
         const teddy = setTeddy(jsonData);
-
+        
         // Initialize item properties
         document.querySelector(".main").id = teddy.id;
         document.querySelector(".left-container figure img").src = teddy.imageUrl;
@@ -51,7 +51,6 @@ const renderItemProperties = () => {
 const onClick_CustomButton = () => {
 
     const customBtn = document.querySelector(".custom-btn");
-    const customBtnHover = document.querySelector(".custom-btn:hover");
     const dropCont = document.querySelector(".dropdown-content");
     const dropFlow = document.querySelector(".dropdown-flow");
 
