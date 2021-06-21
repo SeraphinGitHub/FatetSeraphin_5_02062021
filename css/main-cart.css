@@ -149,11 +149,6 @@ header {
     width: 150px;
 }
 
-.remove-btn:hover,
-.clean-cart-btn:hover,
-.purchase-btn:hover {
-    box-shadow: gray 5px 5px 8px;
-}
 
 /* ============================================ */
 /*          ---  Order Container ---            */
@@ -180,4 +175,76 @@ header {
 .total-container {
     justify-content: space-between;
     width: 200px;
+}
+
+
+/* ============================================ */
+/*   --- Confirm order form page Container ---  */
+/* ============================================ */
+.purchase-page-flow {
+    position: fixed;
+    top: 0;
+    visibility: hidden;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+.purchase-page {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    transform: translateY(100%);
+    border-radius: 50% 50% 0 0;
+}
+
+.contact {
+    position: absolute;
+    height: auto;
+    width: 450px;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.label-input-container {
+    margin: auto;
+    margin-top: 40px;
+    width: 60%;
+
+}
+
+.label-input-container label,
+.label-input-container input {
+    width: 100%;
+
+    font-family: "Raleway-Medium";
+    line-height: 100%;
+    font-size: 100%;
+}
+
+.label-input-container label {
+    font-weight: 600;
+}
+
+.label-input-container input {
+    font-weight: 400;
+
+    margin-top: 8px;
+    padding-left: 20px;
+    height: 30px;
+    border-radius: 8px;
+    border: solid black 1px;
+}
+
+.confirm-order-btn {
+    margin: 50px;
+    margin-bottom: 0;
+    height: 85px;
+    width: 80%;
+}
+
+.cancel-order-btn {
+    margin: 30px;
+    height: 60px;
+    width: 50%;
 }

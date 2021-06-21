@@ -58,87 +58,36 @@ const renderItemsCartList = () => {
 }
 
 
-// ======================================================================
 // Control button "Retirer"
-// ======================================================================
 const onClick_Remove = () => {
-
-    const removeBtn = document.getElementsByClassName("remove-btn");
-    const removeTransition = "transform: translateY(-100%); transition-duration: 0.3s";
-    
-    // Cycle event for each "remove button" of the page
-    for (let i = 0; i < removeBtn.length; i++) {
-        const button = removeBtn[i];
-        
-        button.addEventListener("click", (event) => {
-            event.target.parentElement.style = removeTransition;  // Move <div> up
-            localStorage.setItem(event.target.parentElement.id, 0);  // Set item's data to zero before remove
-            updateTotalItems();  // (background.js) Update number of items in the cart
-            updateTotalPrice();  // Update total price in the cart
-            
-            setTimeout(() => {
-                localStorage.removeItem(event.target.parentElement.id);  // Remove item's data from localStorage
-                event.target.parentElement.remove();  // Totally remove the html content after delay
-            }, 400);
-        }); 
-    }
+    const cart = setCartClass();
+    cart.removeItem();
 }
 
 
-// ======================================================================
 // Control button "Vider le panier"
-// ======================================================================
 const onClick_EmptyCart = () => {
-
-    const cleanBtn = document.querySelector(".clean-cart-btn");
-
-    if (cleanBtn) {
-
-        const listContainer = document.querySelector(".list-container");
-        const emptyTransition = "transform: translateY(-100%); transition-duration: 0.5s";
-
-        cleanBtn.addEventListener("click", () => {
-
-            if (listContainer) {
-
-                listContainer.style = emptyTransition;  // Move <div> up
-                localStorage.clear();  // Delete all data from localStorage
-                updateTotalItems();  // (background.js) Update number of items in the cart
-                updateTotalPrice();  // Update total price in the cart
-                
-                setTimeout(() => {
-                    listContainer.remove();  // Totally remove the html content after delay
-                }, 500);
-            };
-        });
-    }
+    const cart = setCartClass();
+    cart.emptyCart();
 }
 
 
-// ======================================================================
 // Control button "Passer commande"
-// ======================================================================
 const onClick_Purchase = () => {
-    
-    const purchaseBtn = document.querySelector(".purchase-btn");
-
-    if (purchaseBtn) {
-
-        purchaseBtn.addEventListener("click", () => {
-            
-            // ************************************************************
-            // POST Function
-            // ************************************************************
-        });
-    }
+    const cart = setCartClass();
+    cart.purchase();
 }
 
 
-// ======================================================================
+// Control button "Confirmer commande"
+const onClick_Confirm = () => {
+    const cart = setCartClass();
+    cart.confirm();
+}
+
+
 // Update Total cart price
-// ======================================================================
 const updateTotalPrice = () => {
-    
     const cart = setCartClass();
     cart.setTotalPrice();
 }
@@ -150,6 +99,8 @@ const updateTotalPrice = () => {
 window.addEventListener("load", () => {
     renderItemsCartList();
     updateTotalPrice();
+    onClick_Remove();
     onClick_EmptyCart();
     onClick_Purchase();
+    onClick_Confirm();
 });

@@ -1,5 +1,5 @@
 
-/* ---  Background Color  --- */
+/* ======  Background Color  ====== */
 .orinoco,
 .cart,
 .main,
@@ -12,42 +12,57 @@ body,
     background: linear-gradient(to bottom right, rgb(255, 137, 27), rgb(153, 0, 255)) no-repeat;
 }
 
-/* ---  Button Class Color  --- */
+
+/* ======  Button Class Color  ====== */
 .btn {
     background: linear-gradient(to bottom right, pink, rgb(185, 23, 255));
 }
 
-/* ---  Pastille item Panier Color  --- */
+
+/* ======  Pastille item Panier Color  ====== */
 .cart-items {
     background-color: rgb(255, 130, 0);
 }
 
-/* ---  Dropdown Background Color  --- */
+
+/* ======  Dropdown Background Color  ====== */
 .dropdown-content {
     background: linear-gradient(to bottom right, dodgerblue, black);
 }
 
-/* ---  Red buttons  --- */
+
+/* ======  Red buttons  ====== */
 .remove-btn,
 .clean-cart-btn,
-.quantity-minus-btn {
+.quantity-minus-btn,
+.cancel-order-btn {
     background: linear-gradient(to bottom right, pink, red);
 }
 
-/* ---  Green buttons  --- */
+
+/* ======  Green buttons  ====== */
 .purchase-btn,
-.quantity-plus-btn {
+.quantity-plus-btn,
+.confirm-order-btn {
     background: linear-gradient(to bottom right, greenyellow, rgb(0, 170, 0));
 }
 
-/* ---  Blue buttons  --- */
+
+/* ======  Blue buttons  ====== */
 .validate-btn {
     background: linear-gradient(to bottom right, rgb(194, 232, 255), dodgerblue);
 }
 
-/* ---  Anchor on :Hover  --- */
+
+/* ======  Anchor on :Hover  ====== */
 .orinoco:hover,
 .cart:hover,
 .anchor:hover {
     background-color: lightskyblue;
+}
+
+
+/* ======  Contact Page (Form)  ====== */
+.purchase-page {
+    background: linear-gradient(to bottom right, rgba(135, 206, 250, 0.9), rgba(0, 0, 0, 0.9));
 }

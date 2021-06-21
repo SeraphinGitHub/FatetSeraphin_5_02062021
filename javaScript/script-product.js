@@ -51,26 +51,45 @@ const renderItemProperties = () => {
 const onClick_CustomButton = () => {
 
     const customBtn = document.querySelector(".custom-btn");
+    const customBtnHover = document.querySelector(".custom-btn:hover");
     const dropCont = document.querySelector(".dropdown-content");
     const dropFlow = document.querySelector(".dropdown-flow");
 
+    const duration = 0.6;  // ==> (Seconds)
+
+
     // On mouse click "Personaliser" button
     customBtn.addEventListener("click", function() {
+
+        dropFlow.style = "visibility: visible";
+        
         this.style = "border-radius: 20px 20px 0 0";
-        dropCont.style = "transform: translateY(0%)";
-        dropFlow.style = "height: auto;";
+        
+        dropCont.style = `
+            transform: translateY(0%);
+            transition-duration: ${duration}s;
+        `;
     });
+
 
     // On mouse leave dropdown's container
     dropCont.addEventListener("mouseleave", () => {
-        dropCont.style = "transform: translateY(-100%)";
-        setTimeout(hideDropdownBack, 300);
-    });
+        
+        dropCont.style = `
+            transform: translateY(-100%);
+            transition-duration: ${duration}s;
+        `;
+        
+        customBtn.style = `
+            border-radius: 20px;
+            transition-delay: ${duration}s;
+            transition-duration: ${duration}s;
+        `;
 
-    const hideDropdownBack = () => {
-        customBtn.style = "border-radius: 20px; transition-duration: 0.2s";
-        dropFlow.style = "height: 0px";
-    }
+        dropFlow.style = `
+            visibility: hidden;
+        `;
+    });
 }
 
 

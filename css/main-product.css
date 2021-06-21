@@ -46,9 +46,9 @@
 
 .dropdown-flow {
     position: absolute;
-    height: 0;
-    width: 100%;
+    visibility: hidden;
     overflow: hidden;
+    width: 100%;
 }
 
 .dropdown-content {
@@ -56,7 +56,6 @@
     width: 100%;
     padding-top: 4px;
     transform: translateY(-100%);
-    transition-duration: 0.5s;
     
     font-family: "Raleway-Medium";
     line-height: 100%;
@@ -152,11 +151,4 @@
 .cart-add-btn {
     width: 48%;
     margin-bottom: 3px;
-}
-
-.quantity-label:hover,
-.cart-add-btn:hover,
-.quantity-plus-btn:hover,
-.quantity-minus-btn:hover {
-    box-shadow: gray 5px 5px 8px;
 }

@@ -43,10 +43,8 @@
 
         <div class="flexCenter order-container">
             <button class="btn clean-cart-btn" type="button">Vider le panier</button>
-            
-            <form class="purchase-form" method="POST">
-                <button class="btn purchase-btn" type="submit">Passer commande</button>
-            </form>
+                
+            <button class="btn purchase-btn" type="button">Passer commande</button>
            
             <div class="flexCenter total-container">
                 <h3>TOTAL :</h3>
@@ -54,8 +52,46 @@
             </div>
         </div>
     </section>
+    
+    <section class="flexCenter purchase-page-flow">
+        <div class="flexCenter purchase-page">
 
+            <form class="flexCenter contact" method="POST">
+    
+                <div class="flexCenter label-input-container">
+                    <label for="firstName">Prénom</label>
+                    <input name="firstName" id="firstName" type="text" placeholder="Entrer votre prénom">
+                </div>
+    
+                <div class="flexCenter label-input-container">
+                    <label for="lastName">Nom</label>
+                    <input name="lastName" id="lastName" type="text" placeholder="Entrer votre nom de famille">
+                </div>
+    
+                <div class="flexCenter label-input-container">
+                    <label for="address">Adresse postale</label>
+                    <input name="address" id="address" type="text" placeholder="Entrer votre adresse">
+                </div>
+    
+                <div class="flexCenter label-input-container">
+                    <label for="city">Ville</label>
+                    <input name="city" id="city" type="text" placeholder="Entrer votre ville de résidence">
+                </div>
+    
+                <div class="flexCenter label-input-container">
+                    <label for="email">E-mail</label>
+                    <input name="email" id="email" type="email" placeholder="Entrer votre adresse e-mail">
+                </div>
+    
+                <button class="btn confirm-order-btn" type="submit">Confirmer commande</button>
+                <button class="btn cancel-order-btn" type="button">Annuler</button>
+            </form>
+
+        </div>
+    </section>
+    
     <footer class="border-radius">
     </footer>
+
 </body>
 </html>
