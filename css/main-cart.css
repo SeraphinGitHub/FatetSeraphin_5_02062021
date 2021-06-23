@@ -217,8 +217,9 @@ header {
 .label-input-container input {
     width: 100%;
 
-    font-family: "Raleway-Medium";
+    font-family: "Roboto-Medium";
     line-height: 100%;
+    font-weight: 400;
     font-size: 100%;
 }
 

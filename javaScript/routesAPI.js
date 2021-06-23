@@ -7,7 +7,7 @@
 // const getMainData_API = () => await fetch("./jsonAPI/teddy.json")  ==>  When put project on GitHub Page
 
 const getMainData_API = async () => {
-    await fetch("http://localhost:3000/api/teddies")
+    return await fetch("http://localhost:3000/api/teddies")
     .then(response => response.json())
     .then(jsonData => {return jsonData});
 }
@@ -28,15 +28,15 @@ const getItemIdData_API = async (itemID) => {
 // ======================================================================
 //  POST route API - Order
 // ======================================================================
-const postData_API = async (dataArg = {}) => {
+const postData_API = async (contact, products) => {
 
     const response = await fetch("http://localhost:3000/api/teddies/order", {
         method: "POST",  
 
-        // body: JSON.stringify(  dataArg  ), 
-        //                          V
-        //                          V
-        body: JSON.stringify(
+        body: JSON.stringify({contact, products})
+
+
+        // body: JSON.stringify(
             // contact: {
             //     *   firstName: string,
             //     *   lastName: string,
@@ -46,7 +46,7 @@ const postData_API = async (dataArg = {}) => {
             //     * }
 
             //     * products: [string]
-        ), 
+        // ) 
     });
     
     try {

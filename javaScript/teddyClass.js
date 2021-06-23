@@ -41,7 +41,6 @@ const setTeddy = (data) => {
         data.price,
         data.imageUrl,
         data.description,
-        data.quantity,
         data.selectedColor,
         data.colors
     );

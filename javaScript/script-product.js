@@ -29,11 +29,11 @@ const renderItemProperties = () => {
         
         const createDropdownColors = (colorId) => {
                                                             // **********
-            const dropdownColorsHtml = `<a class="flexCenter">${jsonData.colors[colorId]}</a>`;
+            const dropdownColorsHtml = `<a class="flexCenter">${teddy.colors[colorId]}</a>`;
             dropdownContent.insertAdjacentHTML("beforeend", dropdownColorsHtml);
         }
                         // **********
-        const arrayLength = jsonData.colors.length;
+        const arrayLength = teddy.colors.length;
         
         // Render html content for each color in the API's list
         for (let i = 0; i < arrayLength; i++) {

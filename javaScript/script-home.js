@@ -33,11 +33,13 @@ const creatProductList = (teddy) => {
 // ======================================================================
 // Render "Items list elements"
 // ======================================================================
-const renderProductList = () => {
+const renderProductList = async () => {
 
-    fetch("http://localhost:3000/api/teddies")
-    .then((response) => response.json())
-    .then((jsonData) => {
+    // fetch("http://localhost:3000/api/teddies")
+    // .then((response) => response.json())
+    // .then((jsonData) => {
+        
+        const jsonData = await getMainData_API();
 
         const jsonDataLength = jsonData.length;
 
@@ -47,13 +49,13 @@ const renderProductList = () => {
             const teddy = setTeddy(jsonData[i]);
             creatProductList(teddy);
         }
-    });
+    // });
 
 
     // // ***********************************************************
     // // Test Route Function ==> stored to variable (Not Working ! )
     // // ***********************************************************
-    // const dataAPI = fetch("http://localhost:3000/api/teddies")
+    // const dataAPI = await fetch("http://localhost:3000/api/teddies")
     //                 .then((response) => response.json())
     //                 .then((jsonData) => {return jsonData});
 

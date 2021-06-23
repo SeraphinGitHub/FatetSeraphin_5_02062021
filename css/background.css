@@ -38,6 +38,12 @@ h1, h2, h3, h4, h5, h6, p {
     src: url("../fonts/Raleway-Medium.ttf");
 }
 
+/* Roboto Medium */
+@font-face {
+    font-family: "Roboto-Medium";
+    src: url("../fonts/Roboto-Medium.ttf");
+}
+
 /* Roboto Bold */
 @font-face {
     font-family: "Roboto-Bold";

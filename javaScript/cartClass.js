@@ -195,7 +195,7 @@ class CartClass {
             quantityInput.value = qtyArray_indexOne;
             cartArray[teddyIndex].quantity.splice(0, 1, qtyArray_indexOne);
             localStorage.setItem("cartArray", JSON.stringify(cartArray));
-
+            
             this.setTotalQty();  // Update number of items in the cart
             this.setTotalPrice();  // Update total price in the cart
         }
@@ -465,17 +465,82 @@ class CartClass {
     // ======================================================================
     // Confirm form page and order command
     // ======================================================================
-    confirm() {
-        const confirmBtn = document.querySelector(".confirm-order-btn");
-        if (confirmBtn) {
+    getCustomerInfos() {
 
-            confirmBtn.addEventListener("click", () => {
-                
-                // ************************************************************
-                // POST Function
-                // ************************************************************
-            });
-        }
+        const contact = document.querySelector(".contact");
+        const contactData = new FormData(contact);
+
+        const firstName = document.getElementById("firstName");
+        const lastName = document.getElementById("lastName");
+        const address = document.getElementById("address");
+        const city = document.getElementById("city");
+        const email = document.getElementById("email");
+        
+        // contactData.append("firstName", firstName.value);
+        // contactData.append("lastName", lastName.value);
+        // contactData.append("address", address.value);
+        // contactData.append("address", address.value);
+        // contactData.append("city", city.value);
+        // contactData.append("email", email.value);
+
+        let firstName_field = firstName.value
+        let lastName_field = lastName.value
+        let address_field = address.value
+        let city_field = city.value
+        let email_field = email.value
+
+        contactData.firstName = firstName_field;
+        contactData.lastName = lastName_field;
+        contactData.address = address_field;
+        contactData.city = city_field;
+        contactData.email = email_field;
+
+        // *********************************************
+        localStorage.setItem("contactData", JSON.stringify(contactData));
+        // *********************************************
+
+        // console.log(contactData);
+
+        // firstName.addEventListener("input", () =>{
+            
+        //     if (firstName.validity.valid) {
+        //         alert("aze")
+        //     }
+
+        // }, false);
+
+        return contactData;
+    }
+
+
+
+    // ======================================================================
+    // Confirm form page and order command
+    // ======================================================================
+    confirm() {
+
+        const confirmBtn = document.querySelector(".confirm-order-btn");
+
+        confirmBtn.addEventListener("click", (event) => {
+            
+            event.preventDefault();
+
+            const contact = this.getCustomerInfos();
+            const products = this.getItems();
+
+            // ************************************************************
+            // POST Function
+            // ************************************************************
+
+            console.log(contact);
+            console.log(products);
+
+            postData_API(contact, products);
+
+
+            
+        });
+        
     }
 }
 
