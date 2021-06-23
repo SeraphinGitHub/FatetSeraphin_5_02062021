@@ -46,7 +46,6 @@ const creatCartItem = (teddy, teddyQty) => {
 // ======================================================================
 const renderItemsCartList = () => {
 
-    const cart = setCartClass();
     let cartArray = cart.getItems();
     
     // For each teddy in cart
@@ -56,43 +55,7 @@ const renderItemsCartList = () => {
         let teddyQty = cart.miniQtyLoop(cartArray[i].quantity); //Get Teddy total quantity
 
         creatCartItem(teddy, teddyQty); // Render list item in cart
-        onClick_QtyAddCartButton(teddy); // Set "+/-" button per item in cart
     }
-}
-
-
-// On Click button - "Retirer"
-const onClick_Remove = () => {
-    const cart = setCartClass();
-    cart.removeItem();
-}
-
-
-// On Click button - "Vider le panier"
-const onClick_EmptyCart = () => {
-    const cart = setCartClass();
-    cart.emptyCart();
-}
-
-
-// On Click button - "Passer commande"
-const onClick_Purchase = () => {
-    const cart = setCartClass();
-    cart.purchase();
-}
-
-
-// On Click button - "Confirmer commande"
-const onClick_Confirm = () => {
-    const cart = setCartClass();
-    cart.confirm();
-}
-
-
-// Update Total cart price
-const updateTotalPrice = () => {
-    const cart = setCartClass();
-    cart.setTotalPrice();
 }
 
 
@@ -102,8 +65,9 @@ const updateTotalPrice = () => {
 window.addEventListener("load", () => {
     renderItemsCartList();
     updateTotalPrice();
-    onClick_Remove();
-    onClick_EmptyCart();
-    onClick_Purchase();
-    onClick_Confirm();
+    cartQuantityBtn();
+    removeItem();
+    emptyCart();
+    purchase();
+    confirm();
 });

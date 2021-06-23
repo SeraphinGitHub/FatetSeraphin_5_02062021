@@ -28,11 +28,11 @@ const renderItemProperties = () => {
         const dropdownContent = document.querySelector(".dropdown-content");
         
         const createDropdownColors = (colorId) => {
-            
+                                                            // **********
             const dropdownColorsHtml = `<a class="flexCenter">${jsonData.colors[colorId]}</a>`;
             dropdownContent.insertAdjacentHTML("beforeend", dropdownColorsHtml);
         }
-        
+                        // **********
         const arrayLength = jsonData.colors.length;
         
         // Render html content for each color in the API's list
@@ -40,7 +40,7 @@ const renderItemProperties = () => {
             createDropdownColors(i);
         }
 
-        onClick_QtyAddCartButton(teddy); // Call the function to change quantity & add item to cart
+        addItem(teddy); // CartClass "Add" & "+ / -" buttons
     });
 }
 
@@ -48,7 +48,7 @@ const renderItemProperties = () => {
 // ======================================================================
 // Control button "Personaliser"
 // ======================================================================
-const onClick_CustomButton = () => {
+const customButton = () => {
 
     const customBtn = document.querySelector(".custom-btn");
     const dropCont = document.querySelector(".dropdown-content");
@@ -61,7 +61,6 @@ const onClick_CustomButton = () => {
     customBtn.addEventListener("click", function() {
 
         dropFlow.style = "visibility: visible";
-        
         this.style = "border-radius: 20px 20px 0 0";
         
         dropCont.style = `
@@ -97,5 +96,5 @@ const onClick_CustomButton = () => {
 // ======================================================================
 window.addEventListener("load", () => {
     renderItemProperties();
-    onClick_CustomButton();
+    customButton();
 });

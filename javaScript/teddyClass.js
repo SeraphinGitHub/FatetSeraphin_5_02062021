@@ -48,3 +48,22 @@ const setTeddy = (data) => {
 
     return teddy
 }
+
+
+// **********************************************************
+
+const teddyDataAPI = (getId) => {
+    
+    fetch(`http://localhost:3000/api/teddies/${getId}`)
+    .then((response) => response.json())
+    .then((jsonData) => {
+        
+        const teddy = setTeddy(jsonData);
+        
+        return teddy;
+    });
+    
+    return teddy;
+}
+
+// **********************************************************

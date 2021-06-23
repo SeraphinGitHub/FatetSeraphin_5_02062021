@@ -16,12 +16,10 @@
     <title>Orinoco - Produit</title>
     
     <script src="../javaScript/routesAPI.js" async></script>
-    <script src="../javaScript/script-background.js" async></script>
-    <script src="../javaScript/script-quantityBtn.js" async></script>
-    <script src="../javaScript/script-product.js" async></script>
-    <script src="../javaScript/script-cart.js" async></script>
     <script src="../javaScript/teddyClass.js" async></script>
     <script src="../javaScript/cartClass.js" async></script>
+    <script src="../javaScript/script-background.js" async></script>
+    <script src="../javaScript/script-product.js" async></script>
 </head>
 
 <body class="flexCenter">
@@ -56,6 +54,11 @@
             
             <div class="flexCenter qnt-add-tag">
                 <div class="flexCenter plus-minus-btn">
+
+                    <span class="max-value-alert">
+                        Vous ne pouvez pas ajouter plus de <span></span> de cet article au panier en une seule fois !
+                    </span>
+
                     <button class="btn quantity-minus-btn" type="button"> - </button>
                     <button class="btn quantity-plus-btn" type="button"> + </button>
                     
@@ -64,6 +67,7 @@
                             
                         <input class="quantity-input" type="number" name="quantity" id="quantity" min="1" max="10" value="1">
                     </div>
+
                 </div>
 
                 <button class="btn cart-add-btn" type="button">Ajouter au panier</button>

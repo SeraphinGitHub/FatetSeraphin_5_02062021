@@ -147,7 +147,40 @@
 }
 
 
-/*  ---  Cart Add Button --- */
+/*  --- Max value Alert --- */
+.plus-minus-btn {
+    position: relative;
+}
+
+.max-value-alert {
+    position: absolute;
+    /* display: none; */
+    opacity: 0;
+    text-align: center;
+
+    padding: 5px;
+    width: 450px;
+    top: -45px;
+    left: -70px;
+    background: linear-gradient(to bottom right, white, pink);
+    border: solid 2px red;
+    border-radius: 12px;
+    
+    font-family: "Raleway-Medium";
+    line-height: 130%;
+    font-weight: 400;
+    font-size: 105%;
+}
+
+.max-value-alert span {
+    font-family: "Roboto-Bold";
+    line-height: 100%;
+    font-weight: 600;
+    font-size: 130%;
+}
+
+
+/*  --- Cart Add Button --- */
 .cart-add-btn {
     width: 48%;
     margin-bottom: 3px;

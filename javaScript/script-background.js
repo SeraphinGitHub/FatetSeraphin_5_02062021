@@ -67,20 +67,10 @@ const renderFooter = () => {
 
 
 // ======================================================================
-// Calculate total number of Items in cart
-// ======================================================================
-const updateTotalItems = () => {
-
-    const cart = setCartClass();
-    cart.setTotalQty();
-}
-
-
-// ======================================================================
 // Functions chaining order
 // ======================================================================
 window.addEventListener("load", () => {
     renderHeader();
-    updateTotalItems();
+    updateTotalQty();
     renderFooter();
 });

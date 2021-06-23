@@ -224,11 +224,11 @@ h1 {
     top: -15px;
     right: -15px;
     border-radius: 50%;
-    box-shadow: black 5px 0px 5px;
+    box-shadow: black 8px 0px 5px;
     font-size: 180%;
     font-weight: 600;
     color: white;
-    text-shadow: black 2px 2px 2px;
+    text-shadow: black 5px 2px 4px;
 }
 
 .orinoco:hover,

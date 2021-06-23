@@ -24,71 +24,180 @@ class CartClass {
     // ======================================================================
     // Add item to Cart
     // ======================================================================
-    addItem(teddy, quantityValue) {
+    addItem(teddy) {
+        
+        const inputClass = document.querySelector(".quantity-input"); // Get input field's Product Page
+        let quantityValue = Number (inputClass.value);
+        const resetValue = 1;
+        
+        const minusBtn = document.querySelector(".quantity-minus-btn"); // Get "-" button Product Page
+        const plusBtn = document.querySelector(".quantity-plus-btn"); // Get "+" button Product Page
+        const minValue = Number (inputClass.min);  // Get min value from input field's attribute
+        const maxValue = Number (inputClass.max);  // Get max value from input field's attribute
+        
+        
+        // **********************************************************
+        // For FUN !!! ^_^ (I like coding)
+        // **********************************************************
+            const maxValueAlert = document.querySelector(".max-value-alert");
+        
+            maxValueAlert.children[0].textContent = maxValue;
+            const transitionTime = 1; // ==> (Seconds)
+        // **********************************************************
 
-        let cartArray = this.getItems();        
-        const elementMatchId = element => element._id === teddy._id;
-        
-        if (!cartArray.find(elementMatchId)) {
+
+        // =======================================
+        // On Click " + " Button in Product Page
+        // =======================================
+        plusBtn.addEventListener("click", () => {
+
+            // Keep increase quantity value as long as under max value
+            if (quantityValue < maxValue) {
+
+                quantityValue++;
+                inputClass.value = quantityValue;  // Render value in input's field
+
+                if (quantityValue === maxValue) {  // Grey out "+" button over max value reached
+                    plusBtn.style = "background : linear-gradient(to bottom right, lightgray, black)"
+                }
+            } 
             
-            teddy.quantity.push(Number (quantityValue));
-            cartArray.push(teddy);            
-            localStorage.setItem("cartArray", JSON.stringify(cartArray));
-        }
+            else {
+                // maxValueAlert.style = "display: block";
+                maxValueAlert.style = `
+                    opacity: 100%;
+                    transition-duration: ${transitionTime}s
+                `;
+
+                setTimeout(() => {
+                    maxValueAlert.style = `
+                        opacity: 0%;
+                        transition-duration: ${transitionTime}s
+                    `;
+                }, 5000);
+
+                return;  // If max value's reached => stop at max value's value
+            }
+        });  
+
+
+        // =======================================
+        // On Click " - " Button in Product Page
+        // =======================================
+        minusBtn.addEventListener("click", () => {
+
+            // Keep decrease quantity value as long as over min value
+            if (quantityValue > minValue) {
+
+                quantityValue--;
+                inputClass.value = quantityValue;  // Render value in input's field
+                plusBtn.style = "background: linear-gradient(to bottom right, greenyellow, rgb(0, 170, 0));"
+                
+                // maxValueAlert.style = "display: none;";
+                maxValueAlert.style = `
+                    opacity: 0%;
+                    transition-duration: ${transitionTime}s
+                `;
+            }
+            
+            else return;  // If min value's reached => stop at min value's value
+        });
         
-        else {
-            const teddyIndex = cartArray.findIndex(elementMatchId);
-            cartArray[teddyIndex].quantity.push(Number (quantityValue));
-            localStorage.setItem("cartArray", JSON.stringify(cartArray));
-        }
+
+        // =======================================
+        // On Click "Add to Cart" in Product Page
+        // =======================================
+        const addButton = document.querySelector(".cart-add-btn");
+
+        addButton.addEventListener("click", () => {
+
+            let cartArray = this.getItems(); // Get data from localStorage
+
+            const elementMatchId = element => element._id === teddy._id; // Compare ID
+            
+            // If this item's Id doesn't exist in localStorage ==> Create new Teddy with chosen qty
+            if (!cartArray.find(elementMatchId)) {
+
+                teddy.quantity.push(Number (quantityValue)); // Push the chosen qty in the current teddy's qty array
+                cartArray.push(teddy); // Push the teddy with new qty value in cartArray 
+                localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
+            }
+            
+            // If this item's Id already exist in localStorage ==> Just add chosen qty to qty array of current Teddy
+            else {
+                const teddyIndex = cartArray.findIndex(elementMatchId); // Find the current teddy's index in cartArray
+                cartArray[teddyIndex].quantity.push(Number (quantityValue)); // Push the chosen qty in the current teddy's qty array 
+                localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
+            }    
+
+            inputClass.value = resetValue;  // After adding item to cart => restore input field to 1
+            quantityValue = resetValue;  // Restore "+ / -" buttons values to 1
+            this.setTotalQty();  // (cartClass.js - setTotalQty() ) Update number of items in the cart
+            plusBtn.style = "background: linear-gradient(to bottom right, greenyellow, rgb(0, 170, 0));"
+        });
     }
 
 
-    plusMinusCartPage(quantityValue, minValue, inputClass) {
 
-        let cartArray = this.getItems();        
-        
-        const minusBtnCart = document.getElementsByClassName("quantity-minus-btn");
-        const plusBtnCart = document.getElementsByClassName("quantity-plus-btn");
+    // ======================================================================
+    // Control buttons " + / - " per item in Cart Page
+    // ======================================================================
+    cartQuantityBtn() {
+
+        let cartArray = cart.getItems();
+
+        const quantity = document.getElementsByClassName("quantity");
+
+        // For each "+ / - Btn & input field's" in Cart Page
+        for (let i = 0; i < quantity.length; i++) {
             
-        // modify the current " + " button
-        for (let i = 0; i < plusBtnCart.length; i++) {
-            const button = plusBtnCart[i];
-            
-            button.addEventListener("click", (event) => {
-                quantityValue++;
-                onClickBtn(event);
+            const quantity_Indexed = quantity[i];
+            const plusBtnCart = quantity_Indexed.querySelector(".quantity-plus-btn");
+            const minusBtnCart = quantity_Indexed.querySelector(".quantity-minus-btn");
+
+            // On Click " + " button
+            plusBtnCart.addEventListener("click", (event) => {
+                
+                const button = "+";
+                manageQuantity(event, button);
+            });
+
+
+            // On Click " - " button
+            minusBtnCart.addEventListener("click", (event) => {
+
+                const button = "-";
+                manageQuantity(event, button);
             });
         }
-    
 
-        // modify the current " - " button
-        if (quantityValue > minValue) {
-        
-            for (let i = 0; i < minusBtnCart.length; i++) {
-                const button = minusBtnCart[i];
-                
-                button.addEventListener("click", (event) => {
-                    quantityValue--;
-                    onClickBtn(event);
-                });
-            }
-        }
-        
 
-        const onClickBtn = (event) => {
+        const manageQuantity = (event, button) => {
 
-            inputClass.value = quantityValue;
-
-            const getTargetId = event.target.parentElement.parentElement.id;
+            const getParent = event.target.parentElement;
+            const getTargetId = getParent.parentElement.id;
+            let quantityInput = getParent.querySelector(".quantity-input");
+            
             const elementMatchId = element => element._id === getTargetId;
             const teddyIndex = cartArray.findIndex(elementMatchId);
+            let qtyArray_indexOne = cartArray[teddyIndex].quantity[0];
 
-            cartArray[teddyIndex].quantity.push(Number (quantityValue));
-            localStorage.setItem("cartArray", JSON.stringify(cartArray));
+            const minValue = Number (quantityInput.min);
             
-            updateTotalItems();  // (background.js) Update number of items in the cart
-            updateTotalPrice();  // (cart.js) Update total price in the cart
+            if (button === "+") {
+                qtyArray_indexOne ++;
+            }
+
+            if (quantityInput.value > minValue && button === "-") {
+                qtyArray_indexOne --;
+            }
+            
+            quantityInput.value = qtyArray_indexOne;
+            cartArray[teddyIndex].quantity.splice(0, 1, qtyArray_indexOne);
+            localStorage.setItem("cartArray", JSON.stringify(cartArray));
+
+            this.setTotalQty();  // Update number of items in the cart
+            this.setTotalPrice();  // Update total price in the cart
         }
     }
 
@@ -99,27 +208,28 @@ class CartClass {
     // ======================================================================
     removeItem() {
 
-        let cartArray = this.getItems();
+        let cartArray = this.getItems(); // Get data from localStorage
 
         const removeBtn = document.getElementsByClassName("remove-btn");
-        const removeTransition = "transform: translateY(-100%); transition-duration: 0.3s";
+        const removeTransition = "transform: translateY(-100%); transition-duration: 0.3s"; // Move <div> up 
         
-        // Cycle event for each "remove button" of the page
+        // Cycle addEventListener for each "remove button" of the page 
         for (let i = 0; i < removeBtn.length; i++) {
-            const button = removeBtn[i];
             
-            button.addEventListener("click", (event) => {
+            const removeBtn_Indexed = removeBtn[i];
+            
+            removeBtn_Indexed.addEventListener("click", (event) => {
 
-                const getTargetId = event.target.parentElement.id;
-                const elementMatchId = element => element._id === getTargetId;
-                const teddyIndex = cartArray.findIndex(elementMatchId);
+                const getTargetId = event.target.parentElement.id; // Get cliked element main <div> Id
+                const elementMatchId = element => element._id === getTargetId; // Compare ID
+                const teddyIndex = cartArray.findIndex(elementMatchId); // Find the current teddy's index in cartArray
 
-                cartArray.splice(teddyIndex, 1);
-                localStorage.setItem("cartArray", JSON.stringify(cartArray));
+                cartArray.splice(teddyIndex, 1); // Delete the "Teddy object" at this index
+                localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
 
                 event.target.parentElement.style = removeTransition;  // Move <div> up                
-                updateTotalItems();  // (background.js) Update number of items in the cart
-                updateTotalPrice();  // Update total price in the cart
+                this.setTotalQty();  // Update number of items in the cart
+                this.setTotalPrice();  // Update total price in the cart
 
                 setTimeout(() => {
                     event.target.parentElement.remove();  // Totally remove the html content after delay
@@ -136,27 +246,23 @@ class CartClass {
     emptyCart() {
 
         const cleanBtn = document.querySelector(".clean-cart-btn");
+        const listContainer = document.querySelector(".list-container");
+        const emptyTransition = "transform: translateY(-100%); transition-duration: 0.5s"; // Move <div> up
 
-        if (cleanBtn) {
+        cleanBtn.addEventListener("click", () => {
 
-            const listContainer = document.querySelector(".list-container");
-            const emptyTransition = "transform: translateY(-100%); transition-duration: 0.5s";
+            if (listContainer) {
 
-            cleanBtn.addEventListener("click", () => {
-
-                if (listContainer) {
-
-                    listContainer.style = emptyTransition;  // Move <div> up
-                    localStorage.clear();  // Delete all data from localStorage
-                    updateTotalItems();  // (background.js) Update number of items in the cart
-                    updateTotalPrice();  // Update total price in the cart
-                    
-                    setTimeout(() => {
-                        listContainer.remove();  // Totally remove the html content after delay
-                    }, 500);
-                };
-            });
-        }
+                listContainer.style = emptyTransition;  // Move <div> up
+                localStorage.clear();  // Delete all data from localStorage
+                this.setTotalQty();  // Update number of items in the cart
+                this.setTotalPrice();  // Update total price in the cart
+                
+                setTimeout(() => {
+                    listContainer.remove();  // Totally remove the html content after delay
+                }, 500);
+            };
+        });
     }
 
 
@@ -174,7 +280,7 @@ class CartClass {
 
     miniQtyLoop(quantityArray) {
         let quantityTotal = 0;
-
+        
         for (let i in quantityArray) {
             quantityTotal += quantityArray[i];
         }
@@ -195,12 +301,38 @@ class CartClass {
             
             let totalQtyAll = 0;
 
-            for (let i in cartArray) {
+            if (localStorage.length) {
+              
+                // For each Teddy in cart Array (LocalStorage)
+                for (let i in cartArray) {
+                    
+                    let quantityTotal = 0;
+                    let quantityArray = cartArray[i].quantity;
+                    
+                    // For each value in this Teddy's quantity Array (LocalStorage)
+                    for (let i in quantityArray) {
+                        
+                        quantityTotal += quantityArray[i];
+                    }
+                    
+                    // Add up every value in this Teddy's quantity Array
+                    totalQtyAll += quantityTotal;
+                }
 
-                return this.quantityLoop(totalQtyAll, cartArray, i, 1);
+                return totalQtyAll;
             }
 
-            return totalQtyAll;
+            else return totalQtyAll;
+
+            // *******************************************************
+            // let totalQtyAll = 0;
+
+            // for (let i in cartArray) {
+
+            //     this.quantityLoop (totalQtyAll, cartArray, i, 1);
+            // }
+
+            // return totalQtyAll;
         }
 
         // Display the "total" calculated value in the cart html element
@@ -221,13 +353,39 @@ class CartClass {
             
             let totalPrice = 0;
 
-            for (let i in cartArray) {
+            if (localStorage.length) {
 
-                let teddyPrice = cartArray[i].price;
-                return this.quantityLoop(totalPrice, cartArray, i, teddyPrice);
+                // For each Teddy in cart Array (LocalStorage)
+                for (let i in cartArray) {
+    
+                    let quantityArray = cartArray[i].quantity;
+                    let teddyPrice = cartArray[i].price;
+                    let quantityTotal = 0;
+                    
+                    // For each value in this Teddy's quantity Array (LocalStorage)
+                    for (let i in quantityArray) {
+    
+                        quantityTotal += quantityArray[i];
+                    }
+                    
+                    // Add up every value in this Teddy's quantity Array, then multipled by this Teddy's price
+                    totalPrice += quantityTotal * teddyPrice;
+                }
+
+                return totalPrice;
             }
 
-            return totalPrice;
+            else return totalPrice;
+
+            // *******************************************************
+            // let totalPrice = 0;
+
+            // for (let i in cartArray) {
+
+            //     this.quantityLoop (totalPrice, cartArray, i, teddyPrice);
+            // }
+
+            // return totalPrice;
         }
         
         // Turn the total price value into a currency (Cart Page)
@@ -235,8 +393,7 @@ class CartClass {
 
         // Display total price in "Total" html container (Cart Page)
         const totalPriceDiv = document.querySelector(".total-price");
-
-        if (totalPriceDiv) totalPriceDiv.textContent = currencyTotalPrice;
+        totalPriceDiv.textContent = currencyTotalPrice;
     }
 
 
@@ -330,4 +487,58 @@ const setCartClass = () => {
     );
 
     return cart
+}
+
+
+// ======================================================================
+// Set Cart method to callable functions
+// ======================================================================
+const cart = setCartClass();
+
+
+// On Click button - "Add" or "+ / -" (Product Page)
+const addItem = (teddy) => {
+    cart.addItem(teddy);
+}
+
+
+// On Click button - "+ / -" (Cart Page)
+const cartQuantityBtn = () => {
+    cart.cartQuantityBtn();
+}
+
+
+// On Click button - "Retirer" (Cart Page)
+const removeItem = () => {
+    cart.removeItem();
+}
+
+
+// On Click button - "Vider le panier" (Cart Page)
+const emptyCart = () => {
+    cart.emptyCart();
+}
+
+
+// Update Total cart quantity (All Pages)
+const updateTotalQty = () => {
+    cart.setTotalQty();
+}
+
+
+// Update Total cart price (Cart Page)
+const updateTotalPrice = () => {
+    cart.setTotalPrice();
+}
+
+
+// On Click button - "Passer commande" (Cart Page)
+const purchase = () => {
+    cart.purchase();
+}
+
+
+// On Click button - "Confirmer commande" (Cart Page)
+const confirm = () => {
+    cart.confirm();
 }
