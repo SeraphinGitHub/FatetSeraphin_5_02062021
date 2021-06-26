@@ -71,6 +71,6 @@ const renderFooter = () => {
 // ======================================================================
 window.addEventListener("load", () => {
     renderHeader();
-    updateTotalQty();
+    cart.updateTotalQty();
     renderFooter();
 });

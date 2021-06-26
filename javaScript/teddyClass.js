@@ -49,20 +49,9 @@ const setTeddy = (data) => {
 }
 
 
-// **********************************************************
-
-const teddyDataAPI = (getId) => {
+const teddyClass_WithAPI = async (getId) => {
     
-    fetch(`http://localhost:3000/api/teddies/${getId}`)
-    .then((response) => response.json())
-    .then((jsonData) => {
-        
-        const teddy = setTeddy(jsonData);
-        
-        return teddy;
-    });
-    
+    const teddyJson = await getTeddyData_API(getId);
+    const teddy = setTeddy(teddyJson);
     return teddy;
 }
-
-// **********************************************************

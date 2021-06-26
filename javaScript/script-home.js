@@ -35,39 +35,15 @@ const creatProductList = (teddy) => {
 // ======================================================================
 const renderProductList = async () => {
 
-    // fetch("http://localhost:3000/api/teddies")
-    // .then((response) => response.json())
-    // .then((jsonData) => {
+    const jsonData = await getAllData_API();
+    const jsonDataLength = jsonData.length;
+
+    // Render html content for each item in the API's list
+    for (let i = 0; i < jsonDataLength; i++) {
         
-        const jsonData = await getMainData_API();
-
-        const jsonDataLength = jsonData.length;
-
-        // Render html content for each item in the API's list
-        for (let i = 0; i < jsonDataLength; i++) {
-            
-            const teddy = setTeddy(jsonData[i]);
-            creatProductList(teddy);
-        }
-    // });
-
-
-    // // ***********************************************************
-    // // Test Route Function ==> stored to variable (Not Working ! )
-    // // ***********************************************************
-    // const dataAPI = await fetch("http://localhost:3000/api/teddies")
-    //                 .then((response) => response.json())
-    //                 .then((jsonData) => {return jsonData});
-
-    // const dataAPILength = dataAPI.length;
-
-    // // Render html content for each item in the API's list
-    // for (let i = 0; i < dataAPILength; i++) {
-        
-    //     const teddy = setTeddy(dataAPI[i]);
-    //     creatProductList(teddy);
-    // }
-    // // ***********************************************************
+        const teddy = setTeddy(jsonData[i]);
+        creatProductList(teddy);
+    }
 }
 
 
