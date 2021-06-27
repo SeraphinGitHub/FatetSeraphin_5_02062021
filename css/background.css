@@ -102,12 +102,13 @@ body button {
 header,
 .main,
 footer {
-    width: 80%;
+    width: 70%;
 }
 
 .border-radius {
     border-radius: 30px;
 }
+
 
 /* ============================================ */
 /*          ---  Figure / Price   ---           */
@@ -209,7 +210,7 @@ h1 {
 .cart p {
     font-size: 170%;
     font-weight: 600;
-    padding-left: 50px;
+    margin-left: 50px;
 }
 
 .logo-cart {
@@ -282,6 +283,10 @@ h2 {
     font-size: 400%;
 }
 
+
+/* ============================================ */
+/*        Remove Arrows - input fields          */
+/* ============================================ */
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

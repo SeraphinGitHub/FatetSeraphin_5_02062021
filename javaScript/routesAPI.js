@@ -38,7 +38,7 @@ const postData_API = async (contact, products) => {
     try {
         const newData = await response.json();
         
-        console.log(newData);
+        // console.log(newData);
         
         return newData;
     }

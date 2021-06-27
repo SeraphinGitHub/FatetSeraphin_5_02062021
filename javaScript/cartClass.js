@@ -22,7 +22,7 @@ class CartClass {
     // ======================================================================
     // Handle "Add to Cart" button
     // ======================================================================
-    addItem(teddy, inputClass, plusBtn) {
+    addItem(teddy, inputClass, plusBtn, maxValueAlert) {
         
         const resetValue = 1;        
         let quantityValue = Number (inputClass.value);
@@ -47,15 +47,22 @@ class CartClass {
 
         inputClass.value = resetValue;  // After adding item to cart => restore input field to 1
         quantityValue = resetValue;  // Restore "+ / -" buttons values to 1
-        this.updateTotalQty();  // (cartClass.js - updateTotalQty() ) Update number of items in the cart
-        plusBtn.style = "background: linear-gradient(to bottom right, greenyellow, rgb(0, 170, 0));"
+        this.updateTotalQty();  // Update number of items in the cart
+
+
+        plusBtn.classList.remove("greyed-out-btn");
+
+        if (getComputedStyle(maxValueAlert).visibility === "visible") {
+            maxValueAlert.classList.remove("visible");
+            maxValueAlert.classList.remove("opacity_100");
+        }
     }
 
 
     // ======================================================================
     // Handle " + " button (not Cart)
     // ======================================================================
-    plusBtnProduct(maxValue, inputClass, plusBtn, maxValueAlert, transitionTime) {
+    plusBtnProduct(maxValue, inputClass, plusBtn, maxValueAlert) {
         
         let quantityValue = Number (inputClass.value);
         
@@ -66,22 +73,17 @@ class CartClass {
             inputClass.value = quantityValue;  // Render value in input's field
 
             if (quantityValue === maxValue) {  // Grey out "+" button over max value reached
-                plusBtn.style = "background : linear-gradient(to bottom right, lightgray, black)"
+                plusBtn.classList.add("greyed-out-btn");
             }
         } 
         
         else {
-            // maxValueAlert.style = "display: block";
-            maxValueAlert.style = `
-                opacity: 100%;
-                transition-duration: ${transitionTime}s
-            `;
+            maxValueAlert.classList.add("visible");
+            maxValueAlert.classList.add("opacity_100");
 
             setTimeout(() => {
-                maxValueAlert.style = `
-                    opacity: 0%;
-                    transition-duration: ${transitionTime}s
-                `;
+                maxValueAlert.classList.remove("visible");
+                maxValueAlert.classList.remove("opacity_100");
             }, 5000);
 
             return;  // If max value's reached => stop at max value's value
@@ -92,7 +94,7 @@ class CartClass {
     // ======================================================================
     // Handle " - " button (not Cart)
     // ======================================================================
-    minusBtnProduct(minValue, inputClass, plusBtn, maxValueAlert, transitionTime) {
+    minusBtnProduct(minValue, inputClass, plusBtn, maxValueAlert) {
         
         let quantityValue = Number (inputClass.value);
         
@@ -101,13 +103,10 @@ class CartClass {
 
             quantityValue--;
             inputClass.value = quantityValue;  // Render value in input's field
-            plusBtn.style = "background: linear-gradient(to bottom right, greenyellow, rgb(0, 170, 0));"
-            
-            // maxValueAlert.style = "display: none;";
-            maxValueAlert.style = `
-                opacity: 0%;
-                transition-duration: ${transitionTime}s
-            `;
+            plusBtn.classList.remove("greyed-out-btn");
+
+            maxValueAlert.classList.remove("visible");
+            maxValueAlert.classList.remove("opacity_100");
         }
         
         else return;  // If min value's reached => stop at min value's value
@@ -122,12 +121,12 @@ class CartClass {
         const cartArray = this.getItems();
         
         // For each teddy in cart
-        for (const i in cartArray) {
-
-            const teddy = setTeddy(cartArray[i]); // Get Teddy data from localStorage
-            const teddyQty = cartArray[i].quantity[0]; //Get Teddy quantity
+        cartArray.forEach(item => {
+        
+            const teddy = setTeddy(item); // Get Teddy data from localStorage
+            const teddyQty = item.quantity[0]; //Get Teddy quantity
             creatCartItem(teddy, teddyQty); // Render item in cart
-        }
+        });
     }
 
 
@@ -170,17 +169,15 @@ class CartClass {
     // ======================================================================
     removeItem(event) {
 
-        const cartArray = cart.getItems(); // Get data from localStorage
-        const removeTransition = "transform: translateY(-100%); transition-duration: 0.3s"; // Move <div> up
-        
+        const cartArray = cart.getItems(); // Get data from localStorage        
         const getTargetId = event.target.parentElement.id; // Get cliked element main <div> Id
         const elementMatchId = element => element._id === getTargetId; // Compare ID
+        
         const teddyIndex = cartArray.findIndex(elementMatchId); // Find the current teddy's index in cartArray
-
         cartArray.splice(teddyIndex, 1); // Deconste the "Teddy object" at this index
         localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
 
-        event.target.parentElement.style = removeTransition;  // Move <div> up                
+        event.target.parentElement.classList.add("translateY_-100");  // Move <div> up before remove              
         cart.updateTotalQty();  // Update number of items in the cart
         cart.updateTotalPrice();  // Update total price in the cart
 
@@ -193,9 +190,9 @@ class CartClass {
     // ======================================================================
     // Clear all Cart
     // ======================================================================
-    emptyCart(listContainer, emptyTransition) {
+    emptyCart(listContainer) {
 
-        listContainer.style = emptyTransition;  // Move <div> up
+        listContainer.classList.add("translateY_-100");  // Move <div> up
         localStorage.clear();  // Deconste all data from localStorage
         this.updateTotalQty();  // Update number of items in the cart
         this.updateTotalPrice();  // Update total price in the cart
@@ -215,17 +212,17 @@ class CartClass {
         if (localStorage.length) {
             
             // For each Teddy in cart Array (LocalStorage)
-            for (const i in cartArray) {
-                
-                const teddyPrice = cartArray[i].price;
-                const quantity = cartArray[i].quantity[0];
+            cartArray.forEach(item => {
+
+                const teddyPrice = item.price;
+                const quantity = item.quantity[0];
                 
                 // Add up every Teddy's quantity in cart
                 if (valueType === "quantity") total += quantity;
 
                 // Add up every Teddy's quantity in cart & multiply by Teddy's price value
                 if (valueType === "price") total += quantity * teddyPrice;
-            }
+            });
 
             return total;
         }
@@ -266,49 +263,24 @@ class CartClass {
     // ======================================================================
     // Access to form page to confirm order
     // ======================================================================
-    purchase(purchasePageFlow, purchasePage, timeOutDuration, duration) {
+    purchase(purchasePageFlow, purchasePage, timeOutDuration) {
         
-        purchasePageFlow.style = `
-            visibility: visible;
-        `;
-
-        purchasePage.style = `
-            transform: translateY(0%);
-            transition-duration: ${duration}s;
-        `;
-
-        setTimeout(() => {
-
-            purchasePage.style = `
-                border-radius: 0;
-                transform: translateY(0%);
-                transition-duration: ${duration}s;
-            `;
-        }, timeOutDuration);
+        purchasePageFlow.classList.add("visible");
+        purchasePage.classList.add("translateY_0");
+        setTimeout(() => purchasePage.classList.add("border-radius_0"), timeOutDuration);
     }
 
 
     // ======================================================================
     // Cancel form and return to cart page
     // ======================================================================
-    cancelPurchase(purchasePageFlow, purchasePage, timeOutDuration, duration) {
+    cancelPurchase(purchasePageFlow, purchasePage, timeOutDuration) {
 
-        purchasePage.style = `
-            border-radius: 50% 50% 0 0;
-            transform: translateY(0%);
-            transition-duration: ${duration}s;
-        `;
-
+        purchasePage.classList.remove("border-radius_0");
+        
         setTimeout(() => {
-            
-            purchasePage.style = `
-            transform: translateY(100%);
-            transition-duration: ${duration}s;
-            `;
-            
-            purchasePageFlow.style = `
-                visibility: hidden;
-            `;
+            purchasePage.classList.remove("translateY_0");
+            purchasePageFlow.classList.remove("visible")
         }, timeOutDuration);
     }
     
@@ -323,9 +295,9 @@ class CartClass {
         const cartArray = this.getItems();
         const products = [];
 
-        for (const i in cartArray) {
-            products.push(cartArray[i]._id);
-        }
+        cartArray.forEach(item => {
+            products.push(item._id);
+        });
         
         
         // ***************************************
@@ -336,7 +308,8 @@ class CartClass {
         // console.log(products);
         // ***************************************
         
-        // postData_API(contact, products);
+        postData_API(contact, products);
+        // console.log(JSON.stringify({contact, products}));
     }
     
     
@@ -360,25 +333,39 @@ class CartClass {
         contactData.set("city", city.value);
         contactData.set("email", email.value);
 
-        this.checkEmptyness(city);
-        this.checkEmptyness(email);
-        this.checkEmptyness(address);
-        this.checkEmptyness(lastName);
-        this.checkEmptyness(firstName);
+        // Have to contain: LETTER || letter || accent letters || spaces || dash
+        const nameRegEx = new RegExp(/^[A-Za-zÜ-ü\s-]+$/);
         
+        // Have to contain: numbers at the begining && LETTER || letter || accent letters || spaces || dash
+        const adressRegEx = new RegExp(/^[0-9]+[A-Za-zÜ-ü\s-]+$/);
+        
+        // Have to contain: 
+        //    LETTER || letter || number || dot || under score || dash && at (@) &&
+        //    LETTER || letter || number && dot && LETTER || letter
+        const emailRegEx = new RegExp(/^[A-Za-z0-9\._-]+[@]+[A-Za-z0-9]+[\.]+[A-Za-z]+$/);
+
+        this.formValidation(city, nameRegEx);
+        this.formValidation(email, emailRegEx);
+        this.formValidation(address, adressRegEx);
+        this.formValidation(lastName, nameRegEx);
+        this.formValidation(firstName, nameRegEx);
+        
+        // Paul-édouard
+        // Le pömîé
+        // 123 rue du maréchal-Foch
+        // Montbéliard-sur-Saône
+        // paul.edouard_45@gmail.com
+
         return contactData;
     }
 
-    checkEmptyness(inputField) {
+    formValidation(inputField, regEx) {
         
-        if (inputField.value === "") {
+        if (inputField.value === "" || !regEx.test(inputField.value)) {
             inputField.focus();
+            console.log("Error !");
             return false;
         }
-    }
-
-    checkFormat(inputField) {
-
     }
 }
 

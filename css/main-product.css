@@ -17,27 +17,39 @@
 /* ============================================ */
 /*            ---  Left Container ---           */
 /* ============================================ */
-.left-container figure,
-.left-container img {
+.teddy-fig,
+.teddy-img {
     border-radius: 20px;
 }
 
-.left-container figure {
+.teddy-fig {
+    position: relative;
     height: 400px;
 }
 
-.left-container img {
+.teddy-img {
+    position: absolute;
+    top: 40px;
     object-fit: cover;
     height: 100%;
     width: 100%;
 }
 
-.left-container figure,
-.custom-dropdown {
+.teddy-fig {
     width: 70%;
 }
 
 /*  ---  Dropdown Custom Menu ---  */
+.custom-dropdown {
+    top: -40px;
+    width: 100%;
+}
+
+.custom-dropdown,
+.dropdown-content {
+    transition-duration: 0.5s;
+}
+
 .custom-dropdown {
     position: relative;
     height: auto;
@@ -45,6 +57,7 @@
 }
 
 .dropdown-flow {
+    visibility: hidden;
     position: absolute;
     overflow: hidden;
     width: 100%;
@@ -153,7 +166,7 @@
 
 .max-value-alert {
     position: absolute;
-    /* display: none; */
+    visibility: hidden;
     opacity: 0;
     text-align: center;
 
@@ -164,6 +177,7 @@
     background: linear-gradient(to bottom right, white, pink);
     border: solid 2px red;
     border-radius: 12px;
+    transition-duration: 1s;
     
     font-family: "Raleway-Medium";
     line-height: 130%;

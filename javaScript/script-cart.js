@@ -46,9 +46,9 @@ const creatCartItem = (teddy, teddyQty) => {
 // ======================================================================
 const cartItem_Btns = () => {
 
-    const plusBtnCart = document.getElementsByClassName("quantity-plus-btn");
-    const minusBtnCart = document.getElementsByClassName("quantity-minus-btn");
-    const removeBtn = document.getElementsByClassName("remove-btn");
+    const plusBtnCart = document.querySelectorAll(".quantity-plus-btn");
+    const minusBtnCart = document.querySelectorAll(".quantity-minus-btn");
+    const removeBtn = document.querySelectorAll(".remove-btn");
   
     itemBtn(plusBtnCart, cart.cartQuantityBtn, "+");
     itemBtn(minusBtnCart, cart.cartQuantityBtn, "-");
@@ -58,13 +58,12 @@ const cartItem_Btns = () => {
 // Cycle each button type in Cart Page & apply it's own function
 const itemBtn = (button, btnFunction, symbol) => {
     
-    for (let i = 0; i < button.length; i++) {
-        const button_Indexed = button[i];
-
-        button_Indexed.addEventListener("click", (event) => {
+    button.forEach(btn => {
+        
+        btn.addEventListener("click", (event) => {
             btnFunction(event, symbol);
         });
-    }
+    });
 }
 
 
@@ -75,12 +74,11 @@ const emptyCart = () => {
 
     const cleanBtn = document.querySelector(".clean-cart-btn");
     const listContainer = document.querySelector(".list-container");
-    const emptyTransition = "transform: translateY(-100%); transition-duration: 0.5s"; // Move <div> up
 
     cleanBtn.addEventListener("click", () => {
 
         if (listContainer) {
-            cart.emptyCart(listContainer, emptyTransition);
+            cart.emptyCart(listContainer);
         };
     });
 }
@@ -96,17 +94,16 @@ const purchase = () => {
     const purchasePage = document.querySelector(".purchase-page");
     const cancelPageBtn = document.querySelector(".cancel-order-btn");
 
-    const duration = 0.5;  // ==> (Seconds)
-    const timeOutDuration = duration * 600;
+    const timeOutDuration = 300; // ==> milliSeconds
 
     // On Click "Passer Commander" button ==> Show confirm order page (Form)
     purchaseBtn.addEventListener("click", () => {
-        cart.purchase(purchasePageFlow, purchasePage, timeOutDuration, duration);
+        cart.purchase(purchasePageFlow, purchasePage, timeOutDuration);
     });
 
     // On Click "Annuler" button ==> Hide confirm order page
     cancelPageBtn.addEventListener("click", () => {
-        cart.cancelPurchase(purchasePageFlow, purchasePage, timeOutDuration, duration);
+        cart.cancelPurchase(purchasePageFlow, purchasePage, timeOutDuration);
     });
 }
 

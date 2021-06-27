@@ -9,8 +9,8 @@ header {
 
 .orinoco {
     width: 100%;
-    margin-left: 200px;        
-    margin-right: 200px;        
+    margin-left: 20%;        
+    margin-right: 20%;        
 }
 
 .cart {
@@ -195,6 +195,7 @@ header {
     height: 100%;
     width: 100%;
     transform: translateY(100%);
+    transition-duration: 0.5s;
     border-radius: 50% 50% 0 0;
 }
 

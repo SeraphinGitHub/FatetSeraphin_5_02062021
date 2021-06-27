@@ -28,7 +28,7 @@ const renderItemProperties = async () => {
     }
 
     product_BtnHandler(teddy);
-    customButton(colorsLength);
+    customButton();
 }
 
 
@@ -57,86 +57,87 @@ const product_BtnHandler = (teddy) => {
     const maxValue = Number (inputClass.max);  // Get max value from input field's attribute
 
     // **********************************************************
-    // For FUN !!! ^_^ (I like coding)
-    // **********************************************************
-    const maxValueAlert = document.querySelector(".max-value-alert");
-    
+    const maxValueAlert = document.querySelector(".max-value-alert"); // <== For FUN !!! ^_^
     maxValueAlert.children[0].textContent = maxValue;
-    const transitionTime = 1; // ==> (Seconds)
     // **********************************************************
     
-
+    
     // On Click "Add to Cart"
     addButton.addEventListener("click", () => {
-        cart.addItem(teddy, inputClass, plusBtn);
+        cart.addItem(teddy, inputClass, plusBtn, maxValueAlert);
+        teddyImgAnim();
     });
     
 
     // On Click " + " Button
     plusBtn.addEventListener("click", () => {
-        cart.plusBtnProduct(maxValue, inputClass, plusBtn, maxValueAlert, transitionTime);
+        cart.plusBtnProduct(maxValue, inputClass, plusBtn, maxValueAlert);
     });  
     
 
     // On Click " - " Button
     minusBtn.addEventListener("click", () => {
-        cart.minusBtnProduct(minValue, inputClass, plusBtn, maxValueAlert, transitionTime);
+        cart.minusBtnProduct(minValue, inputClass, plusBtn, maxValueAlert);
     });
 }
 
 
 // ======================================================================
-// Control button "Personaliser"
+// Control button "Couleurs"
 // ======================================================================
-const customButton = (colorsLength) => {
+const customButton = () => {
 
     const customBtn = document.querySelector(".custom-btn");
     const dropCont = document.querySelector(".dropdown-content");
     const dropFlow = document.querySelector(".dropdown-flow");
+    const dropComputed = getComputedStyle(dropFlow);
 
-    const duration = 0.6;  // ==> (Seconds)
-
-    // On mouse click "Personaliser" button
+    // On mouse click "Couleurs" button
     customBtn.addEventListener("click", function() {
 
-        dropFlow.style = "visibility: visible";
-        this.style = "border-radius: 20px 20px 0 0";
+        if (dropComputed.visibility === "hidden") {
+            
+            dropFlow.classList.add("visible");
+            this.classList.remove("custom-btn-delay");
+            this.classList.add("border-radius-bottom_0");
+            this.parentElement.classList.add("translateY_-50");
+            dropCont.classList.add("translateY_0");
+        }
 
-        this.parentElement.style = `
-            transform: translateY(-${25 * colorsLength}%);
-            transition-duration: ${duration}s;
-        `;
+        else {
+            dropFlow.classList.remove("visible");
+            this.classList.add("custom-btn-delay");
+            this.classList.remove("border-radius-bottom_0");
+            this.parentElement.classList.remove("translateY_-50");
+            dropCont.classList.remove("translateY_0");
+        }
 
-        dropCont.style = `
-            transform: translateY(0%);
-            transition-duration: ${duration}s;
-        `;
     });
+}
 
 
-    // On mouse leave dropdown's container
-    dropCont.addEventListener("mouseleave", function() {
+// ======================================================================
+// Set item picture Animation ==> For FUN as well !!! ^_^
+// ======================================================================
+const teddyImgAnim = () => {
+
+    const teddyImg = document.querySelector(".teddy-img");
+    const teddyImgClone = teddyImg.cloneNode(true);
+    const teddyDouble = teddyImg.parentElement.appendChild(teddyImgClone);
+    const tedyComputed = getComputedStyle(teddyDouble);
+    
+    const duration = 1; // ==> Seconds
+    const delay = duration * 1000;
         
-        this.parentElement.parentElement.style = `
-            transform: translateY(0%);
-            transition-duration: ${duration}s;
-        `;
+    if (tedyComputed.position === "absolute") {
 
-        dropCont.style = `
-            transform: translateY(-100%);
-            transition-duration: ${duration}s;
-        `;
-        
-        customBtn.style = `
-            border-radius: 20px;
-            transition-delay: ${duration}s;
-            transition-duration: ${duration}s;
-        `;
+        teddyDouble.classList.add("teddy-img-anim");
+        teddyDouble.style.transitionDuration = `${duration}s`;
+    }
 
-        dropFlow.style = `
-            visibility: hidden;
-        `;
-    });
+    setTimeout(() => {
+        teddyDouble.remove();
+    }, delay)
 }
 
 

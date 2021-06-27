@@ -1,0 +1,44 @@
+
+/* ========================================================== */
+/*      Tablet Big Size         
+/* ========================================================== */
+@media screen and (min-width: 723px) and (max-width : 1024px) {
+
+    .orinoco {
+        justify-content: center;
+        margin-left: 15%;
+        margin-right: 15%;
+        width: 100%;
+    }
+    
+    h1 {
+        margin: 0;
+    }
+
+    .cart {
+        margin: auto;
+        margin-top: 30px;
+    }
+}
+
+
+/* ========================================================== */
+/*      Tablet Small Size         
+/* ========================================================== */
+@media screen and (min-width: 421px) and (max-width : 722px) {
+    
+    .orinoco {
+        margin: 0;
+    }
+}
+
+
+/* ========================================================== */
+/*      Smartphone         
+/* ========================================================== */
+@media screen and (min-width: 320px) and (max-width : 420px) {
+    
+    .orinoco {
+        margin: 0;
+    }
+}
