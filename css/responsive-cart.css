@@ -1,8 +1,8 @@
 
 /* ========================================================== */
-/*      Tablet Big Size         
+/*      Crossover Tablet Big Size - Smartphone         
 /* ========================================================== */
-@media screen and (min-width: 723px) and (max-width : 1024px) {
+@media screen and (min-width: 320px) and (max-width : 1024px) {
 
     .orinoco {
         justify-content: center;
@@ -19,6 +19,101 @@
         margin: auto;
         margin-top: 30px;
     }
+
+    /*  ==========  Main - Cart ========== */
+
+    /* --- Legend --- */
+    .caption h3,
+    .total-container h3 {
+        font-size: 130%;
+    }
+
+    .caption-Arti {
+        width: 29%;
+    }
+
+    .caption-Prix {
+        width: 22%;
+    }
+
+
+    /* --- List Container --- */
+    .list-container {
+        width: 95%;
+    }
+
+    .flow-cart-item {
+        flex-wrap: wrap;
+    }
+
+
+    .list-container a {
+        margin-left: 0;
+        width: 30%;
+    }
+
+    .item-price {
+        font-size: 140%;
+    }
+
+    .item-caption h3 {
+        margin-top: 0px;
+    }
+
+    .quantity {
+        width: 17%;
+    }
+
+    .quantity-plus-btn,
+    .quantity-minus-btn {
+        width: 47%;
+    }
+
+    .remove-btn {
+        width: 30%;
+        margin-bottom: 10px;
+    }
+
+
+    /* --- Order Container --- */
+    .order-container {
+        position: relative;
+        width: 90%;
+        margin-top: 20px;
+        margin-bottom: 90px;
+    }
+    
+    .total-container,
+    .order-container {
+        padding-top: 90px;
+    }
+
+    .clean-cart-btn {
+        width: 40%;
+    }
+
+    .purchase-btn {
+        height: 100px;
+        width: 70%;
+        margin: auto;
+        margin-top: 70px;
+    }
+
+    .total-container {
+        position: absolute;
+        top: 15px;
+        right: 0;
+    }
+
+
+    /* --- Confirm form page --- */
+    .contact {
+        width: 400px;
+    }
+
+    .label-input-container {
+        width: 70%;
+    }
 }
 
 
@@ -30,6 +125,38 @@
     .orinoco {
         margin: 0;
     }
+
+    .caption {
+        display: none;
+    }
+
+    .list-container {
+        margin-top: 20px;
+    }
+
+    .list-container a,
+    .item-caption {
+        width: 45%;
+    }
+    
+    .item-price {
+        width: 30%;
+    }
+
+    .quantity {
+        width: 35%;
+    }
+
+    /*  ---  Remove Button  ---  */
+    .remove-btn {
+        width: 70%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .total-container {
+        width: 200px;
+    }
 }
 
 
@@ -40,5 +167,97 @@
     
     .orinoco {
         margin: 0;
+    }
+
+    .caption {
+        display: none;
+    }
+
+    .list-container {
+        margin-top: 20px;
+    }
+
+    .flow-cart-item {
+        justify-content: center;
+    }
+
+    .list-container a,
+    .item-caption,
+    .item-price {
+        margin: 10px;
+        width: 100%;
+    }
+
+    .quantity {
+        width: 70%;
+    }
+
+    .remove-btn {
+        width: 90%;
+        margin-top: 10px;
+    }
+
+
+    /* --- Order Container --- */
+    .order-container {
+        justify-content: center;
+    }
+    
+    .clean-cart-btn {
+        width: 80%;
+    }
+    
+    .purchase-btn {
+        height: 100px;
+        width: 95%;
+        margin: auto;
+        margin-top: 50px;
+    }
+
+    .total-container {
+        width: 200px;
+        margin: auto;
+        padding: 0;
+        top: 12%;
+        left: 0;
+    }
+
+
+    /* --- Confirm form page --- */
+    .purchase-page {
+        border-radius: 120px 120px 0 0;
+    }
+
+    .border-radius_0 {
+        border-radius: 0;
+    }
+
+    .contact {
+        width: 300px;
+    }
+
+    .label-input-container {
+        width: 85%;
+        margin-top: 20px;
+    }
+
+    .label-input-container input {
+        margin-top: 5px;
+        padding-left: 20px;
+        height: 25px;
+    }
+
+    .confirm-order-btn {
+        margin: 20px;
+        margin-bottom: 50px;
+        margin-bottom: 0;
+        height: 70px;
+        width: 100%;
+    }
+
+    .cancel-order-btn {
+        margin: 15px;
+        height: 50px;
+        width: 50%;
     }
 }

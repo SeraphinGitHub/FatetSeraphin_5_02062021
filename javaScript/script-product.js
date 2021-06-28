@@ -126,7 +126,7 @@ const teddyImgAnim = () => {
     const teddyDouble = teddyImg.parentElement.appendChild(teddyImgClone);
     const tedyComputed = getComputedStyle(teddyDouble);
     
-    const duration = 1; // ==> Seconds
+    const duration = 1.3; // ==> Seconds
     const delay = duration * 1000;
         
     if (tedyComputed.position === "absolute") {

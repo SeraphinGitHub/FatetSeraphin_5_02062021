@@ -65,6 +65,7 @@ header {
 
 .flow-cart-item {
     justify-content: space-between;
+    flex-wrap: nowrap;
     width: 100%;
     padding-top: 15px;
     padding-bottom: 15px;
@@ -75,7 +76,7 @@ header {
 .list-container a {
     margin: 20px;
     height: 200px;
-    width: 200px;
+    width: 20%;
 }
 
 .list-container figure,
@@ -97,26 +98,26 @@ header {
 }
 
 /*  ---  Caption  ---  */
+.item-price {
+    font-size: 150%;
+}
+
 .item-caption {
     align-content: flex-start;
     height: auto;
     width: 25%;
-
-    /* background-color: orange; */
 }
 
 .item-caption h3,
 .item-caption p {
     width: 100%;
     margin-top: 20px;
-    
-    /* background-color: skyblue; */
 }
 
 /*  ---  Quantity "+ / -" ---  */
 .quantity {
     justify-content: space-between;
-    width: 140px;
+    width: 15%;
 }
 
 .quantity-plus-btn,
@@ -146,7 +147,7 @@ header {
 /*  ---  Remove Button  ---  */
 .remove-btn,
 .clean-cart-btn {
-    width: 150px;
+    width: 15%;
 }
 
 
@@ -195,8 +196,10 @@ header {
     height: 100%;
     width: 100%;
     transform: translateY(100%);
-    transition-duration: 0.5s;
     border-radius: 50% 50% 0 0;
+
+    /* JS DOM Class Css */
+    transition-duration: 0.7s;
 }
 
 .contact {

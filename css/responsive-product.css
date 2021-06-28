@@ -1,0 +1,231 @@
+
+/* ========================================================== */
+/*      Laptop Small Screen      
+/* ========================================================== */
+@media screen and (min-width: 1024px) and (max-width : 1366px) {
+    
+    .teddy-fig {
+        width: 80%;
+    }
+}
+
+
+/* ========================================================== */
+/*      Crossover Tablet Big Size - Smartphone         
+/* ========================================================== */
+@media screen and (min-width: 320px) and (max-width : 1024px) {
+
+    .left-container,
+    .right-container {
+        height: 100%;
+        width: 100%;
+    }
+
+    .teddy-fig {
+        height: 300px;
+    }
+
+    /*  ---  Price --- */
+    .item-price {
+        text-align: center;
+        margin-top: 0px;
+    }
+
+    /*  ---  Description --- */
+    .item-caption {
+        align-content: flex-start;
+        height: auto;
+        width: 100%;
+    }
+
+    .item-caption h3,
+    .item-caption p {
+        margin-top: 0px;
+        width: 100%;
+    }
+    
+    .item-caption p {
+        margin-top: 30px;
+    }
+}
+
+
+/* ========================================================== */
+/*      Tablet Big Size         
+/* ========================================================== */
+@media screen and (min-width: 723px) and (max-width : 1024px) {
+
+    .left-container,
+    .right-container {
+        margin: 40px;
+    }
+
+    .left-container {
+        margin-top: 70px;
+    }
+
+    .right-container {
+        margin-top: 50px;
+        margin-bottom: 40px;
+    }
+
+    .teddy-fig {
+        width: 70%;
+    }
+
+    /*  --- Max value Alert --- */
+    .max-value-alert {
+        width: 100%;
+        top: -40%;
+        left: -2%;
+    }
+}
+
+
+/* ========================================================== */
+/*      Tablet Small Size         
+/* ========================================================== */
+@media screen and (min-width: 421px) and (max-width : 722px) {
+    
+    .left-container,
+    .right-container {
+        margin: 30px;
+    }
+
+    .left-container {
+        margin-top: 60px;
+    }
+
+    .right-container {
+        margin-top: 60px;
+        margin-bottom: 30px;
+    }
+
+    .teddy-fig {
+        width: 85%;
+    }
+
+    /* --- Qty Buttons --- */
+    .cart-add-btn,
+    .plus-minus-btn {
+        width: 100%;
+    }
+
+    .plus-minus-btn {
+        position: relative;
+        height: 100px;
+    }
+    
+    .quantity-plus-btn,
+    .quantity-minus-btn {
+        position: absolute;
+        right: 0;
+        width: 20%;
+        margin: auto;
+    }
+
+    .quantity-minus-btn {
+        right: 25%;
+    }
+
+    /*  ---  Quantity  --- */
+    .quantity {
+        position: absolute;
+        left: 0;
+        width: 50%;
+    }
+
+    .quantity-input {
+        height: 60px;
+        width: 25%;
+    }
+
+    /*  --- Max value Alert --- */
+    .max-value-alert {
+        z-index: 10;
+        width: 90%;
+        top: -50%;
+        left: 3%;
+    }
+}
+
+
+/* ========================================================== */
+/*      Smartphone         
+/* ========================================================== */
+@media screen and (min-width: 320px) and (max-width : 420px) {
+
+    .left-container,
+    .right-container {
+        margin: 0;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .left-container {
+        margin-top: 60px;
+    }
+
+    .right-container {
+        margin-top: 70px;
+        margin-bottom: 30px;
+    }
+
+    .teddy-fig {
+        width: 95%;
+    }
+
+    .item-caption {
+        margin-top: 20px;
+    }
+
+    /*  ---  Price --- */
+    .item-price {
+        font-size: 150%;
+    }
+
+    /*  ---  Description --- */
+    .item-caption h3,
+    .item-caption p {
+        font-size: 120%;
+    }
+
+    /* --- Qty Buttons --- */
+    .cart-add-btn,
+    .plus-minus-btn {
+        width: 100%;
+    }
+    
+    .quantity-plus-btn,
+    .quantity-minus-btn {
+        width: 30%;
+        margin: auto;
+    }
+
+    .quantity,
+    .quantity-plus-btn,
+    .quantity-minus-btn {
+        margin-bottom: 20px;
+    }
+
+    .quantity-minus-btn {
+        right: 25%;
+    }
+
+    /*  ---  Quantity  --- */
+    .quantity {
+        width: 80%;
+    }
+
+    .quantity-input {
+        height: 60px;
+        width: 25%;
+    }
+
+    /*  --- Max value Alert --- */
+    .max-value-alert {   
+        width: 90%;
+        top: -35%;
+        left: 3%;
+    }
+}

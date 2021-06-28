@@ -182,7 +182,7 @@ class CartClass {
         cart.updateTotalPrice();  // Update total price in the cart
 
         setTimeout(() => {
-            event.target.parentElement.remove();  // Totally remove the html content after delay
+            event.target.parentElement.parentElement.remove();  // Totally remove the html content after delay
         }, 400);
     }
 
@@ -298,18 +298,13 @@ class CartClass {
         cartArray.forEach(item => {
             products.push(item._id);
         });
-        
-        
-        // ***************************************
-        // for (const key of contact.entries()) {
-        //     console.log(key[0] + ": " + key[1]);
-        // }
-        
-        // console.log(products);
-        // ***************************************
-        
+
+        contact.forEach((key, value) => {
+            contact[value] = key;
+        });
+
         postData_API(contact, products);
-        // console.log(JSON.stringify({contact, products}));
+        console.log(JSON.stringify({contact, products}));
     }
     
     
@@ -333,8 +328,11 @@ class CartClass {
         contactData.set("city", city.value);
         contactData.set("email", email.value);
 
+        // Have to contain: LETTER || letter || accent letters || dash
+        const firstNameRegEx = new RegExp(/^[A-Za-zÜ-ü-]+$/);
+
         // Have to contain: LETTER || letter || accent letters || spaces || dash
-        const nameRegEx = new RegExp(/^[A-Za-zÜ-ü\s-]+$/);
+        const lastNameRegEx = new RegExp(/^[A-Za-zÜ-ü\s-]+$/);
         
         // Have to contain: numbers at the begining && LETTER || letter || accent letters || spaces || dash
         const adressRegEx = new RegExp(/^[0-9]+[A-Za-zÜ-ü\s-]+$/);
@@ -344,11 +342,11 @@ class CartClass {
         //    LETTER || letter || number && dot && LETTER || letter
         const emailRegEx = new RegExp(/^[A-Za-z0-9\._-]+[@]+[A-Za-z0-9]+[\.]+[A-Za-z]+$/);
 
-        this.formValidation(city, nameRegEx);
-        this.formValidation(email, emailRegEx);
-        this.formValidation(address, adressRegEx);
-        this.formValidation(lastName, nameRegEx);
-        this.formValidation(firstName, nameRegEx);
+        this.formValidation(firstName, firstNameRegEx, "Prénom :  Les chiffres et les espaces ne sont pas autorisés !");
+        this.formValidation(lastName, lastNameRegEx, "Nom :  Les chiffres ne sont pas autorisés !");
+        this.formValidation(address, adressRegEx, "Adresse :  Les chiffres ne autorisés qu'au début !");
+        this.formValidation(city, lastNameRegEx, "Ville :  Les chiffres ne sont pas autorisés !");
+        this.formValidation(email, emailRegEx, "E-mail :  Veuillez rentrer une adresse e-mail valide !");
         
         // Paul-édouard
         // Le pömîé
@@ -359,11 +357,11 @@ class CartClass {
         return contactData;
     }
 
-    formValidation(inputField, regEx) {
+    formValidation(inputField, regEx, alertMessage) {
         
         if (inputField.value === "" || !regEx.test(inputField.value)) {
             inputField.focus();
-            console.log("Error !");
+            alert(alertMessage);
             return false;
         }
     }

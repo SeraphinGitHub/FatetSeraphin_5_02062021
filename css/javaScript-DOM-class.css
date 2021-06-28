@@ -22,7 +22,9 @@
 .translateY_-50,
 .translateY_0,
 .custom-btn-delay {
-    transition-duration: 0.5s;
+
+    /* .purchase-page - main-cart.css */
+    transition-duration: 0.7s;
 }
 
 
@@ -56,5 +58,5 @@
 }
 
 .teddy-img-anim {
-    transform: translate3d(230%, -105%, 0) scale(0) rotate(40deg);
+    transform: translate3d(235%, -110%, 0) scale(0) rotate(40deg);
 }

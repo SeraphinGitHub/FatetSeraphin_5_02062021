@@ -94,7 +94,7 @@ const purchase = () => {
     const purchasePage = document.querySelector(".purchase-page");
     const cancelPageBtn = document.querySelector(".cancel-order-btn");
 
-    const timeOutDuration = 300; // ==> milliSeconds
+    const timeOutDuration = 400; // ==> milliSeconds
 
     // On Click "Passer Commander" button ==> Show confirm order page (Form)
     purchaseBtn.addEventListener("click", () => {

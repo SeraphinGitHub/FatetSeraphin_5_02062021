@@ -13,13 +13,9 @@
     border-top: solid black 2px;
 }
 
-.anchor,
-.anchor figure {
-    height: 250px;
-}
-
 .anchor {
     justify-content: space-between;
+    height: auto;
     margin-top: 20px;
     margin-left: -40px;
     margin-right: -40px;
@@ -29,6 +25,7 @@
 
 /* ======  Figure  ====== */
 .anchor figure {
+    height: 250px;
     width: 300px;
 }
 
@@ -43,8 +40,7 @@
 .item-caption {
     align-content: flex-start;
     height: auto;
-    width: 23%;
-    padding-right: 13%;
+    width: 40%;
 }
 
 .item-caption h3,
