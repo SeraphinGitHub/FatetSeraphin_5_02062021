@@ -35,7 +35,7 @@ header {
 }
 
 .caption-Arti {
-    width: 22%;
+    width: 24%;
 }
 
 .caption-Indi {
@@ -98,10 +98,6 @@ header {
 }
 
 /*  ---  Caption  ---  */
-.item-price {
-    font-size: 150%;
-}
-
 .item-caption {
     align-content: flex-start;
     height: auto;
@@ -113,6 +109,35 @@ header {
     width: 100%;
     margin-top: 20px;
 }
+
+
+
+/* --- Price & Color --- */
+.price-color {
+    margin: auto;
+    height: auto;
+    width: 15%;
+}
+
+.item-price,
+.selected-color {
+    width: 100%;
+}
+
+.item-price {
+    margin-bottom: 35px;
+    font-size: 150%;
+}
+
+.selected-color {
+    height: 70px;
+    border-radius: 20px;
+
+    font-family: "Raleway-Medium";
+    font-weight: 600;
+    font-size: 130%;
+}
+
 
 /*  ---  Quantity "+ / -" ---  */
 .quantity {
@@ -211,6 +236,7 @@ header {
 }
 
 .label-input-container {
+    position: relative;
     margin: auto;
     margin-top: 40px;
     width: 60%;
@@ -252,4 +278,19 @@ header {
     margin: 30px;
     height: 60px;
     width: 50%;
+}
+
+/* --- Error Message --- */
+.error-message {
+    position: absolute;
+    height: 20px;
+    width: 100%;
+    bottom: -20px;
+    left: 0;
+
+    font-size: 85%;
+    text-align: center;
+    border: solid red 1.5px;
+    border-radius: 5px;
+    background-color: rgb(255, 236, 239);
 }

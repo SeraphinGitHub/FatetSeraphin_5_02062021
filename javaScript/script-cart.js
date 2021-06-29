@@ -23,7 +23,10 @@ const creatCartItem = (teddy, teddyQty) => {
                     <p>${teddy.description}</p>
                 </div>
 
-                <h3 class="item-price">${teddy.priceFormated()}</h3>
+                <div class="flexCenter price-color">
+                    <h3 class="item-price">${teddy.priceFormated()}</h3>
+                    <span class="flexCenter selected-color">${teddy.selectedColor}</span>
+                </div>
 
                 <div class="flexCenter quantity">
                     <button class="flexCenter btn quantity-minus-btn" type="button"> - </button>
@@ -49,7 +52,7 @@ const cartItem_Btns = () => {
     const plusBtnCart = document.querySelectorAll(".quantity-plus-btn");
     const minusBtnCart = document.querySelectorAll(".quantity-minus-btn");
     const removeBtn = document.querySelectorAll(".remove-btn");
-  
+
     itemBtn(plusBtnCart, cart.cartQuantityBtn, "+");
     itemBtn(minusBtnCart, cart.cartQuantityBtn, "-");
     itemBtn(removeBtn, cart.removeItem);

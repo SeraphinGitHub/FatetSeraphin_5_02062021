@@ -20,7 +20,7 @@ class CartClass {
     
 
     // ======================================================================
-    // Handle "Add to Cart" button
+    // Manage "Add to Cart" button
     // ======================================================================
     addItem(teddy, inputClass, plusBtn, maxValueAlert) {
         
@@ -29,6 +29,8 @@ class CartClass {
 
         const cartArray = this.getItems(); // Get data from localStorage
         const elementMatchId = element => element._id === teddy._id; // Compare ID
+        const teddyIndex = cartArray.findIndex(elementMatchId); // Find the current teddy's index in cartArray
+        let storedTeddy = cartArray[teddyIndex];
         
         // If this item's Id doesn't exist in localStorage ==> Create new Teddy with chosen qty
         if (!cartArray.find(elementMatchId)) {
@@ -38,12 +40,39 @@ class CartClass {
             localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
         }
         
-        // If this item's Id already exist in localStorage ==> Just add chosen qty to qty array of current Teddy
-        else {
-            const teddyIndex = cartArray.findIndex(elementMatchId); // Find the current teddy's index in cartArray
-            cartArray[teddyIndex].quantity[0] += Number (quantityValue); // Modify the current value of qty array
-            localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
-        }    
+
+        // *******************************************
+
+
+        // If this item's Id doesn't exist in localStorage ==> Create new Teddy with chosen qty
+        else if (cartArray.find(elementMatchId)) {
+        
+            if(storedTeddy.selectedColor !== teddy.selectedColor) {
+
+                // storedTeddy.selectedColor = teddy.selectedColor;
+
+                teddy.quantity.push(Number (quantityValue)); // Push the chosen qty in the current teddy's qty array
+                cartArray.push(teddy); // Push the teddy with new qty value in cartArray 
+                localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
+
+                console.log("!==");
+                console.log(storedTeddy.selectedColor);
+                console.log(teddy.selectedColor);
+            }
+        
+        
+            if(storedTeddy.selectedColor === teddy.selectedColor) {
+                storedTeddy.quantity[0] += Number (quantityValue); // Modify the current value of qty array
+                localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
+                
+                console.log("===");
+                console.log(storedTeddy.selectedColor);
+                console.log(teddy.selectedColor);
+            }
+        }
+
+        // *******************************************
+
 
         inputClass.value = resetValue;  // After adding item to cart => restore input field to 1
         quantityValue = resetValue;  // Restore "+ / -" buttons values to 1
@@ -60,7 +89,7 @@ class CartClass {
 
 
     // ======================================================================
-    // Handle " + " button (not Cart)
+    // Manage " + " button (not Cart)
     // ======================================================================
     plusBtnProduct(maxValue, inputClass, plusBtn, maxValueAlert) {
         
@@ -92,7 +121,7 @@ class CartClass {
 
 
     // ======================================================================
-    // Handle " - " button (not Cart)
+    // Manage " - " button (not Cart)
     // ======================================================================
     minusBtnProduct(minValue, inputClass, plusBtn, maxValueAlert) {
         
@@ -117,12 +146,12 @@ class CartClass {
     // Render Items in Cart
     // ======================================================================
     renderItems(creatCartItem) {
-            
+        
         const cartArray = this.getItems();
         
         // For each teddy in cart
         cartArray.forEach(item => {
-        
+            
             const teddy = setTeddy(item); // Get Teddy data from localStorage
             const teddyQty = item.quantity[0]; //Get Teddy quantity
             creatCartItem(teddy, teddyQty); // Render item in cart
@@ -316,21 +345,24 @@ class CartClass {
         const contact = document.querySelector(".contact");
         const contactData = new FormData(contact);
         
+        // Get input fields by ID
         const firstName = document.getElementById("firstName");
         const lastName = document.getElementById("lastName");
         const address = document.getElementById("address");
         const city = document.getElementById("city");
         const email = document.getElementById("email");
         
+        // Set contact formData with pairs : keys, values
         contactData.set("firstName", firstName.value);
         contactData.set("lastName", lastName.value);
         contactData.set("address", address.value);
         contactData.set("city", city.value);
         contactData.set("email", email.value);
+        
 
         // Have to contain: LETTER || letter || accent letters || dash
         const firstNameRegEx = new RegExp(/^[A-Za-zÜ-ü-]+$/);
-
+        
         // Have to contain: LETTER || letter || accent letters || spaces || dash
         const lastNameRegEx = new RegExp(/^[A-Za-zÜ-ü\s-]+$/);
         
@@ -341,28 +373,48 @@ class CartClass {
         //    LETTER || letter || number || dot || under score || dash && at (@) &&
         //    LETTER || letter || number && dot && LETTER || letter
         const emailRegEx = new RegExp(/^[A-Za-z0-9\._-]+[@]+[A-Za-z0-9]+[\.]+[A-Za-z]+$/);
-
-        this.formValidation(firstName, firstNameRegEx, "Prénom :  Les chiffres et les espaces ne sont pas autorisés !");
-        this.formValidation(lastName, lastNameRegEx, "Nom :  Les chiffres ne sont pas autorisés !");
-        this.formValidation(address, adressRegEx, "Adresse :  Les chiffres ne autorisés qu'au début !");
-        this.formValidation(city, lastNameRegEx, "Ville :  Les chiffres ne sont pas autorisés !");
-        this.formValidation(email, emailRegEx, "E-mail :  Veuillez rentrer une adresse e-mail valide !");
         
-        // Paul-édouard
-        // Le pömîé
-        // 123 rue du maréchal-Foch
-        // Montbéliard-sur-Saône
-        // paul.edouard_45@gmail.com
+
+        // Set error message strings for each field
+        const errMess_empty = "Le champ est vide !"
+
+        const errMess_firstName = "Prénom invalide !";
+        const errMess_lastName = "Nom de famille invalide !";
+        const errMess_address = "Adresse postale invalide !"
+        const errMess_city = "Les chiffres ne sont pas autorisés !"
+        const errMess_email = "Adresse e-mail invalide !"
+
+        this.formValidation(firstName, firstNameRegEx, errMess_empty, errMess_firstName);
+        this.formValidation(lastName, lastNameRegEx, errMess_empty, errMess_lastName);
+        this.formValidation(address, adressRegEx, errMess_empty, errMess_address);
+        this.formValidation(city, lastNameRegEx, errMess_empty, errMess_city);
+        this.formValidation(email, emailRegEx, errMess_empty, errMess_email);
 
         return contactData;
     }
 
-    formValidation(inputField, regEx, alertMessage) {
+    // Check input fields informations 
+    formValidation(inputField, regEx, errMessEmpty, errMessField) {
         
-        if (inputField.value === "" || !regEx.test(inputField.value)) {
-            inputField.focus();
-            alert(alertMessage);
-            return false;
+        if (inputField.value === "") {
+            this.popUpMessage(inputField, errMessEmpty);
+        }
+
+        else if (!regEx.test(inputField.value)) {
+            this.popUpMessage(inputField, errMessField);
+        }
+    }
+
+    // Pop error message up if wrong data entered
+    popUpMessage(inputField, message) {
+
+        const messageHtml = `<p class="flexCenter error-message">${message}</p>`;
+        const messageContainer = inputField.parentElement;
+
+        if (!messageContainer.children[2]) {
+
+            messageContainer.insertAdjacentHTML("beforeend", messageHtml);
+            setTimeout(() => messageContainer.children[2].remove(), 3000);
         }
     }
 }

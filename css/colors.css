@@ -25,6 +25,12 @@ body,
 }
 
 
+/* ======  Cart Item Selected Color  ====== */
+.selected-color {
+    background: linear-gradient(to bottom right, rgb(255, 94, 0), rgb(255, 217, 0));
+}
+
+
 /* ======  Dropdown Background Color  ====== */
 .dropdown-content {
     background: linear-gradient(to bottom right, dodgerblue, black);

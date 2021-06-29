@@ -60,3 +60,10 @@
 .teddy-img-anim {
     transform: translate3d(235%, -110%, 0) scale(0) rotate(40deg);
 }
+
+.chosen-color {
+    background: linear-gradient(to bottom right, rgb(255, 94, 0), rgb(255, 217, 0));
+    font-family: "Raleway-Medium";
+    font-weight: 400;
+    font-size: 160%;
+}
