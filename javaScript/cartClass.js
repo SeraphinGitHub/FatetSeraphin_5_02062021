@@ -17,7 +17,22 @@ class CartClass {
     getItems() {
         return this.items;
     }
-    
+
+
+    // ======================================================================
+    // Display alert message
+    // ======================================================================
+    popAlertMessage(messageClass) {
+
+        messageClass.classList.add("visible");
+        messageClass.classList.add("opacity_100");
+
+        setTimeout(() => {
+            messageClass.classList.remove("visible");
+            messageClass.classList.remove("opacity_100");
+        }, 4000);
+    }
+
 
     // ======================================================================
     // Manage "Add to Cart" button
@@ -30,55 +45,59 @@ class CartClass {
         const cartArray = this.getItems(); // Get data from localStorage
         const elementMatchId = element => element._id === teddy._id; // Compare ID
         const teddyIndex = cartArray.findIndex(elementMatchId); // Find the current teddy's index in cartArray
-        let storedTeddy = cartArray[teddyIndex];
         
-        // If this item's Id doesn't exist in localStorage ==> Create new Teddy with chosen qty
+        // If this item's Id doesn't exist in localStorage ==> Create new Teddy with chosen qty by color
         if (!cartArray.find(elementMatchId)) {
+            
+            // Set for each Teddy's color an Array of color & quantity
+            for (let i = 0; i < teddy.colors.length; i++) {
+                    
+                let qtyColor = [];
+                qtyColor.push(teddy.colors[i], 0);
+                teddy.quantity.push(qtyColor)[i];
+            }
 
-            teddy.quantity.push(Number (quantityValue)); // Push the chosen qty in the current teddy's qty array
-            cartArray.push(teddy); // Push the teddy with new qty value in cartArray 
-            localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
+
+
+            //  *************************
+
+            // quantity[ {"Tan": 0, "Chocolate": 0, "Black": 0} ] ==> Create Object in array quantity !!!
+            
+            //  *************************
+            
+
+
+            teddy.quantity.splice(0, 1, Number (quantityValue));
+            teddy.quantity.find(teddy.selectedColor)
+            console.log(teddy.selectedColor);
+
+            cartArray.push(teddy);
+            localStorage.setItem("cartArray", JSON.stringify(cartArray));
         }
         
+        // If 
+        else {
+            let storedTeddy = cartArray[teddyIndex];
 
-        // *******************************************
-
-
-        // If this item's Id doesn't exist in localStorage ==> Create new Teddy with chosen qty
-        else if (cartArray.find(elementMatchId)) {
+            if(storedTeddy.selectedColor === teddy.selectedColor) {
+                
+                
+            }
+        
         
             if(storedTeddy.selectedColor !== teddy.selectedColor) {
-
-                // storedTeddy.selectedColor = teddy.selectedColor;
-
-                teddy.quantity.push(Number (quantityValue)); // Push the chosen qty in the current teddy's qty array
-                cartArray.push(teddy); // Push the teddy with new qty value in cartArray 
-                localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
-
-                console.log("!==");
-                console.log(storedTeddy.selectedColor);
-                console.log(teddy.selectedColor);
-            }
-        
-        
-            if(storedTeddy.selectedColor === teddy.selectedColor) {
-                storedTeddy.quantity[0] += Number (quantityValue); // Modify the current value of qty array
-                localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
                 
-                console.log("===");
-                console.log(storedTeddy.selectedColor);
-                console.log(teddy.selectedColor);
+                
             }
         }
 
-        // *******************************************
+        // storedTeddy.quantity[0] += Number (quantityValue); // Modify the current value of qty array
+        // localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
 
 
         inputClass.value = resetValue;  // After adding item to cart => restore input field to 1
         quantityValue = resetValue;  // Restore "+ / -" buttons values to 1
         this.updateTotalQty();  // Update number of items in the cart
-
-
         plusBtn.classList.remove("greyed-out-btn");
 
         if (getComputedStyle(maxValueAlert).visibility === "visible") {
@@ -107,15 +126,7 @@ class CartClass {
         } 
         
         else {
-            maxValueAlert.classList.add("visible");
-            maxValueAlert.classList.add("opacity_100");
-
-            setTimeout(() => {
-                maxValueAlert.classList.remove("visible");
-                maxValueAlert.classList.remove("opacity_100");
-            }, 5000);
-
-            return;  // If max value's reached => stop at max value's value
+            this.popAlertMessage(maxValueAlert);
         }
     }
 

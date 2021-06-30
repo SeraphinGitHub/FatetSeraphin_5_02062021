@@ -2,9 +2,9 @@
 "use strict"
 
 // ======================================================================
-// Render "Item properties"
+// Render renderProductPage
 // ======================================================================
-const renderItemProperties = async () => {
+const renderProductPage = async () => {
     
     const pageParams = new URLSearchParams(window.location.search);
     const getId = pageParams.get("_id");
@@ -12,41 +12,64 @@ const renderItemProperties = async () => {
     // Get ID tranfered from Query String to initialize item content
     const teddy = await teddyClass_WithAPI(getId);
     
-    // Initialize item properties
+    // Set item properties
     document.querySelector(".main").id = teddy._id;
     document.querySelector(".left-container figure img").src = teddy.imageUrl;
     document.querySelector(".item-price").textContent = teddy.priceFormated();
     document.querySelector(".item-name").textContent = teddy.name;
     document.querySelector(".item-description").textContent = teddy.description;
-        
-    // Get Custom button
+
+    // Get Custom button & DropDown content & Add button
     const customBtn = document.querySelector(".custom-btn");
-    let customBtnText = customBtn.textContent;
-
-    renderCustomBtn(teddy, customBtn); // Render Teddy's colors    
-    product_AddQtyBtn(teddy, customBtn, customBtnText); // Manage + / - & Add buttons
-}
-
-
-// ======================================================================
-// Render custom button & each Teddy's color in dropdown
-// ======================================================================
-const renderCustomBtn = (teddy, customBtn) => {
-
-    // Get Custom button & DropDown content
     const dropCont = document.querySelector(".dropdown-content");
     const dropFlow = document.querySelector(".dropdown-flow");
+    const addButton = document.querySelector(".cart-add-btn");
     const color = document.getElementsByClassName("color");
 
-    const teddyColors = teddy.colors;
+    const plusBtn = document.querySelector(".quantity-plus-btn"); // Get "+" button Product Page
+    const inputClass = document.querySelector(".quantity-input"); // Get input field's Product Page
+    const maxValueAlert = document.querySelector(".max-value-alert");
 
-    // Render html content for each color per Teddy
+    // Get "Add to cart" button's alert message
+    const noColorAlert = document.querySelector(".no-color-alert"); 
+    
+    // Set default custom button's text
+    let customBtnText = customBtn.textContent;
+    
+    
+    const teddyColors = teddy.colors;
+    
+    // For each color per Teddy
     for (let i = 0; i < teddyColors.length; i++) {
         
         let color_Indexed = teddyColors[i];
-        createDropdownColors(color_Indexed);
-        colorBtn(teddy, color, i, color_Indexed, customBtn, dropCont, dropFlow);
+
+        // Render html content 
+        const dropdownContent = document.querySelector(".dropdown-content");
+        const dropdownColorsHtml = `<a class="flexCenter color">${color_Indexed}</a>`;
+        dropdownContent.insertAdjacentHTML("beforeend", dropdownColorsHtml);
+
+
+        // "On click" color
+        color[i].addEventListener("click", () => {
+
+            teddy.selectedColor = color_Indexed; // Set Teddy's Class color with selected color
+            customBtn.textContent = color_Indexed; // Set custom button's text with selected color
+            customBtn.classList.add("chosen-color"); // Add CSS class to change button's style
+            closeDropDown(customBtn, dropCont, dropFlow);
+    
+            addButton.classList.remove("greyed-out-btn"); // Set back "Add to Cart" button to normal style
+            noColorAlert.classList.remove("visible"); // Hide alert message
+            noColorAlert.classList.remove("opacity_100");
+
+            // Set back "Add to Cart" button to normal function
+            let isColorSelected = true;
+            localStorage.setItem("isColorSelected", isColorSelected);
+
+            product_AddBtn(teddy, inputClass, plusBtn, maxValueAlert, customBtn, addButton, noColorAlert, customBtnText);
+        });
     }
+
 
     const dropComputed = getComputedStyle(dropFlow);
 
@@ -68,26 +91,17 @@ const renderCustomBtn = (teddy, customBtn) => {
             closeDropDown(customBtn, dropCont, dropFlow);
         }
     });
-}
 
-const createDropdownColors = (color_Indexed) => {
-
-    const dropdownContent = document.querySelector(".dropdown-content");
-    const dropdownColorsHtml = `<a class="flexCenter color">${color_Indexed}</a>`;
-    dropdownContent.insertAdjacentHTML("beforeend", dropdownColorsHtml);
-}
-
-const colorBtn = (teddy, color, i, color_Indexed, customBtn, dropCont, dropFlow) => {
+    addButton.classList.add("greyed-out-btn"); // Grey out "Add to Cart" button
     
-    color[i].addEventListener("click", () => {
-
-        teddy.selectedColor = color_Indexed;
-        customBtn.textContent = color_Indexed;
-        customBtn.classList.add("chosen-color");
-        closeDropDown(customBtn, dropCont, dropFlow);
-    });
+    // Manage + / - & Add button
+    product_QuantityBtn(teddy, inputClass, plusBtn, maxValueAlert, customBtn, addButton, noColorAlert, customBtnText);
 }
 
+
+// ======================================================================
+// Close & hide color dropdown
+// ======================================================================
 const closeDropDown = (customBtn, dropCont, dropFlow) => {
 
     dropFlow.classList.remove("visible");
@@ -99,45 +113,54 @@ const closeDropDown = (customBtn, dropCont, dropFlow) => {
 
 
 // ======================================================================
-// Handle "+ / -" & "Add to Cart" buttons in Product Page
+// Manage "+ / -" buttons in Product Page
 // ======================================================================
-const product_AddQtyBtn = (teddy, customBtn, customBtnText) => {
+const product_QuantityBtn = (teddy, inputClass, plusBtn, maxValueAlert, customBtn, addButton, noColorAlert, customBtnText) => {
     
-    const plusBtn = document.querySelector(".quantity-plus-btn"); // Get "+" button Product Page
     const minusBtn = document.querySelector(".quantity-minus-btn"); // Get "-" button Product Page
-    const addButton = document.querySelector(".cart-add-btn");
-    const inputClass = document.querySelector(".quantity-input"); // Get input field's Product Page
-    
     const minValue = Number (inputClass.min);  // Get min value from input field's attribute
     const maxValue = Number (inputClass.max);  // Get max value from input field's attribute
 
-    // **********************************************************
-    const maxValueAlert = document.querySelector(".max-value-alert"); // <== For FUN !!! ^_^
-    maxValueAlert.children[0].textContent = maxValue;
-    // **********************************************************
-    
-    
-    // On Click "Add to Cart"
-    addButton.addEventListener("click", () => {
+    maxValueAlert.children[0].textContent = maxValue;  
 
-        cart.addItem(teddy, inputClass, plusBtn, maxValueAlert);
-        teddyImgAnim();
-        customBtn.textContent = customBtnText;
-        customBtn.classList.remove("chosen-color");   
-    });
-    
+    product_AddBtn(teddy, inputClass, plusBtn, maxValueAlert, customBtn, addButton, noColorAlert, customBtnText);
 
     // On Click " + " Button
     plusBtn.addEventListener("click", () => {
-
         cart.plusBtnProduct(maxValue, inputClass, plusBtn, maxValueAlert);
     });  
     
 
     // On Click " - " Button
     minusBtn.addEventListener("click", () => {
-
         cart.minusBtnProduct(minValue, inputClass, plusBtn, maxValueAlert);
+    });
+}
+
+
+// ======================================================================
+// On Click "Add to Cart" Button
+// ======================================================================
+const product_AddBtn = (teddy, inputClass, plusBtn, maxValueAlert, customBtn, addButton, noColorAlert, customBtnText) => {
+
+    addButton.addEventListener("click", () => {
+    
+        let isColorSelected = localStorage.getItem("isColorSelected");
+        
+        // If color was selected
+        if(isColorSelected) {
+
+            customBtn.textContent = customBtnText;
+            customBtn.classList.remove("chosen-color");
+            addButton.classList.add("greyed-out-btn"); // Grey out "Add to Cart" button
+            
+            teddyImgAnim();
+            cart.addItem(teddy, inputClass, plusBtn, maxValueAlert);
+            setTimeout(() => localStorage.removeItem("isColorSelected"), 50)
+        }
+
+        // If color was not selected
+        else cart.popAlertMessage(noColorAlert);
     });
 }
 
@@ -171,5 +194,5 @@ const teddyImgAnim = () => {
 // Functions chaining order
 // ======================================================================
 window.addEventListener("load", () => {
-    renderItemProperties();
+    renderProductPage();
 });
