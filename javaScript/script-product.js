@@ -26,10 +26,6 @@ const renderProductPage = async () => {
     const addButton = document.querySelector(".cart-add-btn");
     const color = document.getElementsByClassName("color");
 
-    const plusBtn = document.querySelector(".quantity-plus-btn"); // Get "+" button Product Page
-    const inputClass = document.querySelector(".quantity-input"); // Get input field's Product Page
-    const maxValueAlert = document.querySelector(".max-value-alert");
-
     // Get "Add to cart" button's alert message
     const noColorAlert = document.querySelector(".no-color-alert"); 
     
@@ -65,8 +61,6 @@ const renderProductPage = async () => {
             // Set back "Add to Cart" button to normal function
             let isColorSelected = true;
             localStorage.setItem("isColorSelected", isColorSelected);
-
-            product_AddBtn(teddy, inputClass, plusBtn, maxValueAlert, customBtn, addButton, noColorAlert, customBtnText);
         });
     }
 
@@ -95,7 +89,7 @@ const renderProductPage = async () => {
     addButton.classList.add("greyed-out-btn"); // Grey out "Add to Cart" button
     
     // Manage + / - & Add button
-    product_QuantityBtn(teddy, inputClass, plusBtn, maxValueAlert, customBtn, addButton, noColorAlert, customBtnText);
+    product_QuantityBtn(teddy, customBtn, addButton, noColorAlert, customBtnText);
 }
 
 
@@ -115,34 +109,19 @@ const closeDropDown = (customBtn, dropCont, dropFlow) => {
 // ======================================================================
 // Manage "+ / -" buttons in Product Page
 // ======================================================================
-const product_QuantityBtn = (teddy, inputClass, plusBtn, maxValueAlert, customBtn, addButton, noColorAlert, customBtnText) => {
+const product_QuantityBtn = (teddy, customBtn, addButton, noColorAlert, customBtnText) => {
     
+    const plusBtn = document.querySelector(".quantity-plus-btn"); // Get "+" button Product Page
     const minusBtn = document.querySelector(".quantity-minus-btn"); // Get "-" button Product Page
+    const inputClass = document.querySelector(".quantity-input"); // Get input field's Product Page
+    
     const minValue = Number (inputClass.min);  // Get min value from input field's attribute
     const maxValue = Number (inputClass.max);  // Get max value from input field's attribute
-
-    maxValueAlert.children[0].textContent = maxValue;  
-
-    product_AddBtn(teddy, inputClass, plusBtn, maxValueAlert, customBtn, addButton, noColorAlert, customBtnText);
-
-    // On Click " + " Button
-    plusBtn.addEventListener("click", () => {
-        cart.plusBtnProduct(maxValue, inputClass, plusBtn, maxValueAlert);
-    });  
     
-
-    // On Click " - " Button
-    minusBtn.addEventListener("click", () => {
-        cart.minusBtnProduct(minValue, inputClass, plusBtn, maxValueAlert);
-    });
-}
-
-
-// ======================================================================
-// On Click "Add to Cart" Button
-// ======================================================================
-const product_AddBtn = (teddy, inputClass, plusBtn, maxValueAlert, customBtn, addButton, noColorAlert, customBtnText) => {
-
+    const maxValueAlert = document.querySelector(".max-value-alert");
+    maxValueAlert.children[0].textContent = maxValue;  
+    
+    // On Click "Add to Cart" Button
     addButton.addEventListener("click", () => {
     
         let isColorSelected = localStorage.getItem("isColorSelected");
@@ -156,11 +135,23 @@ const product_AddBtn = (teddy, inputClass, plusBtn, maxValueAlert, customBtn, ad
             
             teddyImgAnim();
             cart.addItem(teddy, inputClass, plusBtn, maxValueAlert);
-            setTimeout(() => localStorage.removeItem("isColorSelected"), 50)
+            localStorage.removeItem("isColorSelected");
         }
 
         // If color was not selected
         else cart.popAlertMessage(noColorAlert);
+    });
+
+
+    // On Click " + " Button
+    plusBtn.addEventListener("click", () => {
+        cart.plusBtnProduct(maxValue, inputClass, plusBtn, maxValueAlert);
+    });  
+    
+
+    // On Click " - " Button
+    minusBtn.addEventListener("click", () => {
+        cart.minusBtnProduct(minValue, inputClass, plusBtn, maxValueAlert);
     });
 }
 

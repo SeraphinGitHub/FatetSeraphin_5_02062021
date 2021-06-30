@@ -20,7 +20,8 @@ class TeddyClass {
         this.price = price;
         this.imageUrl = imageUrl;
         this.description = description;
-        this.quantity = [];
+        // this.quantity = [];
+        this.quantity = {};
         this.selectedColor = selectedColor;
         this.colors = colors;
     }
