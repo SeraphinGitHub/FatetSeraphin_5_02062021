@@ -39,16 +39,11 @@ class CartClass {
     // ======================================================================
     addItem(teddy, inputClass, plusBtn, maxValueAlert) {
         
+        const cartArray = this.getItems();
+        const elementMatchId = element => element._id === teddy._id;
+        
         const resetValue = 1;        
         let quantityValue = Number (inputClass.value);
-
-        const cartArray = this.getItems(); // Get data from localStorage
-        const elementMatchId = element => element._id === teddy._id; // Compare ID
-        
-        
-        // *************************************************************************
-        // *************************************************************************
-        
         let teddyQtyObj = teddy.quantity;
         let currentColor = teddy.selectedColor;
 
@@ -56,7 +51,6 @@ class CartClass {
             
             teddy.colors.forEach(color => teddyQtyObj[color] = 0);
             teddyQtyObj[currentColor] = (teddyQtyObj[currentColor] + Number (quantityValue));
-            
             cartArray.push(teddy);
             localStorage.setItem("cartArray", JSON.stringify(cartArray));
         }
@@ -65,24 +59,6 @@ class CartClass {
             teddyQtyObj[currentColor] = (teddyQtyObj[currentColor] + Number (quantityValue));
             localStorage.setItem("cartArray", JSON.stringify(cartArray));
         }
-
-        // *************************************************************************
-        // *************************************************************************
-
-        // // If this item's Id doesn't exist in localStorage ==> Create new Teddy with chosen qty
-        // if (!cartArray.find(elementMatchId)) {
-
-        //     teddy.quantity.push(Number (quantityValue)); // Push the chosen qty in the current teddy's qty array
-        //     cartArray.push(teddy); // Push the teddy with new qty value in cartArray 
-        //     localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
-        // }
-
-        // // If this item's Id already exist in localStorage ==> Just add chosen qty to qty array of current Teddy
-        // else {
-        //     const teddyIndex = cartArray.findIndex(elementMatchId); // Find the current teddy's index in cartArray
-        //     cartArray[teddyIndex].quantity[0] += Number (quantityValue); // Modify the current value of qty array
-        //     localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
-        // } 
 
         inputClass.value = resetValue;  // After adding item to cart => restore input field to 1
         quantityValue = resetValue;  // Restore "+ / -" buttons values to 1
@@ -147,14 +123,41 @@ class CartClass {
     // ======================================================================
     renderItems(creatCartItem) {
         
+        // ****************************************************************
+        // ****************************************************************
+
         const cartArray = this.getItems();
         
         // For each teddy in cart
         cartArray.forEach(item => {
             
             const teddy = setTeddy(item); // Get Teddy data from localStorage
-            const teddyQty = item.quantity[0]; //Get Teddy quantity
-            creatCartItem(teddy, teddyQty); // Render item in cart
+
+            
+            
+            // const teddyQty = item.quantity[value]; //Get Teddy quantity
+
+
+            
+            let teddyColor = teddy.selectedColor;
+            
+            const qtyObj = item.quantity;
+            let teddyQty = 0;
+            
+            // For each qty per color
+            for (let value in qtyObj) {
+                
+                teddyQty = qtyObj[value]; // Get color qty value
+
+                // If qty value is not null
+                if(teddyQty) {
+                    creatCartItem(teddy, teddyQty, teddyColor); // Render item in cart
+                }
+            }
+            
+            // ****************************************************************
+            // ****************************************************************
+
         });
     }
 
@@ -164,6 +167,9 @@ class CartClass {
     // ======================================================================
     cartQuantityBtn(event, symbol) {
 
+        // ****************************************************************
+        // ****************************************************************
+        
         const cartArray = cart.getItems();
 
         const getParent = event.target.parentElement;
@@ -172,21 +178,34 @@ class CartClass {
         
         const elementMatchId = element => element._id === getTargetId;
         const teddyIndex = cartArray.findIndex(elementMatchId);
-        let qtyArray_indexOne = cartArray[teddyIndex].quantity[0];
+   
 
         const minValue = Number (quantityInput.min);
         
-        if (symbol === "+") {
-            qtyArray_indexOne ++;
-        }
 
-        if (quantityInput.value > minValue && symbol === "-") {
-            qtyArray_indexOne --;
+        let quantityValue = Number (quantityInput.value);
+        let teddyQtyObj = cartArray[teddyIndex].quantity;
+        let currentColor = cartArray[teddyIndex].selectedColor;
+
+
+        if (symbol === "+") {
+            // qtyArray_indexOne ++;
+
+            teddyQtyObj[currentColor] = (teddyQtyObj[currentColor] + Number (quantityValue));
         }
         
-        quantityInput.value = qtyArray_indexOne;
-        cartArray[teddyIndex].quantity.splice(0, 1, qtyArray_indexOne);
+        if (quantityInput.value > minValue && symbol === "-") {
+            // qtyArray_indexOne --;
+
+            teddyQtyObj[currentColor] = (teddyQtyObj[currentColor] - Number (quantityValue));
+        }
+        
+        quantityInput.value = teddyQtyObj[currentColor];
+        // cartArray[teddyIndex].quantity.splice(0, 1, qtyArray_indexOne);
         localStorage.setItem("cartArray", JSON.stringify(cartArray));
+
+        // ****************************************************************
+        // ****************************************************************
         
         cart.updateTotalQty();  // Update number of items in the cart
         cart.updateTotalPrice();  // Update total price in the cart
@@ -244,13 +263,19 @@ class CartClass {
             cartArray.forEach(item => {
 
                 const teddyPrice = item.price;
-                const quantity = item.quantity[0];
+                const qtyObj = item.quantity;
+                let qtyItems = 0;
+                
+                // For each qty per color add qty value to "qtyItems"
+                for (let value in qtyObj) {
+                    qtyItems += qtyObj[value];
+                }
                 
                 // Add up every Teddy's quantity in cart
-                if (valueType === "quantity") total += quantity;
+                if (valueType === "quantity") total += qtyItems;
 
                 // Add up every Teddy's quantity in cart & multiply by Teddy's price value
-                if (valueType === "price") total += quantity * teddyPrice;
+                if (valueType === "price") total += qtyItems * teddyPrice;
             });
 
             return total;

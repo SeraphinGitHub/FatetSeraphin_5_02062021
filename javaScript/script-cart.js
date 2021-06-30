@@ -4,7 +4,7 @@
 // ======================================================================
 //  Create "Items Cart-list elements" html code
 // ======================================================================
-const creatCartItem = (teddy, teddyQty) => {
+const creatCartItem = (teddy, teddyQty, teddyColor) => {
 
     const ulContainer = document.querySelector(".list-container");
 
@@ -25,7 +25,7 @@ const creatCartItem = (teddy, teddyQty) => {
 
                 <div class="flexCenter price-color">
                     <h3 class="item-price">${teddy.priceFormated()}</h3>
-                    <span class="flexCenter selected-color">${teddy.selectedColor}</span>
+                    <span class="flexCenter selected-color">${teddyColor}</span>
                 </div>
 
                 <div class="flexCenter quantity">

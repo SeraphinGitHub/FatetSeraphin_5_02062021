@@ -54,7 +54,8 @@ exports.orderTeddies = (req, res, next) => {
     !req.body.contact.city ||
     !req.body.contact.email ||
     !req.body.products) {
-    return res.status(400).send(new Error('Bad Request!'));
+    // return res.status(400).send(new Error('Bad Request!'));
+    return res.status(400).send({message:"Error 400", body: req.body});
   }
 
   let queries = [];
