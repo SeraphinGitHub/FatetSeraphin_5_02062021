@@ -66,10 +66,10 @@ body,
 
 /* ======  Contact Page (Form)  ====== */
 .validate-page {
-    background: linear-gradient(to bottom right, rgba(135, 206, 250, 0.9), rgba(0, 0, 0, 0.9));
+    background: linear-gradient(to bottom right, rgba(135, 206, 250, 0.7), rgba(0, 0, 0, 0.7));
 }
 
 /* ======  Loading Spinner background ====== */
 .backLoad {
-    background: linear-gradient(to bottom right, white, rgba(0, 0, 0, 0.6));
+    background: linear-gradient(to bottom right, white, rgba(0, 0, 0, 0.3));
 }

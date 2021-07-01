@@ -75,9 +75,7 @@ const renderProductPage = async () => {
         }
 
         // Close color dropdown
-        else {
-            closeDropDown(customBtn, dropCont, dropFlow);
-        }
+        else closeDropDown(customBtn, dropCont, dropFlow);
     });
     
     // Manage + / - & Add button
@@ -106,7 +104,6 @@ const product_QuantityBtn = (teddy, customBtn, addButton, noColorAlert, customBt
     const plusBtn = document.querySelector(".quantity-plus-btn"); // Get "+" button Product Page
     const minusBtn = document.querySelector(".quantity-minus-btn"); // Get "-" button Product Page
     const inputClass = document.querySelector(".quantity-input"); // Get input field's Product Page
-    
     const minValue = Number (inputClass.min);  // Get min value from input field's attribute
     const maxValue = Number (inputClass.max);  // Get max value from input field's attribute
 
@@ -132,6 +129,9 @@ const product_QuantityBtn = (teddy, customBtn, addButton, noColorAlert, customBt
             teddyImgAnim();
             cart.addItem(teddy, inputClass);
 
+            // Display item quantity in Cart
+            totalQuantityDOM(cart.updateTotalQty());
+
             if (getComputedStyle(maxValueAlert).visibility === "visible") {
                 maxValueAlert.classList.remove("visible");
                 maxValueAlert.classList.remove("opacity_100");
@@ -150,18 +150,15 @@ const product_QuantityBtn = (teddy, customBtn, addButton, noColorAlert, customBt
         
         // Keep increase quantity value as long as under max value
         if (quantityValue < maxValue) {
-
+            
             quantityValue++;
-            inputClass.value = quantityValue;  // Render value in input's field
-
-            if (quantityValue === maxValue) {  // Grey out "+" button over max value reached
-                plusBtn.classList.add("greyed-out-btn");
-            }
+            inputClass.value = quantityValue; // Render value in input's field
+            
+            // Grey out "+" button over max value reached
+            if (quantityValue === maxValue) plusBtn.classList.add("greyed-out-btn");
         } 
         
-        else {
-            popAlertMessage(maxValueAlert);
-        }
+        else popAlertMessage(maxValueAlert);
     });  
     
 
@@ -194,12 +191,12 @@ const teddyImgAnim = () => {
     const teddyImg = document.querySelector(".teddy-img");
     const teddyImgClone = teddyImg.cloneNode(true);
     const teddyDouble = teddyImg.parentElement.appendChild(teddyImgClone);
-    const isTeddyDoubleAnim = teddyDouble.classList.contains("teddy-img-anim");
+    const tedyComputed = getComputedStyle(teddyDouble);
 
     const duration = 1.3; // ==> Seconds
     const delay = duration * 1000;
         
-    if (!isTeddyDoubleAnim) {
+    if (tedyComputed.position === "absolute") {
 
         teddyDouble.classList.add("teddy-img-anim");
         teddyDouble.style.transitionDuration = `${duration}s`;

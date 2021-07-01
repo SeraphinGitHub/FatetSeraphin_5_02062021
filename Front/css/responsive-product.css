@@ -7,6 +7,10 @@
     .teddy-fig {
         width: 80%;
     }
+
+    .teddy-img-anim {
+        transform: translate3d(205%, -110%, 0) scale(0) rotate(40deg);
+    }
 }
 
 
@@ -79,6 +83,10 @@
         top: -40%;
         left: -2%;
     }
+
+    .teddy-img-anim {
+        transform: translate3d(72%, -117%, 0) scale(0) rotate(40deg);
+    }
 }
 
 
@@ -146,6 +154,10 @@
         width: 90%;
         top: -50%;
         left: 3%;
+    }
+
+    .teddy-img-anim {
+        transform: translate3d(22%, -112%, 0) scale(0) rotate(40deg);
     }
 }
 
@@ -227,5 +239,9 @@
         width: 90%;
         top: -35%;
         left: 3%;
+    }
+
+    .teddy-img-anim {
+        transform: translate3d(20%, -100%, 0) scale(0) rotate(40deg);
     }
 }

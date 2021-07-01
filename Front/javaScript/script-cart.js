@@ -4,7 +4,7 @@
 // ======================================================================
 //  Create "Items Cart-list elements" html code
 // ======================================================================
-const creatCartItem = (teddy, teddyQty, teddyColor) => {
+const creatCartItem = (teddy, teddyColor, teddyQty) => {
 
     const ulContainer = document.querySelector(".list-container");
 
@@ -62,7 +62,12 @@ const cartItem_Btns = () => {
 const itemBtn = (button, btnFunction, symbol) => {
     
     button.forEach(btn => {
-        btn.addEventListener("click", (event) => btnFunction(event, symbol));
+        btn.addEventListener("click", (event) => {
+
+            btnFunction(event, symbol);
+            totalQuantityDOM(cart.updateTotalQty());
+            totalPriceDOM();
+        });
     });
 }
 
@@ -71,15 +76,12 @@ const itemBtn = (button, btnFunction, symbol) => {
 // Clear all Cart
 // ======================================================================
 const emptyCart = () => {
-
     const cleanBtn = document.querySelector(".clean-cart-btn");
-    const listContainer = document.querySelector(".list-container");
-
+    
     cleanBtn.addEventListener("click", () => {
-
-        if (listContainer) {
-            cart.emptyCart(listContainer);
-        };
+        cart.emptyCart();
+        totalQuantityDOM(cart.updateTotalQty());
+        totalPriceDOM();       
     });
 }
 
@@ -123,35 +125,39 @@ const displayForm = () => {
 const purchase = () => {
     const confirmBtn = document.querySelector(".purchase-order-btn");
     const loadingSpinner = document.querySelector(".loading-spinner");
-    const spinner_1 = document.querySelector(".spinner-1");
-    const spinner_2 = document.querySelector(".spinner-2");
+    const spinner = document.querySelector(".spinner");
     
-    const delay = 2000; // ==> milliSeconds
+    // Spin timer
+    const delay = 3000; // ==> milliSeconds
     const spinCount = delay/1000 + 1;
 
     confirmBtn.addEventListener("click", (event) => {
        
         cart.purchase(event);
-
         let cartArray = JSON.parse(localStorage.getItem("cartArray"));
-        
+
+        // If Cart is empty
         if(!cartArray || !cartArray.length) {
             const emptyCartAlert = document.querySelector(".cart-empty-alert"); 
             popAlertMessage(emptyCartAlert);
         }
 
+        // Display loading spinner
         setTimeout(() => {
             let getOrderId = localStorage.getItem("orderId");
 
             if(getOrderId) {
+                
                 loadingSpinner.classList.add("visible");
-                spinner_1.classList.add("spinner-anim-1");
-                spinner_2.classList.add("spinner-anim-2");
-                spinner_1.style.animationIterationCount = `${spinCount}`;
-                spinner_2.style.animationIterationCount = `${spinCount}`;
+                spinner.classList.add("spinner-anim");
+                spinner.style.animationIterationCount = `${spinCount}`;
+                
+                localStorage.setItem("confirmPage", JSON.stringify(cartArray));
+                cart.emptyCart();
             }
         }, 50);
         
+        // Redirect to confirm page
         setTimeout(() => {
             let getOrderId = localStorage.getItem("orderId");
             if(getOrderId) document.location.href = "./confirmation.html";
@@ -162,13 +168,25 @@ const purchase = () => {
 
 
 // ======================================================================
+// DOM Update Total Price
+// ======================================================================
+const totalPriceDOM = () => {
+    
+    // Display total price in "Total" html container (Cart Page)
+    const totalPriceDiv = document.querySelector(".total-price");
+    totalPriceDiv.textContent = cart.updateTotalPrice();
+}
+
+
+// ======================================================================
 // Functions chaining order
 // ======================================================================
 window.addEventListener("load", () => {
     cart.renderItems(creatCartItem);
-    cart.updateTotalPrice();
+    totalPriceDOM();
     cartItem_Btns();
     emptyCart();
     displayForm();
     purchase();
+    cleanOldOrder();
 });

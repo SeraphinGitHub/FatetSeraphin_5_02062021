@@ -2,19 +2,78 @@
 "use strict"
 
 // ======================================================================
-// 
+//  Create cart item in confirm page  html code
 // ======================================================================
-const deleteOrderId = () => {
+const createConfirmItems = (teddy, teddyColor, teddyQty) => {
 
-    const confirmPath = "/Front/html/confirmation.html";
+    const ulContainer = document.querySelector(".confirm-list-container");
+
+    // Create html content of one item
+    const itemListHtml = `
+        <li class="flexCenter">
+            <figure>
+                <img src="${teddy.imageUrl}" alt="ours en peluche faits à la main">
+            </figure>
+        
+            <div class="flexCenter item-caption">
+                <h3>${teddy.name}</h3>
+                <p>${teddy.description}</p>
+            </div>
+
+            <h3 class="confirm-price">${teddy.priceFormated()}</h3>
+            <span class="flexCenter confirm-color">${teddyColor}</span>
+            <h3 class="flexCenter confirm-qty">${teddyQty}</h3>
+        </li>`
+    ;
+
+    ulContainer.insertAdjacentHTML("beforeend", itemListHtml);
+}
+
+
+// ======================================================================
+// Render cart item in confirm page 
+// ======================================================================
+const renderConfirmItems = () => {
+
+    // Get localStorage's data
+    const confirmPageArray = JSON.parse(localStorage.getItem("confirmPage"));
+        
+    // For each teddy in cart
+    confirmPageArray.forEach(item => {
+        
+        const teddy = setTeddy(item); // Get Teddy data from localStorage
+        const teddyQtyObject = item.quantity;
+
+        for (const [teddyColor, teddyQty] of Object.entries(teddyQtyObject)) {
+            createConfirmItems(teddy, teddyColor, teddyQty);
+        }
+    });
+}
+
+
+// ======================================================================
+// Set Data from localStorage to page content 
+// ======================================================================
+const setOrderPageData = () => {
+
+    // Get Html Class name
+    const totalQuantityHtml = document.querySelector(".confirm-qty");
+    const totalPriceHtml = document.querySelector(".confirm-price");
+    const orderIdHtml = document.querySelector(".order-nurmber");
+    const articleHtml = document.querySelector(".article-word");
     
-    if(window.location.pathname === confirmPath) {
-        const cart = document.querySelector(".cart")
+    // Get localStorage's data
+    const totalQuantity = localStorage.getItem("totalQuantity");
+    const totalPrice = localStorage.getItem("totalPrice");
+    const orderId = localStorage.getItem("orderId");
 
-        cart.addEventListener("click", () => {
-            localStorage.removeItem("orderId");
-        });
-    }
+    totalQuantityHtml.textContent = totalQuantity;
+    totalPriceHtml.textContent = totalPrice;
+    orderIdHtml.textContent = orderId;
+    
+    (totalQuantity > 1 )
+    ? articleHtml.textContent = "articles"
+    : articleHtml.textContent = "article";
 }
 
 
@@ -22,5 +81,6 @@ const deleteOrderId = () => {
 // Functions chaining order
 // ======================================================================
 window.addEventListener("load", () => {
-    deleteOrderId();
+    setOrderPageData();
+    // renderConfirmItems();
 });

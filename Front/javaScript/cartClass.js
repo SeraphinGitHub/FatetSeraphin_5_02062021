@@ -20,31 +20,43 @@ class CartClass {
 
 
     // ======================================================================
+    // Get Teddy object by Id inside CartArray
+    // ======================================================================
+    getTeddyById(cartArray, targetId) {
+        const elementMatchId = element => element._id === targetId;
+        const teddyIndex = cartArray.findIndex(elementMatchId);
+        return cartArray[teddyIndex];
+    }
+
+    // ======================================================================
     // Manage "Add to Cart" button
     // ======================================================================
     addItem(teddy, inputClass) {
         
         const cartArray = this.getItems();
-        const elementMatchId = element => element._id === teddy._id;
         
         const resetValue = 1;        
         let quantityValue = Number (inputClass.value);
-        let teddyQtyObj = teddy.quantity;
+        let teddyQtyObject = teddy.quantity;
         let currentColor = teddy.selectedColor;
+        let teddyById = cart.getTeddyById(cartArray, teddy._id);
+        
+        if (!teddyById) {
 
-        if (!cartArray.find(elementMatchId)) {
-            
-            teddy.colors.forEach(color => teddyQtyObj[color] = 0);
-            teddyQtyObj[currentColor] = (teddyQtyObj[currentColor] + Number (quantityValue));
+            teddyQtyObject[currentColor] = Number (quantityValue), 654;
             cartArray.push(teddy);
-            localStorage.setItem("cartArray", JSON.stringify(cartArray));
         }
         
         else {
-            teddyQtyObj[currentColor] = (teddyQtyObj[currentColor] + Number (quantityValue));
-            localStorage.setItem("cartArray", JSON.stringify(cartArray));
-        }
+            if (!Object.keys(teddyById.quantity).includes(currentColor)) {
+                teddyById.quantity[currentColor] = Number (quantityValue);
+            }
 
+            else teddyById.quantity[currentColor] += Number (quantityValue);
+            teddyById.selectedColor = currentColor;
+        }
+        
+        localStorage.setItem("cartArray", JSON.stringify(cartArray));
         inputClass.value = resetValue;  // After adding item to cart => restore input field to 1
         quantityValue = resetValue;  // Restore "+ / -" buttons values to 1
         this.updateTotalQty();  // Update number of items in the cart
@@ -55,9 +67,6 @@ class CartClass {
     // Render Items in Cart
     // ======================================================================
     renderItems(creatCartItem) {
-        
-        // ****************************************************************
-        // ****************************************************************
 
         const cartArray = this.getItems();
         
@@ -65,32 +74,11 @@ class CartClass {
         cartArray.forEach(item => {
             
             const teddy = setTeddy(item); // Get Teddy data from localStorage
+            const teddyQtyObject = item.quantity;
 
-            
-            
-            // const teddyQty = item.quantity[value]; //Get Teddy quantity
-
-
-            
-            let teddyColor = teddy.selectedColor;
-            
-            const qtyObj = item.quantity;
-            let teddyQty = 0;
-            
-            // For each qty per color
-            for (let value in qtyObj) {
-                
-                teddyQty = qtyObj[value]; // Get color qty value
-
-                // If qty value is not null
-                if(teddyQty) {
-                    creatCartItem(teddy, teddyQty, teddyColor); // Render item in cart
-                }
+            for (const [teddyColor, teddyQty] of Object.entries(teddyQtyObject)) {
+                if(teddyQty) creatCartItem(teddy, teddyColor, teddyQty);
             }
-            
-            // ****************************************************************
-            // ****************************************************************
-
         });
     }
 
@@ -100,46 +88,23 @@ class CartClass {
     // ======================================================================
     cartQuantityBtn(event, symbol) {
 
-        // ****************************************************************
-        // ****************************************************************
-        
         const cartArray = cart.getItems();
-
-        const getParent = event.target.parentElement;
-        const getTargetId = getParent.parentElement.id;
-        const quantityInput = getParent.querySelector(".quantity-input");
-        
-        const elementMatchId = element => element._id === getTargetId;
-        const teddyIndex = cartArray.findIndex(elementMatchId);
-   
-
+        const getTargetId = event.target.parentElement.parentElement.id;
+        const quantityInput = event.target.parentElement.querySelector(".quantity-input");
+        const teddyColor = event.target.parentElement.parentElement.querySelector(".selected-color").textContent;
+        let teddyQtyObject = cart.getTeddyById(cartArray, getTargetId).quantity;
         const minValue = Number (quantityInput.min);
-        
-
-        let quantityValue = Number (quantityInput.value);
-        let teddyQtyObj = cartArray[teddyIndex].quantity;
-        let currentColor = cartArray[teddyIndex].selectedColor;
-
 
         if (symbol === "+") {
-            // qtyArray_indexOne ++;
-
-            teddyQtyObj[currentColor] = (teddyQtyObj[currentColor] + Number (quantityValue));
+            teddyQtyObject[teddyColor] ++;
         }
         
         if (quantityInput.value > minValue && symbol === "-") {
-            // qtyArray_indexOne --;
-
-            teddyQtyObj[currentColor] = (teddyQtyObj[currentColor] - Number (quantityValue));
+            teddyQtyObject[teddyColor] --;
         }
         
-        quantityInput.value = teddyQtyObj[currentColor];
-        // cartArray[teddyIndex].quantity.splice(0, 1, qtyArray_indexOne);
+        quantityInput.value = teddyQtyObject[teddyColor];
         localStorage.setItem("cartArray", JSON.stringify(cartArray));
-
-        // ****************************************************************
-        // ****************************************************************
-        
         cart.updateTotalQty();  // Update number of items in the cart
         cart.updateTotalPrice();  // Update total price in the cart
     }
@@ -151,11 +116,15 @@ class CartClass {
     removeItem(event) {
 
         const cartArray = cart.getItems(); // Get data from localStorage        
-        const getTargetId = event.target.parentElement.id; // Get cliked element main <div> Id
-        const elementMatchId = element => element._id === getTargetId; // Compare ID
-        
-        const teddyIndex = cartArray.findIndex(elementMatchId); // Find the current teddy's index in cartArray
-        cartArray.splice(teddyIndex, 1); // Deconste the "Teddy object" at this index
+        const teddyColor = event.target.parentElement.querySelector(".selected-color").textContent;
+        const getTargetId = event.target.parentElement.id; // Get main <div> Id of cliked element
+        const elementMatchId = element => element._id === getTargetId;
+        const teddyIndex = cartArray.findIndex(elementMatchId);
+
+        let teddyById = cartArray[teddyIndex];
+        let teddyQtyObject = teddyById.quantity;
+
+        delete teddyQtyObject[teddyColor];
         localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
 
         event.target.parentElement.classList.add("translateY_-100");  // Move <div> up before remove              
@@ -164,6 +133,12 @@ class CartClass {
 
         setTimeout(() => {
             event.target.parentElement.parentElement.remove();  // Totally remove the html content after delay
+            
+            // If last this Teddy by color is remove
+            if(!Object.keys(teddyQtyObject).length) {
+                cartArray.splice(teddyIndex, 1); // Delete "Teddy object" at this index
+                localStorage.setItem("cartArray", JSON.stringify(cartArray)); 
+            }
         }, 400);
     }
 
@@ -171,16 +146,19 @@ class CartClass {
     // ======================================================================
     // Clear all Cart
     // ======================================================================
-    emptyCart(listContainer) {
-
-        listContainer.classList.add("translateY_-100");  // Move <div> up
-        localStorage.clear();  // Deconste all data from localStorage
-        this.updateTotalQty();  // Update number of items in the cart
-        this.updateTotalPrice();  // Update total price in the cart
+    emptyCart() {
+        const listContainer = document.querySelector(".list-container");
         
-        setTimeout(() => {
-            listContainer.remove();  // Totally remove the html content after delay
-        }, 500);
+        if(listContainer) {
+            listContainer.classList.add("translateY_-100");  // Move <div> up
+            localStorage.removeItem("cartArray"); // Delete "cartArray" from localStorage
+            this.updateTotalQty();  // Update number of items in the cart
+            this.updateTotalPrice();  // Update total price in the cart
+            
+            setTimeout(() => {
+                listContainer.remove();  // Totally remove the html content after delay
+            }, 500);
+        }
     }
 
 
@@ -196,12 +174,12 @@ class CartClass {
             cartArray.forEach(item => {
 
                 const teddyPrice = item.price;
-                const qtyObj = item.quantity;
+                const teddyQtyObject = item.quantity;
                 let qtyItems = 0;
                 
                 // For each qty per color add qty value to "qtyItems"
-                for (let value in qtyObj) {
-                    qtyItems += qtyObj[value];
+                for (let value in teddyQtyObject) {
+                    qtyItems += teddyQtyObject[value];
                 }
                 
                 // Add up every Teddy's quantity in cart
@@ -224,10 +202,12 @@ class CartClass {
     updateTotalQty() {
         const cartArray = this.getItems();
         const totalQtyAll = 0;
+        const finalQuantity = this.calculateTotal(cartArray, totalQtyAll, "quantity");
 
-        // Display the "total" calculated value in the cart html element
-        const cartItemsDiv = document.querySelector(".cart-items");
-        cartItemsDiv.textContent = this.calculateTotal(cartArray, totalQtyAll, "quantity");
+        let getOrderId = localStorage.getItem("orderId");
+        if(getOrderId) localStorage.setItem("totalQuantity", finalQuantity);
+
+        return finalQuantity;
     }
 
 
@@ -241,9 +221,10 @@ class CartClass {
         // Turn the total price value into a currency (Cart Page)
         const currencyTotalPrice = new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(this.calculateTotal(cartArray, totalPrice, "price")/100);
 
-        // Display total price in "Total" html container (Cart Page)
-        const totalPriceDiv = document.querySelector(".total-price");
-        totalPriceDiv.textContent = currencyTotalPrice;
+        let getOrderId = localStorage.getItem("orderId");
+        if(getOrderId) localStorage.setItem("totalPrice", currencyTotalPrice);
+
+        return currencyTotalPrice;
     }
     
 
@@ -270,11 +251,6 @@ class CartClass {
             const command = await postData_API(contact, products);
             if(command.orderId) localStorage.setItem("orderId", command.orderId);
         }
-        
-        // else {
-        //     const emptyCartAlert = document.querySelector(".cart-empty-alert"); 
-        //     popAlertMessage(emptyCartAlert);
-        // }
     }
     
     
@@ -328,22 +304,26 @@ class CartClass {
     // Check input fields informations 
     formValidation(contactData, inputField, regEx, errMessEmpty, errMessField) {
 
-        // If input field is empty
-        if (inputField.value === "") {
-            this.popUpMessage(inputField, errMessEmpty); // Pop error message up
-        }
+        // // If input field is empty
+        // if (inputField.value === "") {
+        //     this.popUpMessage(inputField, errMessEmpty); // Pop error message up
+        // }
 
-        // If regEx is wrong
-        else if (!regEx.test(inputField.value)) {
-            this.popUpMessage(inputField, errMessField); // Pop error message up
-            contactData.set(inputField.name, ""); // Set contactData pairs "key: value" to "input field's name: empty"
-        }
+        // // If regEx is wrong
+        // else if (!regEx.test(inputField.value)) {
+        //     this.popUpMessage(inputField, errMessField); // Pop error message up
+        //     contactData.set(inputField.name, ""); // Set contactData pairs "key: value" to "input field's name: empty"
+        // }
         
-        // If all informations are corrects
-        else {
-            // Set contactData pairs "key: value" to "input field's name: inputField.value"
-            contactData.set(inputField.name, inputField.value);
-        }
+        // // If all informations are corrects
+        // else {
+        //     // Set contactData pairs "key: value" to "input field's name: inputField.value"
+        //     contactData.set(inputField.name, inputField.value);
+        // }
+
+
+        contactData.set(inputField.name, "aze");
+        
     }
 
     // Pop error message up if wrong data entered

@@ -9,10 +9,6 @@
     footer {
         width: 90%;
     }
-
-    .teddy-img-anim {
-        transform: translate3d(205%, -110%, 0) scale(0) rotate(40deg);
-    }
 }
 
 
@@ -75,10 +71,6 @@
         padding-top: 15px;
         padding-bottom: 15px;
     }
-
-    .teddy-img-anim {
-        transform: translate3d(72%, -117%, 0) scale(0) rotate(40deg);
-    }
 }
 
 
@@ -132,10 +124,6 @@
     /* --- footer --- */
     footer h2 {
         padding: 20px;
-    }
-
-    .teddy-img-anim {
-        transform: translate3d(22%, -112%, 0) scale(0) rotate(40deg);
     }
 }
 
@@ -213,9 +201,5 @@
     footer h2 {
         font-size: 150%;
         padding: 15px;
-    }
-
-    .teddy-img-anim {
-        transform: translate3d(20%, -100%, 0) scale(0) rotate(40deg);
     }
 }

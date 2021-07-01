@@ -51,4 +51,5 @@ const renderProductList = async () => {
 // ======================================================================
 window.addEventListener("load", () => {
     renderProductList();
+    cleanOldOrder();
 });

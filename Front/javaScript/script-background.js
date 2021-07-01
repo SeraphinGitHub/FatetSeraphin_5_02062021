@@ -49,6 +49,11 @@ const checkLinks = (slashIndex, homeIndex, homeOther, cartPath) => {
     (window.location.pathname === slashIndex || window.location.pathname === homeIndex)
     ? createHeader(homeIndex, cartPath)
     : createHeader(homeOther, cartPath);
+
+    const confirmPath = "/Front/html/confirmation.html";
+    (window.location.pathname !== confirmPath)
+    ? totalQuantityDOM(cart.updateTotalQty())
+    : totalQuantityDOM(0);
 }
 
 
@@ -82,10 +87,35 @@ const popAlertMessage = (messageClass) => {
 
 
 // ======================================================================
+// Clean localStorage From old Order
+// ======================================================================
+const cleanOldOrder =  () => {
+
+    let orderId = localStorage.getItem("orderId");
+    let confirmPage = JSON.parse(localStorage.getItem("confirmPage"));
+    let totalPrice = localStorage.getItem("totalPrice");
+    let totalQty = localStorage.getItem("totalQuantity");
+    
+    if (orderId) localStorage.removeItem("orderId");
+    if (confirmPage) localStorage.removeItem("confirmPage");
+    if(totalPrice) localStorage.removeItem("totalPrice");
+    if(totalQty) localStorage.removeItem("totalQuantity");
+}
+
+
+// ======================================================================
+// DOM Update Total Quantity
+// ======================================================================
+const totalQuantityDOM = (quantity) => {    
+    const cartItemsDiv = document.querySelector(".cart-items");
+    cartItemsDiv.textContent = quantity; // Display item quantity in Cart
+}
+
+
+// ======================================================================
 // Functions chaining order
 // ======================================================================
 window.addEventListener("load", () => {
     renderHeader();
-    cart.updateTotalQty();
     renderFooter();
 });
