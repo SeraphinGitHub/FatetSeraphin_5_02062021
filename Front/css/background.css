@@ -301,3 +301,27 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+
+/* ============================================ */
+/*        Alert message                         */
+/* ============================================ */
+.max-value-alert,
+.no-color-alert,
+.cart-empty-alert {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    text-align: center;
+    padding: 5px;
+
+    transition-duration: 1s;
+    background: linear-gradient(to bottom right, white, pink);
+    border: solid 2px red;
+    border-radius: 12px;
+    
+    font-family: "Raleway-Medium";
+    line-height: 130%;
+    font-weight: 400;
+    font-size: 105%;
+}

@@ -193,7 +193,7 @@ header {
     width: 200px;
 }
 
-.purchase-btn {
+.validate-btn {
     height: 100px;
     width: 350px;
 }
@@ -205,9 +205,9 @@ header {
 
 
 /* ============================================ */
-/*   --- Confirm order form page Container ---  */
+/*  --- Validate order form page Container ---  */
 /* ============================================ */
-.purchase-page-flow {
+.validate-page-flow {
     position: fixed;
     top: 0;
     visibility: hidden;
@@ -216,7 +216,7 @@ header {
     width: 100%;
 }
 
-.purchase-page {
+.validate-page {
     position: relative;
     height: 100%;
     width: 100%;
@@ -267,11 +267,26 @@ header {
     border: solid black 1px;
 }
 
-.confirm-order-btn {
+
+/* --- Purchase Container --- */
+.purchase-container {
+    position: relative;
+    height: auto;
+    width: 100%;
     margin: 50px;
     margin-bottom: 0;
-    height: 85px;
+}
+
+.cart-empty-alert {
+    top: -50%;
+    left: 8.5%;
     width: 80%;
+    height: 40px;
+}
+
+.purchase-order-btn {
+    height: 85px;
+    width: 100%;
 }
 
 .cancel-order-btn {
@@ -280,7 +295,8 @@ header {
     width: 50%;
 }
 
-/* --- Error Message --- */
+
+/* --- Error Message Form --- */
 .error-message {
     position: absolute;
     height: 20px;
@@ -293,4 +309,59 @@ header {
     border: solid red 1.5px;
     border-radius: 5px;
     background-color: rgb(255, 236, 239);
+}
+
+
+
+/* ============================================ */
+/*  --- Loading Spinner ---                     */
+/* ============================================ */
+.loading-spinner {
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.spin {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+
+    border: 13px solid transparent;
+    border-top-color: darkviolet;
+    border-radius: 50%;
+
+    animation: 1s linear;
+}
+
+.spinner-anim-1 {
+    transform: rotate(45deg);
+    animation-name: spin_1;
+}
+
+.spinner-anim-2 {
+    transform: rotate(225deg);
+    animation-name: spin_2;
+}
+
+@keyframes spin_1 {
+    0% {
+        transform: rotate(45deg);
+    }
+   
+    100% {
+        transform: rotate(405deg);
+    }
+}
+
+@keyframes spin_2 {
+    0% {
+        transform: rotate(225deg);
+    }
+   
+    100% {
+        transform: rotate(585deg);
+    }
 }

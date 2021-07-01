@@ -166,48 +166,6 @@
     position: relative;
 }
 
-.max-value-alert {
-    position: absolute;
-    visibility: hidden;
-    opacity: 0;
-    text-align: center;
-
-    padding: 5px;
-    width: 140%;
-    top: -40%;
-    left: -20%;
-
-    background: linear-gradient(to bottom right, white, pink);
-    border: solid 2px red;
-    border-radius: 12px;
-    transition-duration: 1s;
-    
-    font-family: "Raleway-Medium";
-    line-height: 130%;
-    font-weight: 400;
-    font-size: 105%;
-}
-
-/* Alert Message - Color / Qty */
-.max-value-alert,
-.no-color-alert {
-    position: absolute;
-    visibility: hidden;
-    opacity: 0;
-    text-align: center;
-    padding: 5px;
-
-    transition-duration: 1s;
-    background: linear-gradient(to bottom right, white, pink);
-    border: solid 2px red;
-    border-radius: 12px;
-    
-    font-family: "Raleway-Medium";
-    line-height: 130%;
-    font-weight: 400;
-    font-size: 105%;
-}
-
 .max-value-alert span {
     font-family: "Roboto-Bold";
     line-height: 100%;

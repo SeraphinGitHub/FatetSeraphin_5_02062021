@@ -92,7 +92,7 @@
         width: 40%;
     }
 
-    .purchase-btn {
+    .validate-btn {
         height: 100px;
         width: 70%;
         margin: auto;
@@ -106,7 +106,7 @@
     }
 
 
-    /* --- Confirm form page --- */
+    /* --- purchase form page --- */
     .contact {
         width: 400px;
     }
@@ -207,7 +207,7 @@
         width: 80%;
     }
     
-    .purchase-btn {
+    .validate-btn {
         height: 100px;
         width: 95%;
         margin: auto;
@@ -223,8 +223,8 @@
     }
 
 
-    /* --- Confirm form page --- */
-    .purchase-page {
+    /* --- purchase form page --- */
+    .validate-page {
         border-radius: 120px 120px 0 0;
     }
 
@@ -247,7 +247,18 @@
         height: 25px;
     }
 
-    .confirm-order-btn {
+    .purchase-container {
+        margin: 10px;
+    }
+
+    .cart-empty-alert {
+        top: -5%;
+        left: 13%;
+        width: 70%;
+        height: 25px;
+    }
+
+    .purchase-order-btn {
         margin: 20px;
         margin-bottom: 50px;
         margin-bottom: 0;

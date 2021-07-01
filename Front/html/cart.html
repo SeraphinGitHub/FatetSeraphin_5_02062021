@@ -46,7 +46,7 @@
         <div class="flexCenter order-container">
             <button class="btn clean-cart-btn" type="button">Vider le panier</button>
                 
-            <button class="btn purchase-btn" type="button">Passer commande</button>
+            <button class="btn validate-btn" type="button">Valider et poursuivre</button>
            
             <div class="flexCenter total-container">
                 <h3>TOTAL :</h3>
@@ -55,8 +55,8 @@
         </div>
     </section>
     
-    <section class="flexCenter purchase-page-flow">
-        <div class="flexCenter purchase-page">
+    <section class="flexCenter validate-page-flow">
+        <div class="flexCenter validate-page">
 
             <form class="flexCenter contact" method="POST">
     
@@ -85,7 +85,15 @@
                     <input name="email" id="email" type="email" placeholder="Entrer votre adresse e-mail">
                 </div>
 
-                <button class="btn confirm-order-btn" type="submit">Confirmer commande</button>
+                <div class="flexCenter purchase-container">
+                    
+                    <!-- Cart empty Alert -->
+                    <span class="flexCenter cart-empty-alert">
+                        Votre panier est vide !
+                    </span>
+    
+                    <button class="btn purchase-order-btn" type="submit">Passer commande</button>
+                </div>
 
                 <button class="btn cancel-order-btn" type="button">Annuler</button>
             </form>
@@ -93,6 +101,11 @@
         </div>
     </section>
     
+    <section class="flexCenter loading-spinner backLoad">
+        <div class="flexCenter spin spinner-1"></div>
+        <div class="flexCenter spin spinner-2"></div>
+    </section>
+
     <footer class="border-radius">
     </footer>
 

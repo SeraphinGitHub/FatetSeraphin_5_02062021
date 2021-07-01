@@ -62,10 +62,7 @@ const cartItem_Btns = () => {
 const itemBtn = (button, btnFunction, symbol) => {
     
     button.forEach(btn => {
-        
-        btn.addEventListener("click", (event) => {
-            btnFunction(event, symbol);
-        });
+        btn.addEventListener("click", (event) => btnFunction(event, symbol));
     });
 }
 
@@ -90,23 +87,32 @@ const emptyCart = () => {
 // ======================================================================
 // Access to form page to confirm order
 // ======================================================================
-const purchase = () => {
+const displayForm = () => {
 
-    const purchaseBtn = document.querySelector(".purchase-btn");
-    const purchasePageFlow = document.querySelector(".purchase-page-flow");
-    const purchasePage = document.querySelector(".purchase-page");
+    const validateBtn = document.querySelector(".validate-btn");
+    const validatePageFlow = document.querySelector(".validate-page-flow");
+    const validatePage = document.querySelector(".validate-page");
     const cancelPageBtn = document.querySelector(".cancel-order-btn");
 
     const timeOutDuration = 400; // ==> milliSeconds
 
     // On Click "Passer Commander" button ==> Show confirm order page (Form)
-    purchaseBtn.addEventListener("click", () => {
-        cart.purchase(purchasePageFlow, purchasePage, timeOutDuration);
+    validateBtn.addEventListener("click", () => {
+        
+        validatePageFlow.classList.add("visible");
+        validatePage.classList.add("translateY_0");
+        setTimeout(() => validatePage.classList.add("border-radius_0"), timeOutDuration);
     });
 
     // On Click "Annuler" button ==> Hide confirm order page
     cancelPageBtn.addEventListener("click", () => {
-        cart.cancelPurchase(purchasePageFlow, purchasePage, timeOutDuration);
+        
+        validatePage.classList.remove("border-radius_0");
+        
+        setTimeout(() => {
+            validatePage.classList.remove("translateY_0");
+            validatePageFlow.classList.remove("visible")
+        }, timeOutDuration);
     });
 }
 
@@ -114,11 +120,43 @@ const purchase = () => {
 // ======================================================================
 // Confirm form page and order command
 // ======================================================================
-const confirm = () => {
-    const confirmBtn = document.querySelector(".confirm-order-btn");
+const purchase = () => {
+    const confirmBtn = document.querySelector(".purchase-order-btn");
+    const loadingSpinner = document.querySelector(".loading-spinner");
+    const spinner_1 = document.querySelector(".spinner-1");
+    const spinner_2 = document.querySelector(".spinner-2");
+    
+    const delay = 2000; // ==> milliSeconds
+    const spinCount = delay/1000 + 1;
 
     confirmBtn.addEventListener("click", (event) => {
-        cart.confirm(event);
+       
+        cart.purchase(event);
+
+        let cartArray = JSON.parse(localStorage.getItem("cartArray"));
+        
+        if(!cartArray || !cartArray.length) {
+            const emptyCartAlert = document.querySelector(".cart-empty-alert"); 
+            popAlertMessage(emptyCartAlert);
+        }
+
+        setTimeout(() => {
+            let getOrderId = localStorage.getItem("orderId");
+
+            if(getOrderId) {
+                loadingSpinner.classList.add("visible");
+                spinner_1.classList.add("spinner-anim-1");
+                spinner_2.classList.add("spinner-anim-2");
+                spinner_1.style.animationIterationCount = `${spinCount}`;
+                spinner_2.style.animationIterationCount = `${spinCount}`;
+            }
+        }, 50);
+        
+        setTimeout(() => {
+            let getOrderId = localStorage.getItem("orderId");
+            if(getOrderId) document.location.href = "./confirmation.html";
+        }, delay);
+
     });
 }
 
@@ -131,6 +169,6 @@ window.addEventListener("load", () => {
     cart.updateTotalPrice();
     cartItem_Btns();
     emptyCart();
+    displayForm();
     purchase();
-    confirm();
 });

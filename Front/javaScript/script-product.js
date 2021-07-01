@@ -25,8 +25,6 @@ const renderProductPage = async () => {
     const dropFlow = document.querySelector(".dropdown-flow");
     const addButton = document.querySelector(".cart-add-btn");
     const color = document.getElementsByClassName("color");
-
-    // Get "Add to cart" button's alert message
     const noColorAlert = document.querySelector(".no-color-alert"); 
     
     // Set default custom button's text
@@ -57,21 +55,17 @@ const renderProductPage = async () => {
             addButton.classList.remove("greyed-out-btn"); // Set back "Add to Cart" button to normal style
             noColorAlert.classList.remove("visible"); // Hide alert message
             noColorAlert.classList.remove("opacity_100");
-
-            // Set back "Add to Cart" button to normal function
-            let isColorSelected = true;
-            localStorage.setItem("isColorSelected", isColorSelected);
         });
     }
 
-
-    const dropComputed = getComputedStyle(dropFlow);
+    
+    let isDropFlowVisible = dropFlow.classList.contains("visible");
 
     // On mouse click "Couleurs" button
     customBtn.addEventListener("click", function() {
 
         // Open color dropdown
-        if (dropComputed.visibility === "hidden") {
+        if (!isDropFlowVisible) {
             
             dropFlow.classList.add("visible");
             this.classList.remove("custom-btn-delay");
@@ -85,8 +79,6 @@ const renderProductPage = async () => {
             closeDropDown(customBtn, dropCont, dropFlow);
         }
     });
-
-    addButton.classList.add("greyed-out-btn"); // Grey out "Add to Cart" button
     
     // Manage + / - & Add button
     product_QuantityBtn(teddy, customBtn, addButton, noColorAlert, customBtnText);
@@ -117,41 +109,79 @@ const product_QuantityBtn = (teddy, customBtn, addButton, noColorAlert, customBt
     
     const minValue = Number (inputClass.min);  // Get min value from input field's attribute
     const maxValue = Number (inputClass.max);  // Get max value from input field's attribute
-    
+
     const maxValueAlert = document.querySelector(".max-value-alert");
-    maxValueAlert.children[0].textContent = maxValue;  
+    maxValueAlert.children[0].textContent = maxValue;
+    
+    addButton.classList.add("greyed-out-btn");
+
     
     // On Click "Add to Cart" Button
     addButton.addEventListener("click", () => {
-    
-        let isColorSelected = localStorage.getItem("isColorSelected");
         
+        let isAddBtnGreyedOut = addButton.classList.contains("greyed-out-btn");
+
         // If color was selected
-        if(isColorSelected) {
+        if(!isAddBtnGreyedOut) {
 
             customBtn.textContent = customBtnText;
             customBtn.classList.remove("chosen-color");
-            addButton.classList.add("greyed-out-btn"); // Grey out "Add to Cart" button
+            addButton.classList.add("greyed-out-btn");
+            plusBtn.classList.remove("greyed-out-btn");
             
             teddyImgAnim();
-            cart.addItem(teddy, inputClass, plusBtn, maxValueAlert);
-            localStorage.removeItem("isColorSelected");
+            cart.addItem(teddy, inputClass);
+
+            if (getComputedStyle(maxValueAlert).visibility === "visible") {
+                maxValueAlert.classList.remove("visible");
+                maxValueAlert.classList.remove("opacity_100");
+            }
         }
 
         // If color was not selected
-        else cart.popAlertMessage(noColorAlert);
+        else popAlertMessage(noColorAlert);
     });
 
 
     // On Click " + " Button
     plusBtn.addEventListener("click", () => {
-        cart.plusBtnProduct(maxValue, inputClass, plusBtn, maxValueAlert);
+
+        let quantityValue = Number (inputClass.value);
+        
+        // Keep increase quantity value as long as under max value
+        if (quantityValue < maxValue) {
+
+            quantityValue++;
+            inputClass.value = quantityValue;  // Render value in input's field
+
+            if (quantityValue === maxValue) {  // Grey out "+" button over max value reached
+                plusBtn.classList.add("greyed-out-btn");
+            }
+        } 
+        
+        else {
+            popAlertMessage(maxValueAlert);
+        }
     });  
     
 
     // On Click " - " Button
     minusBtn.addEventListener("click", () => {
-        cart.minusBtnProduct(minValue, inputClass, plusBtn, maxValueAlert);
+
+        let quantityValue = Number (inputClass.value);
+        
+        // Keep decrease quantity value as long as over min value
+        if (quantityValue > minValue) {
+
+            quantityValue--;
+            inputClass.value = quantityValue;  // Render value in input's field
+            
+            plusBtn.classList.remove("greyed-out-btn");
+            maxValueAlert.classList.remove("visible");
+            maxValueAlert.classList.remove("opacity_100");
+        }
+        
+        else return;  // If min value's reached => stop at min value's value
     });
 }
 
@@ -164,12 +194,12 @@ const teddyImgAnim = () => {
     const teddyImg = document.querySelector(".teddy-img");
     const teddyImgClone = teddyImg.cloneNode(true);
     const teddyDouble = teddyImg.parentElement.appendChild(teddyImgClone);
-    const tedyComputed = getComputedStyle(teddyDouble);
-    
+    const isTeddyDoubleAnim = teddyDouble.classList.contains("teddy-img-anim");
+
     const duration = 1.3; // ==> Seconds
     const delay = duration * 1000;
         
-    if (tedyComputed.position === "absolute") {
+    if (!isTeddyDoubleAnim) {
 
         teddyDouble.classList.add("teddy-img-anim");
         teddyDouble.style.transitionDuration = `${duration}s`;

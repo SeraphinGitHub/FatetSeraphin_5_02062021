@@ -20,24 +20,9 @@ class CartClass {
 
 
     // ======================================================================
-    // Display alert message
-    // ======================================================================
-    popAlertMessage(messageClass) {
-
-        messageClass.classList.add("visible");
-        messageClass.classList.add("opacity_100");
-
-        setTimeout(() => {
-            messageClass.classList.remove("visible");
-            messageClass.classList.remove("opacity_100");
-        }, 4000);
-    }
-
-
-    // ======================================================================
     // Manage "Add to Cart" button
     // ======================================================================
-    addItem(teddy, inputClass, plusBtn, maxValueAlert) {
+    addItem(teddy, inputClass) {
         
         const cartArray = this.getItems();
         const elementMatchId = element => element._id === teddy._id;
@@ -63,58 +48,6 @@ class CartClass {
         inputClass.value = resetValue;  // After adding item to cart => restore input field to 1
         quantityValue = resetValue;  // Restore "+ / -" buttons values to 1
         this.updateTotalQty();  // Update number of items in the cart
-        plusBtn.classList.remove("greyed-out-btn");
-
-        if (getComputedStyle(maxValueAlert).visibility === "visible") {
-            maxValueAlert.classList.remove("visible");
-            maxValueAlert.classList.remove("opacity_100");
-        }
-    }
-
-
-    // ======================================================================
-    // Manage " + " button (not Cart)
-    // ======================================================================
-    plusBtnProduct(maxValue, inputClass, plusBtn, maxValueAlert) {
-        
-        let quantityValue = Number (inputClass.value);
-        
-        // Keep increase quantity value as long as under max value
-        if (quantityValue < maxValue) {
-
-            quantityValue++;
-            inputClass.value = quantityValue;  // Render value in input's field
-
-            if (quantityValue === maxValue) {  // Grey out "+" button over max value reached
-                plusBtn.classList.add("greyed-out-btn");
-            }
-        } 
-        
-        else {
-            this.popAlertMessage(maxValueAlert);
-        }
-    }
-
-
-    // ======================================================================
-    // Manage " - " button (not Cart)
-    // ======================================================================
-    minusBtnProduct(minValue, inputClass, plusBtn, maxValueAlert) {
-        
-        let quantityValue = Number (inputClass.value);
-        
-        // Keep decrease quantity value as long as over min value
-        if (quantityValue > minValue) {
-
-            quantityValue--;
-            inputClass.value = quantityValue;  // Render value in input's field
-            plusBtn.classList.remove("greyed-out-btn");
-
-            maxValueAlert.classList.remove("visible");
-            maxValueAlert.classList.remove("opacity_100");
-        }
-        
-        else return;  // If min value's reached => stop at min value's value
     }
 
 
@@ -312,40 +245,16 @@ class CartClass {
         const totalPriceDiv = document.querySelector(".total-price");
         totalPriceDiv.textContent = currencyTotalPrice;
     }
-
-    
-    // ======================================================================
-    // Access to form page to confirm order
-    // ======================================================================
-    purchase(purchasePageFlow, purchasePage, timeOutDuration) {
-        
-        purchasePageFlow.classList.add("visible");
-        purchasePage.classList.add("translateY_0");
-        setTimeout(() => purchasePage.classList.add("border-radius_0"), timeOutDuration);
-    }
-
-
-    // ======================================================================
-    // Cancel form and return to cart page
-    // ======================================================================
-    cancelPurchase(purchasePageFlow, purchasePage, timeOutDuration) {
-
-        purchasePage.classList.remove("border-radius_0");
-        
-        setTimeout(() => {
-            purchasePage.classList.remove("translateY_0");
-            purchasePageFlow.classList.remove("visible")
-        }, timeOutDuration);
-    }
     
 
     // ======================================================================
-    // Confirm form page and order command
+    // Purchase command
     // ======================================================================
-    confirm(event) {
+    async purchase(event) {
         
         event.preventDefault();
         const contact = this.getCustomerInfos();
+
         const cartArray = this.getItems();
         const products = [];
 
@@ -356,9 +265,16 @@ class CartClass {
         contact.forEach((key, value) => {
             contact[value] = key;
         });
-
-        postData_API(contact, products);
-        console.log(JSON.stringify({contact, products}));
+        
+        if(products.length) {
+            const command = await postData_API(contact, products);
+            if(command.orderId) localStorage.setItem("orderId", command.orderId);
+        }
+        
+        // else {
+        //     const emptyCartAlert = document.querySelector(".cart-empty-alert"); 
+        //     popAlertMessage(emptyCartAlert);
+        // }
     }
     
     
@@ -366,24 +282,13 @@ class CartClass {
     // Confirm form page and order command
     // ======================================================================
     getCustomerInfos() {
-        
-        const contact = document.querySelector(".contact");
-        const contactData = new FormData(contact);
-        
+
         // Get input fields by ID
         const firstName = document.getElementById("firstName");
         const lastName = document.getElementById("lastName");
         const address = document.getElementById("address");
         const city = document.getElementById("city");
         const email = document.getElementById("email");
-        
-        // Set contact formData with pairs : keys, values
-        contactData.set("firstName", firstName.value);
-        contactData.set("lastName", lastName.value);
-        contactData.set("address", address.value);
-        contactData.set("city", city.value);
-        contactData.set("email", email.value);
-        
 
         // Have to contain: LETTER || letter || accent letters || dash
         const firstNameRegEx = new RegExp(/^[A-Za-zÜ-ü-]+$/);
@@ -399,34 +304,45 @@ class CartClass {
         //    LETTER || letter || number && dot && LETTER || letter
         const emailRegEx = new RegExp(/^[A-Za-z0-9\._-]+[@]+[A-Za-z0-9]+[\.]+[A-Za-z]+$/);
         
-
         // Set error message strings for each field
-        const errMess_empty = "Le champ est vide !"
+        const errMess_empty = "Le champ est vide !";
 
         const errMess_firstName = "Prénom invalide !";
         const errMess_lastName = "Nom de famille invalide !";
-        const errMess_address = "Adresse postale invalide !"
-        const errMess_city = "Les chiffres ne sont pas autorisés !"
-        const errMess_email = "Adresse e-mail invalide !"
+        const errMess_address = "Adresse postale invalide !";
+        const errMess_city = "Les chiffres ne sont pas autorisés !";
+        const errMess_email = "Adresse e-mail invalide !";
 
-        this.formValidation(firstName, firstNameRegEx, errMess_empty, errMess_firstName);
-        this.formValidation(lastName, lastNameRegEx, errMess_empty, errMess_lastName);
-        this.formValidation(address, adressRegEx, errMess_empty, errMess_address);
-        this.formValidation(city, lastNameRegEx, errMess_empty, errMess_city);
-        this.formValidation(email, emailRegEx, errMess_empty, errMess_email);
+        const contact = document.querySelector(".contact");
+        let contactData = new FormData(contact);
+        
+        this.formValidation(contactData, firstName, firstNameRegEx, errMess_empty, errMess_firstName);
+        this.formValidation(contactData, lastName, lastNameRegEx, errMess_empty, errMess_lastName);
+        this.formValidation(contactData, address, adressRegEx, errMess_empty, errMess_address);
+        this.formValidation(contactData, city, lastNameRegEx, errMess_empty, errMess_city);
+        this.formValidation(contactData, email, emailRegEx, errMess_empty, errMess_email);
 
         return contactData;
     }
 
     // Check input fields informations 
-    formValidation(inputField, regEx, errMessEmpty, errMessField) {
-        
+    formValidation(contactData, inputField, regEx, errMessEmpty, errMessField) {
+
+        // If input field is empty
         if (inputField.value === "") {
-            this.popUpMessage(inputField, errMessEmpty);
+            this.popUpMessage(inputField, errMessEmpty); // Pop error message up
         }
 
+        // If regEx is wrong
         else if (!regEx.test(inputField.value)) {
-            this.popUpMessage(inputField, errMessField);
+            this.popUpMessage(inputField, errMessField); // Pop error message up
+            contactData.set(inputField.name, ""); // Set contactData pairs "key: value" to "input field's name: empty"
+        }
+        
+        // If all informations are corrects
+        else {
+            // Set contactData pairs "key: value" to "input field's name: inputField.value"
+            contactData.set(inputField.name, inputField.value);
         }
     }
 

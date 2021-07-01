@@ -49,16 +49,10 @@ body,
 
 
 /* ======  Green buttons  ====== */
-.purchase-btn,
+.validate-btn,
 .quantity-plus-btn,
-.confirm-order-btn {
+.purchase-order-btn {
     background: linear-gradient(to bottom right, greenyellow, rgb(0, 170, 0));
-}
-
-
-/* ======  Blue buttons  ====== */
-.validate-btn {
-    background: linear-gradient(to bottom right, rgb(194, 232, 255), dodgerblue);
 }
 
 
@@ -71,6 +65,11 @@ body,
 
 
 /* ======  Contact Page (Form)  ====== */
-.purchase-page {
+.validate-page {
     background: linear-gradient(to bottom right, rgba(135, 206, 250, 0.9), rgba(0, 0, 0, 0.9));
+}
+
+/* ======  Loading Spinner background ====== */
+.backLoad {
+    background: linear-gradient(to bottom right, white, rgba(0, 0, 0, 0.6));
 }

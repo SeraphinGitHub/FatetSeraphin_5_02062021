@@ -31,19 +31,13 @@ const getTeddyData_API = async (itemID) => {
 const postData_API = async (contact, products) => {
 
     const response = await fetch("http://localhost:3000/api/teddies/order", {
+        
+        headers: {"Content-Type": "application/json; charset=UTF-8"},
         method: "POST",
         body: JSON.stringify({contact, products})
     });
     
-    try {
-        const newData = await response.json();
-        
-        // console.log(newData);
-        
-        return newData;
-    }
-    
-    catch(error) {
-        console.log("error", error);
-    }
+    try {return await response.json()}
+    catch(error) {console.log("error", error)}
+    return {}
 }

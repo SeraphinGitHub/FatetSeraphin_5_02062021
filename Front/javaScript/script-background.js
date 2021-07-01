@@ -31,24 +31,24 @@ const createHeader = (home, cart) => {
     headerContainer.insertAdjacentHTML("beforeend", headerHtml);
 }
 
-
 const renderHeader = () => {
+    
+    const cartPath = "/Front/html/cart.html";
+   
     // From index
     const slashIndex = "/";
     const homeIndex = "/index.html";
-    const cartIndex = "/html/cart.html";
     
     // From html folder
-    const homeOther = "../index.html";
-    const cartOther = "/html/cart.html";
+    const homeOther = "../../index.html";
 
-    const checkLinks = (slashIndex, homeIndexArg, cartIndexArg, homeOtherArg, cartOtherArg) => {
-        (window.location.pathname === slashIndex || window.location.pathname === homeIndexArg)
-        ? createHeader(homeIndexArg, cartIndexArg)
-        : createHeader(homeOtherArg, cartOtherArg);
-    }
+    checkLinks(slashIndex, homeIndex, homeOther, cartPath);
+}
 
-    checkLinks(slashIndex, homeIndex, cartIndex, homeOther, cartOther);
+const checkLinks = (slashIndex, homeIndex, homeOther, cartPath) => {
+    (window.location.pathname === slashIndex || window.location.pathname === homeIndex)
+    ? createHeader(homeIndex, cartPath)
+    : createHeader(homeOther, cartPath);
 }
 
 
@@ -63,6 +63,21 @@ const renderFooter = () => {
     const footerHtml = `<h2>ORINOCO - Site de vente en ligne</h2>`;
 
     footerContainer.insertAdjacentHTML("beforeend", footerHtml);
+}
+
+
+// ======================================================================
+// Display alert message
+// ======================================================================
+const popAlertMessage = (messageClass) => {
+
+    messageClass.classList.add("visible");
+    messageClass.classList.add("opacity_100");
+
+    setTimeout(() => {
+        messageClass.classList.remove("visible");
+        messageClass.classList.remove("opacity_100");
+    }, 3000);
 }
 
 
