@@ -2,14 +2,189 @@
 /*         ---  Main Section Page 4 --- */
 /* ============================================ */
 .main {
-    height: 70vh;
+    height: auto;
+}
+
+.command-recap,
+.command-recap span,
+.comment,
+.order-number,
+.items-recap,
+.items-recap p {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* --- "Commande Envoyée" --- */
+.confirm-title-flow {
+    width: 100%;
+    overflow: hidden;
+}
+
+.confirm-title {
+    position: relative;
+    margin: 40px;
+    padding: 30px;
+    width: 70%;
+    
+    animation: confirmTitle 0.8s linear;
+    animation-timing-function: ease-in-out;
+
+    word-spacing: 200%;
+    border: double 6px rgb(0, 200, 0);
+    border-radius: 20px;
+}
+
+/* --- Animation --- */
+@keyframes confirmTitle {
+    0% {
+        transform: translateX(-120%);
+    }
+
+    50% {
+        transform: translateX(12%);
+    }
+
+    70% {
+        transform: translateX(-5%);
+    }
+    
+    90% {
+        transform: translateX(1%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+
+/* --- Icon --- */
+.confirm-title i {
+    position: absolute;
+    top: 50%;
+    left: 12%;
+    transform: translate(-50%, -50%);
+    font-size: 300%;
+    color: rgb(0, 200, 0);
+}
+
+.confirm-title h2 {
+    padding: 0;
+    font-size: 190%;
+}
+
+.main h3 {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: 600;
+    font-size: 130%;
 }
 
 .main p {
-    width: 85%;
-    margin: auto;
-    margin-top: 100px;
+    font-family: "Raleway-Medium";
+    line-height: 100%;
+    font-weight: 400;
     font-size: 130%;
+}
+
+.comment {
+    margin-bottom: 50px;
+}
+
+.command-recap {
+    margin-bottom: 30px;
+}
+
+.command-recap span {
+    margin-bottom: 20px;
+}
+
+.command-recap p,
+.command-recap h3 {
+    margin: 5px;
+}
+
+
+/* ============================================ */
+/*      --- Items List ---
+/* ============================================ */
+.resume {
+    margin-bottom: 10px;
+    text-decoration: underline;
+}
+
+.confirm-items-container {
+    width: 80%;
+    margin-top: 20px;
+    margin-bottom: 60px;
+    padding: 0;
+    padding : 20px;
+    padding-bottom: 0;
+    border-radius: 50px;
+    border: solid 2px black;
+}
+
+.confirm-items-container li {
+    justify-content: space-between;
+    height: auto;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 35px;
+}
+
+
+/* --- Picture --- */
+.confirm-items-container figure {
+    height: 200px;
+    width: 200px;
+}
+
+.confirm-items-container img,
+.confirm-color {
+    border-radius: 20px;
+}
+
+.confirm-items-container img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+
+/* --- Description --- */
+.item-caption {
+    height: auto;
+    width: 30%;
+}
+
+.item-caption h3 {
+    height: auto;
+    width: 30%;
+}
+
+
+/* --- Price / Qty --- */
+.confirm-price-qty {
+    width: 20%;
+}
+
+.confirm-price-qty h3 {
+    margin: 10px;
+    width: 100%;
     text-align: center;
-    line-height: 250%;
+}
+
+
+/* --- Color --- */
+.confirm-color {
+    height: 70px;
+    width: 20%;
+
+    font-family: "Raleway-Medium";
+    font-weight: 600;
+    font-size: 130%;
 }

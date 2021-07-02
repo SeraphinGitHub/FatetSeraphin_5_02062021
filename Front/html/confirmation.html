@@ -28,16 +28,44 @@
     </header>
 
     <section class="flexCenter border-radius main">
-        <h2> - Commande confirmée - </h2>
-        <p>Orinoco vous remmercie pour votre commande.</p>
-        <span>Vous venez de passer commande pour <h3 class="confirm-qty"></h3> <p class="article-word"></p>.</span>
-        <span>Le prix total de celle-ci s'élève à : <h3 class="confirm-price"></h3></span>
-        <span>Votre numéro de commande est le : <h3 class="order-nurmber"></h3></span>
-        <p>Notre équipe vous souhaite une bonne journée.</p>
 
-        <ul class="flexCenter confirm-list-container">    
-            <!-- Generated content -->
-        </ul>
+        <div class="flexCenter confirm-title-flow">
+            <figure class="flexCenter confirm-title">
+                <i class="fas fa-check-circle"></i>
+                <h2> - Commande envoyée - </h2>
+            </figure>
+        </div>
+
+        <p class="comment">Orinoco vous remmercie pour l'utilisation de nos services et pour votre commande.</p>
+        
+        <div class="flexCenter command-recap">
+            <span class="flexCenter">
+                <p>Votre commande contient</p>
+                <h3 class="confirm-qty"></h3>
+                <p class="article-word"></p>
+            </span>
+
+            <span class="flexCenter">
+                <p>Le prix total de celle-ci s'élève à :</p>
+                <h3 class="confirm-price"></h3>
+            </span>
+
+            <span class="flexCenter">
+                <p>Votre numéro de commande est le :</p>
+                <h3 class="order-number"></h3>
+            </span>
+        </div>
+        
+        <p class="comment">Notre équipe vous souhaite une agréable journée.</p>
+
+        <div class="flexCenter confirm-items-recap">
+            <h3 class="resume">Résumé de vos articles commandés :</h3>
+            
+            <ul class="flexCenter confirm-items-container">
+                <!-- Generated content -->
+            </ul>
+        </div>
+
     </section>
 
     <footer class="border-radius">

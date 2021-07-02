@@ -28,7 +28,6 @@ body,
 /* ======  Cart Item Selected Color  ====== */
 .selected-color,
 .chosen-color {
-    /* background: linear-gradient(to bottom right, rgb(255, 94, 0), rgb(255, 217, 0)); */
     background: linear-gradient(to bottom right, dodgerblue, lightskyblue);
 }
 
@@ -66,10 +65,20 @@ body,
 
 /* ======  Contact Page (Form)  ====== */
 .validate-page {
-    background: linear-gradient(to bottom right, rgba(135, 206, 250, 0.7), rgba(0, 0, 0, 0.7));
+    background: linear-gradient(to bottom right, rgba(135, 206, 250, 0.8), rgba(0, 0, 0, 0.8));
 }
 
 /* ======  Loading Spinner background ====== */
 .backLoad {
     background: linear-gradient(to bottom right, white, rgba(0, 0, 0, 0.3));
+}
+
+
+/* ======  Confirm Page - Item List ====== */
+.confirm-items-container li {
+    background: linear-gradient(to left, rgba(148, 0, 211, 0.6), rgba(30, 143, 255, 0.6));
+}
+
+.confirm-color {
+    background: linear-gradient(to right, rgb(255, 136, 0), rgb(251, 255, 0));
 }

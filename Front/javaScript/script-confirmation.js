@@ -6,7 +6,7 @@
 // ======================================================================
 const createConfirmItems = (teddy, teddyColor, teddyQty) => {
 
-    const ulContainer = document.querySelector(".confirm-list-container");
+    const ulContainer = document.querySelector(".confirm-items-container");
 
     // Create html content of one item
     const itemListHtml = `
@@ -20,9 +20,12 @@ const createConfirmItems = (teddy, teddyColor, teddyQty) => {
                 <p>${teddy.description}</p>
             </div>
 
-            <h3 class="confirm-price">${teddy.priceFormated()}</h3>
+            <div class="flexCenter confirm-price-qty">
+                <h3 class="confirm-price">Prix : ${teddy.priceFormated()}</h3>
+                <h3 class="flexCenter confirm-qty">Quantité : ${teddyQty}</h3>
+            </div>
+
             <span class="flexCenter confirm-color">${teddyColor}</span>
-            <h3 class="flexCenter confirm-qty">${teddyQty}</h3>
         </li>`
     ;
 
@@ -36,10 +39,10 @@ const createConfirmItems = (teddy, teddyColor, teddyQty) => {
 const renderConfirmItems = () => {
 
     // Get localStorage's data
-    const confirmPageArray = JSON.parse(localStorage.getItem("confirmPage"));
+    const confirmArray = JSON.parse(localStorage.getItem("confirmArray"));
         
     // For each teddy in cart
-    confirmPageArray.forEach(item => {
+    confirmArray.forEach(item => {
         
         const teddy = setTeddy(item); // Get Teddy data from localStorage
         const teddyQtyObject = item.quantity;
@@ -59,7 +62,7 @@ const setOrderPageData = () => {
     // Get Html Class name
     const totalQuantityHtml = document.querySelector(".confirm-qty");
     const totalPriceHtml = document.querySelector(".confirm-price");
-    const orderIdHtml = document.querySelector(".order-nurmber");
+    const orderIdHtml = document.querySelector(".order-number");
     const articleHtml = document.querySelector(".article-word");
     
     // Get localStorage's data
@@ -72,8 +75,8 @@ const setOrderPageData = () => {
     orderIdHtml.textContent = orderId;
     
     (totalQuantity > 1 )
-    ? articleHtml.textContent = "articles"
-    : articleHtml.textContent = "article";
+    ? articleHtml.textContent = "articles."
+    : articleHtml.textContent = "article.";
 }
 
 
@@ -82,5 +85,5 @@ const setOrderPageData = () => {
 // ======================================================================
 window.addEventListener("load", () => {
     setOrderPageData();
-    // renderConfirmItems();
+    renderConfirmItems();
 });

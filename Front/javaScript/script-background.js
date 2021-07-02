@@ -92,14 +92,12 @@ const popAlertMessage = (messageClass) => {
 const cleanOldOrder =  () => {
 
     let orderId = localStorage.getItem("orderId");
-    let confirmPage = JSON.parse(localStorage.getItem("confirmPage"));
     let totalPrice = localStorage.getItem("totalPrice");
     let totalQty = localStorage.getItem("totalQuantity");
     
-    if (orderId) localStorage.removeItem("orderId");
-    if (confirmPage) localStorage.removeItem("confirmPage");
-    if(totalPrice) localStorage.removeItem("totalPrice");
-    if(totalQty) localStorage.removeItem("totalQuantity");
+    if (orderId && totalPrice && totalQty) {
+        localStorage.clear();
+    }
 }
 
 

@@ -67,7 +67,7 @@ class CartClass {
     // Render Items in Cart
     // ======================================================================
     renderItems(creatCartItem) {
-
+        
         const cartArray = this.getItems();
         
         // For each teddy in cart
@@ -144,32 +144,13 @@ class CartClass {
 
 
     // ======================================================================
-    // Clear all Cart
-    // ======================================================================
-    emptyCart() {
-        const listContainer = document.querySelector(".list-container");
-        
-        if(listContainer) {
-            listContainer.classList.add("translateY_-100");  // Move <div> up
-            localStorage.removeItem("cartArray"); // Delete "cartArray" from localStorage
-            this.updateTotalQty();  // Update number of items in the cart
-            this.updateTotalPrice();  // Update total price in the cart
-            
-            setTimeout(() => {
-                listContainer.remove();  // Totally remove the html content after delay
-            }, 500);
-        }
-    }
-
-
-    // ======================================================================
     // Calculate item's total "quantity" or "price"
     // ======================================================================
     calculateTotal(cartArray, total, valueType) {
-        
-        // If localStorage isn't empty
-        if (localStorage.length) {
-            
+
+        // If cartArray exist in localStorage
+        if (localStorage.getItem("cartArray") !== null) {
+
             // For each Teddy in cart Array (LocalStorage)
             cartArray.forEach(item => {
 
@@ -200,14 +181,10 @@ class CartClass {
     // Update item's total quantity
     // ======================================================================
     updateTotalQty() {
+
         const cartArray = this.getItems();
         const totalQtyAll = 0;
-        const finalQuantity = this.calculateTotal(cartArray, totalQtyAll, "quantity");
-
-        let getOrderId = localStorage.getItem("orderId");
-        if(getOrderId) localStorage.setItem("totalQuantity", finalQuantity);
-
-        return finalQuantity;
+        return this.calculateTotal(cartArray, totalQtyAll, "quantity");
     }
 
 
@@ -215,16 +192,12 @@ class CartClass {
     // Update cart's total price 
     // ======================================================================
     updateTotalPrice() {
+
         const cartArray = this.getItems();
         const totalPrice = 0;
 
         // Turn the total price value into a currency (Cart Page)
-        const currencyTotalPrice = new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(this.calculateTotal(cartArray, totalPrice, "price")/100);
-
-        let getOrderId = localStorage.getItem("orderId");
-        if(getOrderId) localStorage.setItem("totalPrice", currencyTotalPrice);
-
-        return currencyTotalPrice;
+        return new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(this.calculateTotal(cartArray, totalPrice, "price")/100);
     }
     
 
@@ -259,13 +232,6 @@ class CartClass {
     // ======================================================================
     getCustomerInfos() {
 
-        // Get input fields by ID
-        const firstName = document.getElementById("firstName");
-        const lastName = document.getElementById("lastName");
-        const address = document.getElementById("address");
-        const city = document.getElementById("city");
-        const email = document.getElementById("email");
-
         // Have to contain: LETTER || letter || accent letters || dash
         const firstNameRegEx = new RegExp(/^[A-Za-zÜ-ü-]+$/);
         
@@ -280,6 +246,15 @@ class CartClass {
         //    LETTER || letter || number && dot && LETTER || letter
         const emailRegEx = new RegExp(/^[A-Za-z0-9\._-]+[@]+[A-Za-z0-9]+[\.]+[A-Za-z]+$/);
         
+        // Get input fields by ID
+        const firstName = document.getElementById("firstName");
+        const lastName = document.getElementById("lastName");
+        const address = document.getElementById("address");
+        const city = document.getElementById("city");
+        const email = document.getElementById("email");
+        const contact = document.querySelector(".contact");
+        let contactData = new FormData(contact);
+        
         // Set error message strings for each field
         const errMess_empty = "Le champ est vide !";
 
@@ -289,9 +264,6 @@ class CartClass {
         const errMess_city = "Les chiffres ne sont pas autorisés !";
         const errMess_email = "Adresse e-mail invalide !";
 
-        const contact = document.querySelector(".contact");
-        let contactData = new FormData(contact);
-        
         this.formValidation(contactData, firstName, firstNameRegEx, errMess_empty, errMess_firstName);
         this.formValidation(contactData, lastName, lastNameRegEx, errMess_empty, errMess_lastName);
         this.formValidation(contactData, address, adressRegEx, errMess_empty, errMess_address);

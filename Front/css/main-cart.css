@@ -145,12 +145,19 @@ header {
     width: 15%;
 }
 
-.quantity-plus-btn,
-.quantity-minus-btn,
-.validate-btn,
+
 .remove-btn,
 .clean-cart-btn {
-    height: 60px;
+    height: 70px;
+}
+
+/*  --- "+ / -" --- */
+.quantity-plus-btn,
+.quantity-minus-btn {
+    align-content: center;
+    height: 57px;
+    width: 57px;
+    margin: 0%;
 }
 
 .quantity-input {
@@ -161,18 +168,11 @@ header {
     text-align: center;
 }
 
-/*  --- "+ / -" --- */
-.quantity-plus-btn,
-.quantity-minus-btn {
-    align-content: center;
-    width: 60px;
-    margin: 0%;
-}
-
 /*  ---  Remove Button  ---  */
+.price-color,
 .remove-btn,
 .clean-cart-btn {
-    width: 15%;
+    width: 13%;
 }
 
 
@@ -277,11 +277,14 @@ header {
     margin-bottom: 0;
 }
 
+
+/* --- Error Message Empty Cart --- */
 .cart-empty-alert {
-    top: -50%;
-    left: 8.5%;
+    top: -10%;
+    left: 50%;
     width: 80%;
     height: 40px;
+    transform: translate(-50%, -50%);
 }
 
 .purchase-order-btn {

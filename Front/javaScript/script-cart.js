@@ -66,7 +66,7 @@ const itemBtn = (button, btnFunction, symbol) => {
 
             btnFunction(event, symbol);
             totalQuantityDOM(cart.updateTotalQty());
-            totalPriceDOM();
+            totalPriceDOM(cart.updateTotalPrice());
         });
     });
 }
@@ -75,13 +75,23 @@ const itemBtn = (button, btnFunction, symbol) => {
 // ======================================================================
 // Clear all Cart
 // ======================================================================
-const emptyCart = () => {
+const cleanCart = () => {
     const cleanBtn = document.querySelector(".clean-cart-btn");
+    const listContainer = document.querySelector(".list-container");
     
     cleanBtn.addEventListener("click", () => {
-        cart.emptyCart();
-        totalQuantityDOM(cart.updateTotalQty());
-        totalPriceDOM();       
+        
+        if(listContainer) {
+
+            localStorage.removeItem("cartArray"); // Delete "cartArray" from localStorage
+            listContainer.classList.add("translateY_-100");  // Move <div> up
+            totalQuantityDOM(cart.updateTotalQty());
+            totalPriceDOM(cart.updateTotalPrice());      
+           
+            setTimeout(() => {
+                listContainer.remove();  // Totally remove the html content after delay
+            }, 500);
+        }
     });
 }
 
@@ -123,7 +133,9 @@ const displayForm = () => {
 // Confirm form page and order command
 // ======================================================================
 const purchase = () => {
-    const confirmBtn = document.querySelector(".purchase-order-btn");
+
+    const purchaseBtn = document.querySelector(".purchase-order-btn");
+    const listContainer = document.querySelector(".list-container");
     const loadingSpinner = document.querySelector(".loading-spinner");
     const spinner = document.querySelector(".spinner");
     
@@ -131,7 +143,7 @@ const purchase = () => {
     const delay = 3000; // ==> milliSeconds
     const spinCount = delay/1000 + 1;
 
-    confirmBtn.addEventListener("click", (event) => {
+    purchaseBtn.addEventListener("click", (event) => {
        
         cart.purchase(event);
         let cartArray = JSON.parse(localStorage.getItem("cartArray"));
@@ -152,8 +164,18 @@ const purchase = () => {
                 spinner.classList.add("spinner-anim");
                 spinner.style.animationIterationCount = `${spinCount}`;
                 
-                localStorage.setItem("confirmPage", JSON.stringify(cartArray));
-                cart.emptyCart();
+                localStorage.setItem("confirmArray", JSON.stringify(cartArray));
+                localStorage.setItem("totalQuantity", cart.updateTotalQty());
+                localStorage.setItem("totalPrice", cart.updateTotalPrice());
+
+                localStorage.removeItem("cartArray"); // Delete "cartArray" from localStorage
+                listContainer.classList.add("translateY_-100");  // Move <div> up
+                totalQuantityDOM(0);
+                totalPriceDOM("0 €");
+            
+                setTimeout(() => {
+                    listContainer.remove();  // Totally remove the html content after delay
+                }, 500);
             }
         }, 50);
         
@@ -162,7 +184,6 @@ const purchase = () => {
             let getOrderId = localStorage.getItem("orderId");
             if(getOrderId) document.location.href = "./confirmation.html";
         }, delay);
-
     });
 }
 
@@ -170,11 +191,11 @@ const purchase = () => {
 // ======================================================================
 // DOM Update Total Price
 // ======================================================================
-const totalPriceDOM = () => {
+const totalPriceDOM = (price) => {
     
     // Display total price in "Total" html container (Cart Page)
     const totalPriceDiv = document.querySelector(".total-price");
-    totalPriceDiv.textContent = cart.updateTotalPrice();
+    totalPriceDiv.textContent = price;
 }
 
 
@@ -182,11 +203,11 @@ const totalPriceDOM = () => {
 // Functions chaining order
 // ======================================================================
 window.addEventListener("load", () => {
+    cleanOldOrder();
     cart.renderItems(creatCartItem);
-    totalPriceDOM();
+    totalPriceDOM(cart.updateTotalPrice());
     cartItem_Btns();
-    emptyCart();
+    cleanCart();
     displayForm();
     purchase();
-    cleanOldOrder();
 });

@@ -173,17 +173,19 @@
     font-size: 130%;
 }
 
-/* Position / Width */
-.max-value-alert {
-    width: 140%;
-    top: -40%;
-    left: -20%;
+/*  --- Max value Alert --- */
+.max-value-alert {   
+    width: 120%;
+    top: -15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .no-color-alert {
     width: 60%;
-    top: 15%;
-    right: -5%;
+    top: 50%;
+    left: 76%;
+    transform: translate(-50%, -50%);
 }
 
 /*  --- Cart Add Button --- */

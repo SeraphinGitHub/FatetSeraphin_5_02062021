@@ -50,6 +50,7 @@
         </div>
             
         <div class="flexCenter right-container">
+
             <h3 class="item-price">00€00</h3>
             
             <div class="flexCenter item-caption">
@@ -59,30 +60,29 @@
             
             <div class="flexCenter qnt-add-tag">
                 <div class="flexCenter plus-minus-btn">
+                    <button class="btn quantity-minus-btn" type="button"> - </button>
+                    <button class="btn quantity-plus-btn" type="button"> + </button>
 
+                    <div class="flexCenter quantity">
+                        <label class="flexCenter btn quantity-label" for="quantity">Quantité</label>
+                        
+                        <input class="quantity-input" type="number" name="quantity" id="quantity" min="1" max="10" value="1">
+                    </div>
+                    
                     <!-- Max Qty Alert -->
                     <span class="max-value-alert">
                         Vous ne pouvez pas ajouter plus de <span></span> de cet article au panier en une seule fois !
                     </span>
-
-                    <button class="btn quantity-minus-btn" type="button"> - </button>
-                    <button class="btn quantity-plus-btn" type="button"> + </button>
-                    
-                    <div class="flexCenter quantity">
-                        <label class="flexCenter btn quantity-label" for="quantity">Quantité</label>
-                            
-                        <input class="quantity-input" type="number" name="quantity" id="quantity" min="1" max="10" value="1">
-                    </div>
-
                 </div>
+
+                <button class="btn cart-add-btn" type="button">Ajouter au panier</button>
 
                 <!-- No chosen color Alert -->
                 <span class="no-color-alert">
                     Vous devez choisir une couleur avant d'ajouter votre article au panier !
                 </span>
-
-                <button class="btn cart-add-btn" type="button">Ajouter au panier</button>
             </div>
+            
         </div>
 
     </section>

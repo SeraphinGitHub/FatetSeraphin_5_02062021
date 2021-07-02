@@ -48,16 +48,21 @@
 
 
     .list-container a {
-        margin-left: 0;
+        margin: 0;
         width: 30%;
-    }
-
-    .item-price {
-        font-size: 140%;
     }
 
     .item-caption h3 {
         margin-top: 0px;
+    }
+
+    .price-color {
+        margin: 0;
+        width: 20%;
+    }
+
+    .item-price {
+        font-size: 140%;
     }
 
     .quantity {
@@ -136,15 +141,38 @@
 
     .list-container a,
     .item-caption {
+        margin: 0px;
         width: 45%;
+    }
+
+    .list-container a {
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+
+    .item-caption {
+        margin-right: 10px;
     }
     
     .item-price {
-        width: 30%;
+        margin-top: 10px;
+        margin-bottom: 30px;
     }
 
+    .quantity-input {
+        margin: 0;
+    }
+
+    .item-caption,
+    .quantity-minus-btn,
+    .quantity-plus-btn,
+    .quantity-input {
+        margin-bottom: 20px;
+    }
+
+    .price-color,
     .quantity {
-        width: 35%;
+        width: 40%;
     }
 
     /*  ---  Remove Button  ---  */
@@ -184,17 +212,30 @@
     .list-container a,
     .item-caption,
     .item-price {
-        margin: 10px;
+        margin: 20px;
         width: 100%;
+    }
+
+    .quantity-input {
+        margin: 0;
+    }
+
+    .item-caption,
+    .item-price,
+    .selected-color,
+    .quantity-minus-btn,
+    .quantity-plus-btn,
+    .quantity-input {
+        margin-bottom: 20px;
     }
 
     .quantity {
         width: 70%;
     }
 
+    .price-color,
     .remove-btn {
         width: 90%;
-        margin-top: 10px;
     }
 
 
@@ -251,11 +292,13 @@
         margin: 10px;
     }
 
+    /* --- Error Message Empty Cart --- */
     .cart-empty-alert {
-        top: -5%;
-        left: 13%;
+        top: 15%;
+        left: 50%;
         width: 70%;
         height: 25px;
+        transform: translate(-50%, -50%);
     }
 
     .purchase-order-btn {
