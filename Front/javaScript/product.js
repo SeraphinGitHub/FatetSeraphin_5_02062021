@@ -56,13 +56,13 @@ const renderProductPage = async () => {
     }
 
     
-    let isDropFlowVisible = dropFlow.classList.contains("visible");
+    let dropflowComputed = getComputedStyle(dropFlow);
 
     // On mouse click "color button"
     customBtn.addEventListener("click", function() {
 
         // If dropdown isn't already open
-        if (!isDropFlowVisible) {
+        if (dropflowComputed.visibility === "hidden") {
             
             dropFlow.classList.add("visible"); // Show dropflow container
             this.classList.remove("custom-btn-delay"); // Remove transition delay
