@@ -35,14 +35,8 @@ const creatProductList = (teddy) => {
 // ======================================================================
 const renderProductList = async () => {
 
-    const jsonData = await getAllData_API();
-
-    // Render html content for each item in the API's list
-    jsonData.forEach(data => {
-        
-        const teddy = setTeddy(data);
-        creatProductList(teddy);
-    });
+    const jsonData = await getAllData_API();    
+    jsonData.forEach(data => creatProductList(setTeddy(data))); // Render html content for each item in the API's list
 }
 
 

@@ -76,7 +76,7 @@ body,
 
 /* ======  Confirm Page - Item List ====== */
 .confirm-items-container li {
-    background: linear-gradient(to left, rgba(148, 0, 211, 0.6), rgba(30, 143, 255, 0.6));
+    background: linear-gradient(to right, rgba(148, 0, 211, 0.6), rgba(30, 143, 255, 0.6));
 }
 
 .confirm-color {

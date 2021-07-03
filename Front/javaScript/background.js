@@ -46,14 +46,17 @@ const renderHeader = () => {
 }
 
 const checkLinks = (slashIndex, homeIndex, homeOther, cartPath) => {
+
+    // Modify "href" redirection depend of window's location to match the correct route
     (window.location.pathname === slashIndex || window.location.pathname === homeIndex)
     ? createHeader(homeIndex, cartPath)
     : createHeader(homeOther, cartPath);
 
+    // If the current page isn't "confirmation order" page
     const confirmPath = "/Front/html/confirmation.html";
     (window.location.pathname !== confirmPath)
-    ? totalQuantityDOM(cart.updateTotalQty())
-    : totalQuantityDOM(0);
+    ? totalQuantityDOM(cart.updateTotalQty()) // Set cart quantity to LS quantity 
+    : totalQuantityDOM(0); // Else set quantity to zero
 }
 
 
@@ -62,11 +65,8 @@ const checkLinks = (slashIndex, homeIndex, homeOther, cartPath) => {
 // ======================================================================
 const renderFooter = () => {
 
-    const footerContainer = document.querySelector("footer");
-    
-    // Recycle footer's html content
-    const footerHtml = `<h2>ORINOCO - Site de vente en ligne</h2>`;
-
+    const footerContainer = document.querySelector("footer");    
+    const footerHtml = `<h2>ORINOCO - Site de vente en ligne</h2>`; // Recycle footer's html content
     footerContainer.insertAdjacentHTML("beforeend", footerHtml);
 }
 
@@ -95,6 +95,7 @@ const cleanOldOrder =  () => {
     let totalPrice = localStorage.getItem("totalPrice");
     let totalQty = localStorage.getItem("totalQuantity");
     
+    // Clear LS (when leave "confirmation" page)
     if (orderId && totalPrice && totalQty) {
         localStorage.clear();
     }

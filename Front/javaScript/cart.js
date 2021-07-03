@@ -53,9 +53,9 @@ const cartItem_Btns = () => {
     const minusBtnCart = document.querySelectorAll(".quantity-minus-btn");
     const removeBtn = document.querySelectorAll(".remove-btn");
 
-    itemBtn(plusBtnCart, cart.cartQuantityBtn, "+");
-    itemBtn(minusBtnCart, cart.cartQuantityBtn, "-");
-    itemBtn(removeBtn, cart.removeItem);
+    itemBtn(plusBtnCart, cart.cartQuantityBtn, "+"); // Add 1 quantity to the clicked item "+" button
+    itemBtn(minusBtnCart, cart.cartQuantityBtn, "-"); // Remove 1 quantity from the clicked item "-" button
+    itemBtn(removeBtn, cart.removeItem); // Remove item from cart when clicked "Remove" button
 }
 
 // Cycle each button type in Cart Page & apply it's own function
@@ -65,8 +65,8 @@ const itemBtn = (button, btnFunction, symbol) => {
         btn.addEventListener("click", (event) => {
 
             btnFunction(event, symbol);
-            totalQuantityDOM(cart.updateTotalQty());
-            totalPriceDOM(cart.updateTotalPrice());
+            totalQuantityDOM(cart.updateTotalQty()); // Update cart qty
+            totalPriceDOM(cart.updateTotalPrice()); // Update cart price
         });
     });
 }
@@ -79,18 +79,19 @@ const cleanCart = () => {
     const cleanBtn = document.querySelector(".clean-cart-btn");
     const listContainer = document.querySelector(".list-container");
     
+    // On click "Clean cart" button
     cleanBtn.addEventListener("click", () => {
         
+        // If cart list container exist
         if(listContainer) {
 
             localStorage.removeItem("cartArray"); // Delete "cartArray" from localStorage
-            listContainer.classList.add("translateY_-100");  // Move <div> up
-            totalQuantityDOM(cart.updateTotalQty());
-            totalPriceDOM(cart.updateTotalPrice());      
+            listContainer.classList.add("translateY_-100");  // Move cart list content up
+            totalQuantityDOM(cart.updateTotalQty()); // Update cart qty
+            totalPriceDOM(cart.updateTotalPrice()); // Update cart price     
            
-            setTimeout(() => {
-                listContainer.remove();  // Totally remove the html content after delay
-            }, 500);
+            // Totally remove the html content after delay
+            setTimeout(() => listContainer.remove(), 500);
         }
     });
 }
@@ -101,6 +102,7 @@ const cleanCart = () => {
 // ======================================================================
 const displayForm = () => {
 
+    // Get form content & containers
     const validateBtn = document.querySelector(".validate-btn");
     const validatePageFlow = document.querySelector(".validate-page-flow");
     const validatePage = document.querySelector(".validate-page");
@@ -108,9 +110,9 @@ const displayForm = () => {
 
     const timeOutDuration = 400; // ==> milliSeconds
 
-    // On Click "Passer Commander" button ==> Show confirm order page (Form)
+    // On Click "Validate order" button ==> Display form page
     validateBtn.addEventListener("click", () => {
-        
+
         validatePageFlow.classList.add("visible");
         validatePage.classList.add("translateY_0");
         setTimeout(() => validatePage.classList.add("border-radius_0"), timeOutDuration);
@@ -134,6 +136,7 @@ const displayForm = () => {
 // ======================================================================
 const purchase = () => {
 
+    // Get purchase button, cart list container & loading spinner
     const purchaseBtn = document.querySelector(".purchase-order-btn");
     const listContainer = document.querySelector(".list-container");
     const loadingSpinner = document.querySelector(".loading-spinner");
@@ -143,43 +146,47 @@ const purchase = () => {
     const delay = 3000; // ==> milliSeconds
     const spinCount = delay/1000 + 1;
 
+    // On click "purchase" button
     purchaseBtn.addEventListener("click", (event) => {
        
-        cart.purchase(event);
-        let cartArray = JSON.parse(localStorage.getItem("cartArray"));
+        cart.purchase(event); // Send request to the API with cart items & form infos
+        let cartArray = JSON.parse(localStorage.getItem("cartArray")); // Get "cartArray" from LS
 
         // If Cart is empty
         if(!cartArray || !cartArray.length) {
             const emptyCartAlert = document.querySelector(".cart-empty-alert"); 
-            popAlertMessage(emptyCartAlert);
+            popAlertMessage(emptyCartAlert); // Display "empty cart" alert
         }
 
         // Display loading spinner
         setTimeout(() => {
             let getOrderId = localStorage.getItem("orderId");
 
+            // If received order Id from API's request
             if(getOrderId) {
                 
+                // Display loading spinner
                 loadingSpinner.classList.add("visible");
                 spinner.classList.add("spinner-anim");
                 spinner.style.animationIterationCount = `${spinCount}`;
                 
+                // Set cart items, quantity & price to new key in LS
                 localStorage.setItem("confirmArray", JSON.stringify(cartArray));
                 localStorage.setItem("totalQuantity", cart.updateTotalQty());
                 localStorage.setItem("totalPrice", cart.updateTotalPrice());
 
-                localStorage.removeItem("cartArray"); // Delete "cartArray" from localStorage
-                listContainer.classList.add("translateY_-100");  // Move <div> up
-                totalQuantityDOM(0);
-                totalPriceDOM("0 €");
-            
-                setTimeout(() => {
-                    listContainer.remove();  // Totally remove the html content after delay
-                }, 500);
+                // Delete "cartArray" from localStorage
+                localStorage.removeItem("cartArray"); 
+                listContainer.classList.add("translateY_-100");
+                totalQuantityDOM(0); // Set quantity DOM to zero
+                totalPriceDOM("0 €"); // Set price DOM to zero
+                
+                // Totally remove the html content after delay
+                setTimeout(() => listContainer.remove(), 500);
             }
         }, 50);
         
-        // Redirect to confirm page
+        // Redirect to confirm page if received order Id from API's request
         setTimeout(() => {
             let getOrderId = localStorage.getItem("orderId");
             if(getOrderId) document.location.href = "./confirmation.html";

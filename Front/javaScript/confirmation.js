@@ -20,12 +20,12 @@ const createConfirmItems = (teddy, teddyColor, teddyQty) => {
                 <p>${teddy.description}</p>
             </div>
 
+            <span class="flexCenter confirm-color">${teddyColor}</span>
+            
             <div class="flexCenter confirm-price-qty">
                 <h3 class="confirm-price">Prix : ${teddy.priceFormated()}</h3>
                 <h3 class="flexCenter confirm-qty">Quantité : ${teddyQty}</h3>
             </div>
-
-            <span class="flexCenter confirm-color">${teddyColor}</span>
         </li>`
     ;
 
@@ -38,7 +38,7 @@ const createConfirmItems = (teddy, teddyColor, teddyQty) => {
 // ======================================================================
 const renderConfirmItems = () => {
 
-    // Get localStorage's data
+    // Get localStorage's data from new items array
     const confirmArray = JSON.parse(localStorage.getItem("confirmArray"));
         
     // For each teddy in cart
@@ -47,6 +47,7 @@ const renderConfirmItems = () => {
         const teddy = setTeddy(item); // Get Teddy data from localStorage
         const teddyQtyObject = item.quantity;
 
+        // Render one Teddy for each pair [Color: quantity]
         for (const [teddyColor, teddyQty] of Object.entries(teddyQtyObject)) {
             createConfirmItems(teddy, teddyColor, teddyQty);
         }
@@ -70,13 +71,25 @@ const setOrderPageData = () => {
     const totalPrice = localStorage.getItem("totalPrice");
     const orderId = localStorage.getItem("orderId");
 
+    // Modify DOM content
     totalQuantityHtml.textContent = totalQuantity;
     totalPriceHtml.textContent = totalPrice;
     orderIdHtml.textContent = orderId;
     
+    // If more than one item in cart change singular to plurial
     (totalQuantity > 1 )
     ? articleHtml.textContent = "articles."
     : articleHtml.textContent = "article.";
+}
+
+
+// ======================================================================
+// Modify confirm order title by viewport
+// ======================================================================
+const modifyOrderTitleDOM = () => {
+
+    const orderTitle = document.querySelector(".confirm-title h2");
+    if(window.matchMedia("(max-width: 630px)").matches) orderTitle.textContent = "Commande envoyée";
 }
 
 
@@ -86,4 +99,5 @@ const setOrderPageData = () => {
 window.addEventListener("load", () => {
     setOrderPageData();
     renderConfirmItems();
+    modifyOrderTitleDOM();
 });

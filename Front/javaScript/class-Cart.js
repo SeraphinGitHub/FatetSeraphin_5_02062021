@@ -12,7 +12,7 @@ class CartClass {
 
 
     // ======================================================================
-    // Get data from localStorage
+    // Get data from "cartArray" in localStorage
     // ======================================================================
     getItems() {
         return this.items;
@@ -23,8 +23,7 @@ class CartClass {
     // Get Teddy object by Id inside CartArray
     // ======================================================================
     getTeddyById(cartArray, targetId) {
-        const elementMatchId = element => element._id === targetId;
-        const teddyIndex = cartArray.findIndex(elementMatchId);
+        const teddyIndex = cartArray.findIndex((element) => element._id === targetId);
         return cartArray[teddyIndex];
     }
 
@@ -32,37 +31,42 @@ class CartClass {
     // Manage "Add to Cart" button
     // ======================================================================
     addItem(teddy, inputClass) {
-        
+
         const cartArray = this.getItems();
-        
         const resetValue = 1;        
-        let quantityValue = Number (inputClass.value);
-        let teddyQtyObject = teddy.quantity;
-        let currentColor = teddy.selectedColor;
-        let teddyById = cart.getTeddyById(cartArray, teddy._id);
+        let quantityValue = Number (inputClass.value); // Input field value
+        let teddyQtyObject = teddy.quantity; //Get current teddy's quantity array
+        let currentColor = teddy.selectedColor; //Get current teddy's color
+        let teddyById = cart.getTeddyById(cartArray, teddy._id);  //Get current teddy in cartArray by it's Id 
         
+        // If no teddy with this Id in localStorage
         if (!teddyById) {
-
-            teddyQtyObject[currentColor] = Number (quantityValue), 654;
-            cartArray.push(teddy);
+            teddyQtyObject[currentColor] = Number (quantityValue); // Set color & quantity of teddy
+            cartArray.push(teddy); // Add this teddy to cartArray
         }
-        
-        else {
-            if (!Object.keys(teddyById.quantity).includes(currentColor)) {
-                teddyById.quantity[currentColor] = Number (quantityValue);
-            }
 
-            else teddyById.quantity[currentColor] += Number (quantityValue);
+        // If teddy with this Id exist in localStorage but not with current color
+        else if (!Object.keys(teddyById.quantity).includes(currentColor)) {
+            
+            // Get stored teddy by Id & set the new color & quantity to this teddy
+            teddyById.quantity[currentColor] = Number (quantityValue);
+        }
+
+        // If teddy with this Id & with the same color exist in localStorage
+        else {
+
+            // Get stored teddy by Id & just add the new quantity to this teddy
+            teddyById.quantity[currentColor] += Number (quantityValue);
             teddyById.selectedColor = currentColor;
         }
         
-        localStorage.setItem("cartArray", JSON.stringify(cartArray));
+        localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the modified "cartArray" in LS
         inputClass.value = resetValue;  // After adding item to cart => restore input field to 1
         quantityValue = resetValue;  // Restore "+ / -" buttons values to 1
         this.updateTotalQty();  // Update number of items in the cart
     }
 
-
+    
     // ======================================================================
     // Render Items in Cart
     // ======================================================================
@@ -74,8 +78,9 @@ class CartClass {
         cartArray.forEach(item => {
             
             const teddy = setTeddy(item); // Get Teddy data from localStorage
-            const teddyQtyObject = item.quantity;
+            const teddyQtyObject = item.quantity; //Get current teddy's quantity array
 
+            // If this Teddy's quantity isn't null ==> Render one Teddy for each pair [Color: quantity]
             for (const [teddyColor, teddyQty] of Object.entries(teddyQtyObject)) {
                 if(teddyQty) creatCartItem(teddy, teddyColor, teddyQty);
             }
@@ -89,22 +94,26 @@ class CartClass {
     cartQuantityBtn(event, symbol) {
 
         const cartArray = cart.getItems();
+
+        // Get the Id, the quantity field & the color of the clicked item
         const getTargetId = event.target.parentElement.parentElement.id;
         const quantityInput = event.target.parentElement.querySelector(".quantity-input");
         const teddyColor = event.target.parentElement.parentElement.querySelector(".selected-color").textContent;
-        let teddyQtyObject = cart.getTeddyById(cartArray, getTargetId).quantity;
+        let teddyQtyObject = cart.getTeddyById(cartArray, getTargetId).quantity; // Get stored Teddy's quantity array
         const minValue = Number (quantityInput.min);
 
+        // If plus button
         if (symbol === "+") {
             teddyQtyObject[teddyColor] ++;
         }
         
+        // If minus button & value isn't under minumum set value in html attribute
         if (quantityInput.value > minValue && symbol === "-") {
             teddyQtyObject[teddyColor] --;
         }
         
-        quantityInput.value = teddyQtyObject[teddyColor];
-        localStorage.setItem("cartArray", JSON.stringify(cartArray));
+        quantityInput.value = teddyQtyObject[teddyColor]; // Set the new qty in input field
+        localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the modified "cartArray" in LS
         cart.updateTotalQty();  // Update number of items in the cart
         cart.updateTotalPrice();  // Update total price in the cart
     }
@@ -115,18 +124,19 @@ class CartClass {
     // ======================================================================
     removeItem(event) {
 
-        const cartArray = cart.getItems(); // Get data from localStorage        
+        const cartArray = cart.getItems(); // Get data from localStorage   
+        
+        // Get the Id & the color of the clicked item
+        const getTargetId = event.target.parentElement.id;
         const teddyColor = event.target.parentElement.querySelector(".selected-color").textContent;
-        const getTargetId = event.target.parentElement.id; // Get main <div> Id of cliked element
-        const elementMatchId = element => element._id === getTargetId;
-        const teddyIndex = cartArray.findIndex(elementMatchId);
-
+        
+        // Get Teddy by Id in CartArray
+        const teddyIndex = cartArray.findIndex((element) => element._id === getTargetId); 
         let teddyById = cartArray[teddyIndex];
         let teddyQtyObject = teddyById.quantity;
 
-        delete teddyQtyObject[teddyColor];
+        delete teddyQtyObject[teddyColor]; // Delete this Teddy's pair [color: quantity]
         localStorage.setItem("cartArray", JSON.stringify(cartArray)); // Store the hole thing into LS
-
         event.target.parentElement.classList.add("translateY_-100");  // Move <div> up before remove              
         cart.updateTotalQty();  // Update number of items in the cart
         cart.updateTotalPrice();  // Update total price in the cart
@@ -194,10 +204,8 @@ class CartClass {
     updateTotalPrice() {
 
         const cartArray = this.getItems();
-        const totalPrice = 0;
-
-        // Turn the total price value into a currency (Cart Page)
-        return new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(this.calculateTotal(cartArray, totalPrice, "price")/100);
+        const totalPrice = 0;        
+        return new Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(this.calculateTotal(cartArray, totalPrice, "price")/100); // Turn the total price value into a currency (Cart Page)
     }
     
 
@@ -207,21 +215,20 @@ class CartClass {
     async purchase(event) {
         
         event.preventDefault();
-        const contact = this.getCustomerInfos();
-
-        const cartArray = this.getItems();
+        const contact = this.getCustomerInfos(); // Get infos from customer (after RegEx)
+        const cartArray = this.getItems(); // Get cartArray from lS
         const products = [];
 
-        cartArray.forEach(item => {
-            products.push(item._id);
-        });
-
-        contact.forEach((key, value) => {
-            contact[value] = key;
-        });
+        cartArray.forEach(item => products.push(item._id)); // Set products array with only cart item's Id
+        contact.forEach((key, value) => contact[value] = key); // Set contact object with customer's infos
         
+        // If cart isn't empty
         if(products.length) {
+            
+            // Send request to the API with format data
             const command = await postData_API(contact, products);
+            
+            // If request success ==> store the received order Id
             if(command.orderId) localStorage.setItem("orderId", command.orderId);
         }
     }
@@ -276,26 +283,22 @@ class CartClass {
     // Check input fields informations 
     formValidation(contactData, inputField, regEx, errMessEmpty, errMessField) {
 
-        // // If input field is empty
-        // if (inputField.value === "") {
-        //     this.popUpMessage(inputField, errMessEmpty); // Pop error message up
-        // }
+        // If input field is empty
+        if (inputField.value === "") {
+            this.popUpMessage(inputField, errMessEmpty); // Pop error message up
+        }
 
-        // // If regEx is wrong
-        // else if (!regEx.test(inputField.value)) {
-        //     this.popUpMessage(inputField, errMessField); // Pop error message up
-        //     contactData.set(inputField.name, ""); // Set contactData pairs "key: value" to "input field's name: empty"
-        // }
+        // If regEx is wrong
+        else if (!regEx.test(inputField.value)) {
+            this.popUpMessage(inputField, errMessField); // Pop error message up
+            contactData.set(inputField.name, ""); // Set contactData pairs "key: value" to "input field's name: empty"
+        }
         
-        // // If all informations are corrects
-        // else {
-        //     // Set contactData pairs "key: value" to "input field's name: inputField.value"
-        //     contactData.set(inputField.name, inputField.value);
-        // }
-
-
-        contactData.set(inputField.name, "aze");
-        
+        // If all informations are corrects
+        else {
+            // Set contactData pairs "key: value" to "input field's name: inputField.value"
+            contactData.set(inputField.name, inputField.value);
+        }
     }
 
     // Pop error message up if wrong data entered
@@ -305,7 +308,6 @@ class CartClass {
         const messageContainer = inputField.parentElement;
 
         if (!messageContainer.children[2]) {
-
             messageContainer.insertAdjacentHTML("beforeend", messageHtml);
             setTimeout(() => messageContainer.children[2].remove(), 3000);
         }
